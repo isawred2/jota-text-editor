@@ -1,0 +1,492 @@
+[2011/01/23 v.0.0.1α]
+
+変更
+・新規ファイルセーブ時のデフォルトフォルダを設定可能に変更
+・名前を変えて保存時に元ファイル名を表示するように変更
+・オープン時の履歴の一番目のファイルのフォルダを開くように変更
+・ファイル選択画面でディレクトリとファイル名を両方表示するように変更
+・フォントプロポーショナル、モノスペースフォントを選択可能に変更
+・フォントサイズを変更できるように変更
+・サムの横幅を少し縮める
+・メモリ使用量を削減
+
+バグ修正
+・履歴０件の時に履歴を開くとクラッシュするバグを修正
+・０バイトのファイルを開くとクラッシュするバグを修正
+・文字コード未確定の時に保存で失敗するバグを修正
+・ドラッグ選択を画面外まで続けると、キャンセルされるバグを修正
+・英語のミススペルを修正
+
+Change
+・add the option to set the default folder when save a new file.
+・show original filename when Save As screen.
+・show the directory which 1st record of history when Open screen.
+・show both directory and filename in File Select Screen.
+・add the option to select the kind of font.(Normal/Monospace)
+・add the option to select the font size.
+・Scroll thumb shorten a little smaller. ( In future it can be selected. )
+・Reduced memory usage.
+
+BUG fix
+・fixed the bug that crashed when open the History in the case no history is recorded.
+・fixed the bug that crashed when open 0 bytes file.
+・fixed the bug that failed save file.
+・fixed the bug that selection is canceld when drag to the edge of the screen.
+・fixed miss-spell of English resources.
+
+
+注意
+　近い将来のバージョンアップでRTL言語への対応を廃止する予定です。
+
+CAUTION
+  At near future version, RTL-Language and bi-directional text won't be supported.
+
+
+[2011/02/11 v.0.0.3α]
+
+バグ修正
+・アプリ切替時にクラッシュするバグを修正
+
+[2011/02/11 v.0.0.3α]
+BUG fix
+・fixed the bug that application switching cause a crash.
+
+
+[2011/02/20 v.0.0.4α]
+変更
+・Dropboxからの新規作成に対応
+・ショートカットキーの有効無効の選択オプション追加
+・バックアップ作成有無の選択オプション追加
+・アプリ連携時にACTION_VIEWを投げる機能を追加
+・aGrepから行番号指定で開く機能を追加
+
+バグ修正
+・不正な正規表現でクラッシュするバグを修正
+・0バイトファイルをセーブできないバグを修正
+
+
+[2011/02/20 v.0.0.4α]
+Change
+・Support for Dropbox's New menu.
+・Add a option to select shortcut keys.
+・Add a option to create backup file.
+・Add a menu to send ACTION_VIEW.
+・Add a feature to recieve line number from aGrep.
+
+Bug fix
+・fixed a bug that crashes on bad regular expression.
+・fixed a bug that couldn't save after 0-bytes file read.
+
+
+[2011/03/04 v.0.0.5α]
+機能追加／変更
+・GMail/K9Mailの添付ファイルを開く機能を追加
+・SH製端末のコンテンツマネージャから開く機能を追加
+・ファイルを開く時に文字コードを指定する機能を追加
+・ファイルを保存する時に、文字コード／改行コードを指定する機能を追加
+・デフォルトの文字コード／改行コードを設定する機能を追加
+・「挿入」メニューにダイレクトインテントを割り当てる機能を追加
+・QVGA用のアイコンリソースを追加
+・ホームアプリにショートカットアイコンを作成する機能を追加
+・ファイル履歴を名前＋パスの二段構成に変更
+・A2SD対応
+
+バグ修正
+・ボリュームボタンのKEYUPイベントで音が鳴るバグを修正
+・UTF-16/32でBOMを出力しないバグを修正
+・改行CRの時に、余計な文字が出力されるバグを修正
+・その他細かいバグ修正
+
+
+[2011/03/04 v.0.0.5α]
+Change
+・Added a support to open the attachment of GMail/K9Mail.
+・Added an option to select a character code when open file.
+・Added an option to select a character/linebreak code when save file.
+・Added an option to set default character/linebreak code.
+・Added an option to change "Insert" menu into Direct Intent.
+・Added a menu to create shortcut icon on the home application.
+・Added resources for QVGA devices.
+・Added a support for A2SD.
+・Changed file-history to show a path of the file.
+
+Bug fix
+・Fixed the bug that a beep sound is played when volume+/- key is released.
+・Fixed the bug that BOM is not outputed in UTF-16/32.
+・Fixed the bug that unnecessary character is outputed with CR.
+・Fixed some minor bugs.
+
+
+[2011/03/20 v.0.0.6α]
+
+テキスト選択用のマーカーを追加
+メモリ使用量を削減
+細かいバグ修正
+RTL言語の対応を廃止
+
+[2011/03/21 v.0.0.7α]
+クリップボード・Intentの上限を99KBにするように変更
+保存処理を小さいバッファで処理するように修正
+マーカー表示中にメニューキーを押すと選択が解除されるバグを修正
+タイトルバーを非表示にする設定を追加
+IS01/Lynxのソフトキー領域を非表示にする設定を追加
+
+★もしこのアプリを気に入って頂けたなら、震災被害者のために何かして頂けると嬉しいです。
+
+
+[2011/03/20 v.0.0.6α]
+added text selector.(2-floating-marker like Gingerbread)
+reduced memory usage.
+fixed minor bugs.
+no longer supports RTL languages.
+
+[2011/03/21 v.0.0.7α]
+added the limit of Clipboard and Intent text to 99KB.
+changed to use smaller buffer when a file is saved.
+fixed the bug that cancelled selection area when Menu key is pushed when selection marker is shown.
+added the option to hide title bar.
+
+★If you liked this app, please do something for the earthquake victims in Japan.
+
+
+[2011/03/27 v.0.0.8α]
+コンテキストメニューに選択解除機能を追加
+ワードラップの有無設定を追加
+閲覧モードの設定を追加
+LifeTouch NOTEのctrlキー対応を追加
+日本語の禁則処理を修正
+ディレクトリブラウザでaccess denied の後の挙動を修正
+テキスト検索時のバグを修正
+保存失敗時のエラーメッセージを表示
+
+★がんばれ日本！
+
+[2011/03/27 v.0.0.8α]
+added "Select Cancel" onto the context menu.
+added a option "Word Wrap".
+added the option "Viewer mode".(This is not read-only mode. This only hides IME.)
+Fixed minor bugs.
+
+★From Japan, we are with you !
+
+
+
+[2011/04/03 v.0.0.9α]
+・LandscapeモードでIMEが全画面表示にならないように修正
+・折り返し文字数の設定を追加
+・タブ幅の設定を追加
+・ボリュームキーの有効無効設定を追加
+・DPAD_CENTERの動作を選択する設定を追加
+・ショートカットキーを追加
+・画面回転時にクラッシュする問題を修正
+・履歴のソートが正しく行われない問題を修正
+
+
+[2011/04/03 v.0.0.9α]
+Officially supported landscape mode.
+Added a option to set wrap width.
+Added a option to set tab width.
+Added a option to disable volume key.
+Added a option to select DPAD_CENTER action.
+Added shortcut keys.
+Fixed a bug that crashed when orientation changed.
+Fixed a bug of History sorting.
+
+[2011/04/05 v.0.0.10α]
+GalaxySでファイル読込が途中で打ち切られる問題に対処
+
+[2011/04/05 v.0.0.10α]
+Fixed the issue that long file was truncated on Galaxy S.
+
+
+[2011/04/10 v.0.0.11α]
+・リドゥ機能を追加
+・行番号表示機能を追加
+・行番号指定ジャンプ機能を追加
+・ワードカウンタを追加
+・キーボードショートカット追加
+・細かいバグ修正
+
+
+[2011/04/10 v.0.0.11α]
+Added "Redo".
+Added a option to show line numbers.
+Added a dialog that jump by line number.
+Added a word counter.
+Added some keyboard shortcuts.
+Fixed minor bugs.
+
+[2011/04/10 v.0.0.12α]
+・背景が黒地の時に行番号が見えないバグを修正
+
+[2011/04/10 v.0.0.12α]
+Fixed the bug that line number is hidden in black background.
+
+
+[2011/04/19 v.0.0.13α]
+・国際化（ドイツ語／フランス語）
+ (Bastian Bringenbergさん、Alainさん、ありがとう！)
+・アストロからhtmlを開いた時にクラッシュするバグを修正
+・スリープからの復帰時にクラッシュするバグを修正
+
+[2011/04/19 v.0.0.13α]
+Internationalization for German.
+ Thanks to Bastian Bringenberg!
+
+Internationalization for French.
+ Thanks to Alain!
+
+Fixed the bug that crashes when open html file from Astro file manager.
+Fixed the bug that crashes when resume from sleep state.
+
+
+[2011/04/24 v.0.0.14α]
+自動保存の設定を追加
+自動インデントの設定を追加
+行間調整の設定を追加
+GMailの添付ファイルを開いた時にクラッシュする問題を修正
+SL4Aのエディタとして使用できる機能を追加
+
+[2011/04/25 v.0.0.15α]
+自動保存有効時に縦横切り替えするとクラッシュするバグを修正
+
+
+[2011/04/24 v.0.0.14α]
+added autosave option.
+added autoondent option.
+added line spacing option.
+fixed the bug that crashes by opening from GMail attached file.
+support for opening as SL4A Script editor.
+
+[2011/04/25 v.0.0.15α]
+fixed the bug that crashes when rotation with autosave.
+
+
+[2011/05/05 v.0.1.0]
+・Added a command to clear file history.
+・Added a option to show Tab/Linebreak.
+・Added a option to select Insert or Newfile when received "Share".
+・Added a option to capitalize the first of the sentence.
+・Added Polish string resource.
+  (Thanks to Adam Maciorowski!)
+・Added Chinese(cn/tw) string resource.
+  (Thanks to Chen Ma!)
+・fixed minor bugs.
+
+・Added a donation feature.
+  You can donate to the developer via Android Market.
+
+[2011/05/07 v.0.1.1]
+・Updated localize strings.
+・fixed minor bug.
+
+[2011/05/05 v.0.1.0]
+・履歴消去機能を追加
+・タブ／改行／全角スペース表示機能を追加
+・「共有」を受ける時に、挿入か新規作成を選択する設定を追加
+・文章の先頭を大文字にする設定を追加
+・ポーランド語リソースを追加
+  (Thanks to Adam Maciorowski!)
+・中国語リソースを追加
+  (Thanks to Chen Ma!)
+・細かいバグ修正
+
+・寄付機能を追加しました。
+  アプリ内からAndroid Market経由で作者に寄付できるようになりました。
+
+[2011/05/07 v.0.1.1]
+・全角スペースのレイアウト誤りを修正
+・文言リソースをアップデート
+
+
+[2011/05/14 v.0.1.2]
+・ロシア語リソースを追加
+  (Thanks to Anton Sadovnichenko.)
+・文言リソースをアップデート
+・フォントサイズ追加(9pt,11pt)
+・Windows1250追加(ただし自動検出非対応）
+
+寄付機能が有効になっています。
+ Android Market経由で作者に寄付が出来ます。
+
+
+[2011/05/14 v.0.1.2]
+・Added Polish string resources.
+  (Thanks to Anton Sadovnichenko.)
+・Updated strings resources.
+・added a font size (9pt,11pt)
+・added a support of Windows1250 ( but can't detect automatically )
+
+Donation feature is now available!
+ You can donate to the developer via Android Market!
+
+[2011/05/22 v.0.1.3]
+・置換機能追加(テスト中)
+・設定メニューの構成を変更
+・細かいバグ修正
+
+Android Market経由で作者に寄付が出来ます。
+継続してお使いの方は、寄付をお願いします。
+
+
+[2011/05/22 v.0.1.3]
+・Added "REPLACE" function. (experimental)
+・Restruct Preference Menu.
+・fixed minor bugs.
+
+You can donate to the developer via Android Market.
+Please doneate to support future development.
+
+
+[2011/05/29 v.0.1.4]
+・設定メニューの構成を変更
+・「アンドゥ」が出来ないバグを修正
+・「テキストを選択」メニューがAndroid3.0で動作しないバグを修正
+
+Android Market経由で作者に寄付が出来ます。
+継続してお使いの方は、寄付をお願いします。
+
+
+[2011/05/29 v.0.1.4]
+- Restructed Preference Menu.
+- fixed the bug "Undo" was disabled.
+- fixed the bug "Select Text" did nothing in Honeycomb.
+
+You can donate to the developer via Android Market.
+Please donate if you continue to use Jota.
+
+[2011/06/05 v.0.1.05]
+・「Delete」キーに対応(次文字削除)
+  ALT/FN + Delキー
+    ※入力設定-ショートカット設定-Del のチェックを有効にしてください。
+　Honeycomb + Bluetooth (テスト版)
+  Lifetouch Note (テスト版)
+
+
+Android Market経由で作者に寄付が出来ます。
+継続してお使いの方は、寄付をお願いします。
+
+
+[2011/06/05 v.0.1.05]
+- Supported Forward-Del funtion.
+  ALT/FN + DEL key
+   * You need to check [InputSettings]-[Customize shortcut]-[Del]
+  Honeycomb's Bluetooth keyboard (Experimental)
+
+
+You can donate to the developer via Android Market.
+Please donate if you continue to use Jota.
+
+[2011/06/11 v.0.1.06]
+・オランダ語リソースを追加
+  (Thanks to Jean Marc Lietaer - www.jmlietaer.com)
+・Dynabook AZでIME有効時にカーソルキーで範囲選択できない問題を修正
+
+Android Market経由で作者に寄付が出来ます。
+継続してお使いの方は、寄付をお願いします。
+
+
+[2011/06/11 v.0.1.06]
+- Added Dutch localization.
+  (Thanks to Jean Marc Lietaer - www.jmlietaer.com)
+- Fixed minor bugs.
+
+You can donate to the developer via Android Market.
+Please donate if you continue to use Jota.
+
+
+[2011/06/18 v.0.1.07]
+- ペルシャ語リソースを追加
+  (Thanks to Jalil Faalkhah http://phdi-co.com)
+
+  注意:JotaではRTL言語はサポートされません。
+
+- フォントサイズ追加 48,64,72,96
+- バグ修正
+
+Android Market経由で作者に寄付が出来ます。
+継続してお使いの方は、寄付をお願いします。
+
+
+[2011/06/18 v.0.1.07]
+- Added Persian localize.
+  (Thanks to Jalil Faalkhah http://phdi-co.com)
+
+  CAUTION: Jota doesn't support RTL Language today!)
+
+- Added font size 48,64,72,96.
+- Fixed minor bugs.
+
+You can donate to the developer via Android Market.
+Please donate if you continue to use Jota.
+
+
+[2011/06/26 v.0.1.08]
+- ACTION_EDIT intentへの対応を追加
+  (for Ghost Commander's edit command)
+
+Android Market経由で作者に寄付が出来ます。
+継続してお使いの方は、寄付をお願いします。
+
+[2011/06/26 v.0.1.08]
+- added support for ACTION_EDIT intent
+  (for Ghost Commander's edit command)
+
+You can donate to the developer via Android Market.
+Please donate if you continue to use Jota.
+
+
+[2011/07/03 v.0.1.09]
+- added "select all" to menu. (menu-L)
+- change textboxes of search/replace to jota's textview
+- fixed the issue alt-shortcut with ATOK/iWnn on IS01.
+- fixed the issue DesireZ FN-key didin't work.
+　Thanks for a patch by Matthias Gruenewald!
+- fixed the issue with co-working Tasker.
+　Thanks for a patch by Matthias Gruenewald!
+- updated polish resource. Thanks adam!
+  Thanks Adam!
+
+[2011/07/10 v.0.1.10]
+- Updated Russian resources.
+  Thanks Anton!
+
+You can donate to the developer via Android Market.
+Please donate if you continue to use Jota.
+
+[2011/07/03 v.0.1.09]
+・select-allをメニューに追加(menu-L)
+・検索/置換用のテキストボックスでショートカットが使えるように修正
+・DesireZのfn-keyが使えない問題に対応
+　Thanks for a patch by Matthias Gruenewald!
+・Taskerでファイル追跡が出来ない問題に対応
+　Thanks for a patch by Matthias Gruenewald!
+・IS01でATOKを使用する時のaltキーの挙動を修正
+・ポーランド語リソースを更新
+　Thanks Adam!
+
+[2011/07/10 v.0.1.10]
+・ロシア語リソースを更新
+  Thanks Anton!
+
+Android Market経由で作者に寄付が出来ます。
+継続してお使いの方は、寄付をお願いします。
+
+
+[2011/07/30 v.0.1.11]
+- improve the response of preference screen.
+- added an option to disable cursor blinking.
+- added an option to set orientation mode.
+
+You can donate to the developer via Android Market.
+Please donate if you continue to use Jota.
+
+[2011/07/30 v.0.1.11]
+- 設定画面のレスポンスを改善
+- カーソル点滅の設定を追加
+- 画面の方向の設定を追加
+
+Android Market経由で作者に寄付が出来ます。
+継続してお使いの方は、寄付をお願いします。
+
+

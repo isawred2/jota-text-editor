@@ -1,0 +1,25 @@
+cp Android.mk.release Android.mk
+
+perl -pi -e 's/android:debuggable=\"[^\"]*\"/android:debuggable=\"false\"/' AndroidManifest.xml
+perl -pi -e 's/app_name[^\"]*/app_name/' AndroidManifest.xml
+
+grep versionName AndroidManifest.xml
+grep versionCode AndroidManifest.xml
+grep debuggable AndroidManifest.xml
+
+touch AndroidManifest.xml
+. $MYDROID/build/envsetup.sh
+mm
+rm JotaTextEditor-unaligned.apk
+rm JotaTextEditor.apk
+
+cp $MYDROID/out/target/product/generic/obj/APPS/jota-text-editor_intermediates/package.apk.unsigned ./JotaTextEditor-unaligned.apk
+jarsigner -keystore ../sign/mysign  JotaTextEditor-unaligned.apk "aquamarine networks." < ../sign/password
+$MYDROID/prebuilt/sdk/tools/linux/zipalign -v 4 JotaTextEditor-unaligned.apk JotaTextEditor.apk
+rm JotaTextEditor-unaligned.apk
+
+cp Android.mk.debug Android.mk
+perl -pi -e 's/android:debuggable=\"[^\"]*\"/android:debuggable=\"true\"/' AndroidManifest.xml
+perl -pi -e 's/app_name[^\"]*/app_name_debug/' AndroidManifest.xml
+
+
