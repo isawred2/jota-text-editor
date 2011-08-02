@@ -6755,7 +6755,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
 
     private void makeBlink() {
 // Jota Text Editor
-        if (!mCursorVisible || !isTextEditable()) {
+        if (!mCursorVisible || !(mText instanceof Editable)  || !isEnabled() ) {
             if (mBlink != null) {
                 mBlink.removeCallbacks(mBlink);
             }
@@ -7177,7 +7177,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
      * @return True iff this TextView contains a text that can be edited.
      */
     private boolean isTextEditable() {
-        return mText instanceof Editable /*&& onCheckIsTextEditor()*/ && isEnabled();
+        return mText instanceof Editable && onCheckIsTextEditor() && isEnabled();
     }
 
     /**

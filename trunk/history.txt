@@ -490,3 +490,17 @@ Android Market経由で作者に寄付が出来ます。
 継続してお使いの方は、寄付をお願いします。
 
 
+[2011/08/03 v.0.1.12]
+- fixed the bug that IME pops up when viewr mode. (enbuged at 0.1.11)
+- changed CTRL-KEY shortcut processed after IME.(from Jota+ 0.1.11+1)
+
+You can donate to the developer via Android Market.
+Please donate if you continue to use Jota.
+
+[2011/08/03 v.0.1.12]
+- 閲覧モードでIMEが表示されるバグを修正(0.1.11で混入)
+- CTRLキー併用ショートカットをIMEの後で処理するように変更。(LifeTouch NOTEのATOKで、CTRL-Hのキーバインドを共存させる)(from Jota+ 0.1.11+1)
+
+Android Market経由で作者に寄付が出来ます。
+継続してお使いの方は、寄付をお願いします。
+

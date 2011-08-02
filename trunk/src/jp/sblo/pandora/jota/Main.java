@@ -2017,15 +2017,16 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
         mEditor.setTypeface(mSettings.fontface);
         mEditor.setTextSize(mSettings.fontsize);
 
-        int metakey = (mSettings.shortcutaltleft ? KeyEvent.META_ALT_LEFT_ON : 0)
-        | (mSettings.shortcutaltright ? KeyEvent.META_ALT_RIGHT_ON : 0)
-        | (mSettings.shortcutctrl ? 8 : 0) // ctrl key on Dynabook AZ
+        int altkey = (mSettings.shortcutaltleft ? KeyEvent.META_ALT_LEFT_ON : 0)
+        | (mSettings.shortcutaltright ? KeyEvent.META_ALT_RIGHT_ON : 0);
+
+        int ctrlkey =  (mSettings.shortcutctrl ? 8 : 0) // ctrl key on Dynabook AZ
         | 0x1000                            // ctrl key on Honeycomb and Lifetouch Note;
         ;
 
-        mEditor.setShortcutMetaKey( metakey );
-        mEdtSearchWord.setShortcutMetaKey(metakey);
-        mEdtReplaceWord.setShortcutMetaKey(metakey);
+        mEditor.setShortcutMetaKey(altkey,ctrlkey);
+        mEdtSearchWord.setShortcutMetaKey(altkey,ctrlkey);
+        mEdtReplaceWord.setShortcutMetaKey(altkey,ctrlkey);
 
         mEditor.setHorizontallyScrolling(!mSettings.wordwrap);
 

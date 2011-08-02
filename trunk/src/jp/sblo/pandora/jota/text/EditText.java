@@ -39,7 +39,8 @@ public class EditText extends TextView{
 
     private JotaTextWatcher mTextWatcher;
     private WeakReference<ShortcutListener> mShortcutListener;
-    private int mShortcutMetaKey = 0;
+    private int mShortcutCtrlKey = 0;
+    private int mShortcutAltKey = 0;
     private HashMap<Integer,ShortcutSettings> mShortcuts;;
     private int mDpadCenterFunction = FUNCTION_CENTERING;
 
@@ -150,43 +151,49 @@ public class EditText extends TextView{
     }
     @Override
     public boolean dispatchKeyEventPreIme(KeyEvent event) {
-//        Log.e( "dispatch=","keycode="+event.getKeyCode() );
-
         int keycode = event.getKeyCode();
         // ALT + KEYDOWN
         int meta = (int)event.getMetaState();
-//        int altstate = TextKeyListener.getMetaState(cs,KeyEvent.META_ALT_ON);
-        boolean alt = (meta & mShortcutMetaKey)!=0 ; // || (altstate!=0);      // one of meta keies is pressed , or , Alt key is locked
+        boolean alt = (meta & mShortcutAltKey)!=0 ; // || (altstate!=0);      // one of meta keies is pressed , or , Alt key is locked
 
         if ( alt && event.getAction() == KeyEvent.ACTION_DOWN ){
             if (doShortcut(keycode)){
-//                if ( altstate == 1 ){
-//                    TextKeyListener.clearMetaKeyState(cs,KeyEvent.META_ALT_ON);
-//                }
-                if ( (meta & KeyEvent.META_ALT_LEFT_ON )!=0 || (meta & KeyEvent.META_ALT_RIGHT_ON )!=0 )
-                {
-                    InputMethodManager imm = InputMethodManager.peekInstance();
-                    if (imm != null){
-                        // for IS01 w/iWnn
-                        // iWnn eats ALT key so we needs to reset ime.
-                        try {
-                            Class<?> c = imm.getClass();
-                            Field f = c.getDeclaredField("mCurId");
-                            f.setAccessible(true);
-                            String immId = (String)f.get(imm);
-                            if ( "jp.co.omronsoft.iwnnime/.iWnnIME".equals(immId) ){
-                                imm.restartInput(this);
-                            }
-                        } catch (Exception e) {
+                InputMethodManager imm = InputMethodManager.peekInstance();
+                if (imm != null){
+                    // for IS01 w/iWnn
+                    // iWnn eats ALT key so we needs to reset ime.
+                    try {
+                        Class<?> c = imm.getClass();
+                        Field f = c.getDeclaredField("mCurId");
+                        f.setAccessible(true);
+                        String immId = (String)f.get(imm);
+                        if ( "jp.co.omronsoft.iwnnime/.iWnnIME".equals(immId) ){
+                            imm.restartInput(this);
                         }
+                    } catch (Exception e) {
                     }
-                    TextKeyListener.resetMetaState((Spannable)getEditableText());
                 }
+                TextKeyListener.resetMetaState((Spannable)getEditableText());
                 return true;
             }
-
         }
         return super.dispatchKeyEventPreIme(event);
+    }
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+
+        int keycode = event.getKeyCode();
+        // CTRL + KEYDOWN
+        int meta = (int)event.getMetaState();
+        boolean alt = (meta & mShortcutCtrlKey)!=0 ; // one of meta keies is pressed
+
+        if ( alt && event.getAction() == KeyEvent.ACTION_DOWN ){
+            if (doShortcut(keycode)){
+                return true;
+            }
+        }
+        return super.dispatchKeyEvent(event);
     }
 
     public boolean doFunction( int function ){
@@ -318,8 +325,9 @@ public class EditText extends TextView{
         boolean onCommand(int keycode);
     }
 
-    public void setShortcutMetaKey(int metakey) {
-        this.mShortcutMetaKey = metakey;
+    public void setShortcutMetaKey(int altkey,int ctrlkey) {
+        mShortcutAltKey = altkey;
+        mShortcutCtrlKey = ctrlkey;
     }
 
 
