@@ -504,3 +504,20 @@ Please donate if you continue to use Jota.
 Android Market経由で作者に寄付が出来ます。
 継続してお使いの方は、寄付をお願いします。
 
+
+[2011/08/13 v.0.1.13]
+- fixed the bug of orientation mode.
+- Updated Russian resources.
+  Thanks Anton!
+
+You can donate to the developer via Android Market.
+Please donate if you continue to use Jota.
+
+[2011/08/13 v.0.1.13]
+- 画面方向固定機能のバグを修正
+- ロシア語リソースを更新
+  Thanks Anton!
+
+Android Market経由で作者に寄付が出来ます。
+継続してお使いの方は、寄付をお願いします。
+

@@ -45,6 +45,7 @@ import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -55,15 +56,12 @@ import android.view.View.OnKeyListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 
 public class Main extends Activity implements JotaDocumentWatcher, ShortcutListener,
         OnFileLoadListener {
@@ -106,6 +104,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
     private String mReplaceWord;
     private boolean mChangeCancel = false;
     private boolean mSharedPreferenceChanged=false;
+    private static  boolean mRebootingForConfigChange = false;
 
     class InstanceState {
         String filename;
@@ -123,8 +122,24 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        applyBootSetting();
         super.onCreate(savedInstanceState);
+        applyBootSetting();
+        if (mBootSettings.screenOrientation.equals(SettingsActivity.ORI_AUTO)){
+            // Do nothing
+        }else if (mBootSettings.screenOrientation.equals(SettingsActivity.ORI_PORTRAIT)){
+            setRequestedOrientation( ActivityInfo.SCREEN_ORIENTATION_PORTRAIT );
+            if ( getResources().getConfiguration().orientation != Configuration.ORIENTATION_PORTRAIT ){
+                mRebootingForConfigChange = true;
+                return;
+            }
+        }else if (mBootSettings.screenOrientation.equals(SettingsActivity.ORI_LANDSCAPE)){
+            setRequestedOrientation( ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE );
+            if ( getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE ){
+                mRebootingForConfigChange = true;
+                return;
+            }
+        }
+
         setContentView(R.layout.textviewer);
 
         PreferenceManager.getDefaultSharedPreferences(this)
@@ -264,7 +279,8 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
 
         mProcNew.run();
 
-        if (savedInstanceState == null) {
+        if (mRebootingForConfigChange || savedInstanceState == null) {
+            mRebootingForConfigChange = false;
             Intent it = getIntent();
             if (it != null &&
                     (Intent.ACTION_VIEW.equals(it.getAction())
@@ -441,6 +457,10 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        if ( mRebootingForConfigChange ){;
+            return;
+        }
+
         if (mEditor.isChanged() && mInstanceState.filename != null & mSettings.autosave) {
             save();
             mEditor.setChanged(false);
@@ -2088,13 +2108,6 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
             setTheme(R.style.Theme_NoTitleBar);
         }
 
-        if (mBootSettings.screenOrientation.equals(SettingsActivity.ORI_AUTO)){
-            // Do nothing
-        }else if (mBootSettings.screenOrientation.equals(SettingsActivity.ORI_PORTRAIT)){
-            setRequestedOrientation( ActivityInfo.SCREEN_ORIENTATION_PORTRAIT );
-        }else if (mBootSettings.screenOrientation.equals(SettingsActivity.ORI_LANDSCAPE)){
-            setRequestedOrientation( ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE );
-        }
     }
 
     @Override
