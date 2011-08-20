@@ -188,8 +188,12 @@ public class EditText extends TextView{
         int meta = (int)event.getMetaState();
         boolean alt = (meta & mShortcutCtrlKey)!=0 ; // one of meta keies is pressed
 
-        if ( alt && event.getAction() == KeyEvent.ACTION_DOWN ){
-            if (doShortcut(keycode)){
+        if ( alt ){
+            if (event.getAction() == KeyEvent.ACTION_DOWN ){
+                if (doShortcut(keycode)){
+                    return true;
+                }
+            }else if (event.getAction() == KeyEvent.ACTION_UP){
                 return true;
             }
         }

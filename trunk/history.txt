@@ -521,3 +521,22 @@ Please donate if you continue to use Jota.
 Android Market経由で作者に寄付が出来ます。
 継続してお使いの方は、寄付をお願いします。
 
+[2011/08/20 v.0.1.14]
+fixed the bug of "hide title bar" option.
+fixed the bug that CTRL-V pastes twice. (Honeycomb)
+changes that BACK key handles when Keyup event.
+add support for PageUp/Down/Home/End key of Honeycomb.
+localize for Korean. (Thanks Noah!)
+
+You can donate to the developer via Android Market.
+Please donate if you continue to use Jota.
+
+[2011/08/20 v.0.1.14]
+「タイトルバーを隠す」設定が動作しないバグを修正
+HoneycombのキーボードでCTRL-Vを押すと、二回ペーストされるバグを修正
+バックキーを押された時、KEYUPで処理をするように変更
+HoneycombのPageUp/Down/Home/Endキーに対応
+韓国語のローカライズに対応(Thanks Noah!)
+
+Android Market経由で作者に寄付が出来ます。
+継続してお使いの方は、寄付をお願いします。

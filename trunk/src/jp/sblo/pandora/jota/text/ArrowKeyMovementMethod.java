@@ -140,15 +140,39 @@ implements MovementMethod
         }
     }
 
+    private boolean movehome(TextView widget, Spannable buffer) {
+        boolean cap = (MetaKeyKeyListener.getMetaState(buffer,
+                        KeyEvent.META_SHIFT_ON) == 1) ||
+                      (MetaKeyKeyListener.getMetaState(buffer,
+                        MetaKeyKeyListener.META_SELECTING) != 0);
+        Layout layout = widget.getLayout();
+
+        if (cap) {
+            return Selection.extendToLeftEdge(buffer, layout);
+        } else {
+            return Selection.moveToLeftEdge(buffer, layout);
+        }
+    }
+
+    private boolean moveend(TextView widget, Spannable buffer) {
+        boolean cap = (MetaKeyKeyListener.getMetaState(buffer,
+                        KeyEvent.META_SHIFT_ON) == 1) ||
+                      (MetaKeyKeyListener.getMetaState(buffer,
+                        MetaKeyKeyListener.META_SELECTING) != 0);
+        Layout layout = widget.getLayout();
+
+        if (cap) {
+            return Selection.extendToRightEdge(buffer, layout);
+        } else {
+            return Selection.moveToRightEdge(buffer, layout);
+        }
+    }
+
     private boolean volup(TextView widget, Spannable buffer) {
         boolean cap = (MetaKeyKeyListener.getMetaState(buffer,
                         KeyEvent.META_SHIFT_ON) == 1) ||
                       (MetaKeyKeyListener.getMetaState(buffer,
                         MetaKeyKeyListener.META_SELECTING) != 0);
-        boolean alt = MetaKeyKeyListener.getMetaState(buffer,
-                        KeyEvent.META_ALT_ON) == 1;
-        Layout layout = widget.getLayout();
-
         if (cap) {
             widget.movePage(true,true);
             return true;
@@ -163,10 +187,6 @@ implements MovementMethod
                         KeyEvent.META_SHIFT_ON) == 1) ||
                       (MetaKeyKeyListener.getMetaState(buffer,
                         MetaKeyKeyListener.META_SELECTING) != 0);
-        boolean alt = MetaKeyKeyListener.getMetaState(buffer,
-                        KeyEvent.META_ALT_ON) == 1;
-        Layout layout = widget.getLayout();
-
         if (cap) {
             widget.movePage(false,true);
             return true;
@@ -247,10 +267,17 @@ implements MovementMethod
                 handled |= volup(widget, buffer);
             }
             break;
-        case KeyEvent.KEYCODE_VOLUME_DOWN:
-            if ( sUseVolumeKey ){
-                handled |= voldown(widget, buffer);
-            }
+        case 92:    // KEYCODE.PAGEUP
+            handled |= volup(widget, buffer);
+            break;
+        case 93:    // KEYCODE_PAGE_DOWN
+            handled |= voldown(widget, buffer);
+            break;
+        case 122:    // KEYCODE.MOVE_HOME
+            handled |= movehome(widget, buffer);
+            break;
+        case 123:    // KEYCODE_MOVE_END
+            handled |= moveend(widget, buffer);
             break;
         }
 
