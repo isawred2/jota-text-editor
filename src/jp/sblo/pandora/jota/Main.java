@@ -122,8 +122,8 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         applyBootSetting();
+        super.onCreate(savedInstanceState);
         if (mBootSettings.screenOrientation.equals(SettingsActivity.ORI_AUTO)){
             // Do nothing
         }else if (mBootSettings.screenOrientation.equals(SettingsActivity.ORI_PORTRAIT)){
@@ -657,16 +657,6 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (mLlSearch.getVisibility() == View.VISIBLE) {
-                mBtnClose.performClick();
-                return true;
-            }
-            if (confirmSave(mProcQuit)) {
-                return true;
-            }
-        }
-
         return super.onKeyDown(keyCode, event);
     }
 
@@ -675,6 +665,15 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
         if (keyCode == KeyEvent.KEYCODE_SEARCH) {
             mProcSearch.run();
             return true;
+        }
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (mLlSearch.getVisibility() == View.VISIBLE) {
+                mBtnClose.performClick();
+                return true;
+            }
+            if (confirmSave(mProcQuit)) {
+                return true;
+            }
         }
         return super.onKeyUp(keyCode, event);
     }
