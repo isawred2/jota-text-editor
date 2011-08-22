@@ -25,7 +25,6 @@ import android.text.Spannable;
 import android.text.method.MetaKeyKeyListener;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.ViewConfiguration;
 
 // XXX this doesn't extend MetaKeyKeyListener because the signatures
@@ -238,49 +237,51 @@ implements MovementMethod
     private boolean executeDown(TextView widget, Spannable buffer, int keyCode) {
         boolean handled = false;
 
-        switch (keyCode) {
-        case KeyEvent.KEYCODE_DPAD_UP:
-            handled |= up(widget, buffer);
-            break;
-
-        case KeyEvent.KEYCODE_DPAD_DOWN:
-            handled |= down(widget, buffer);
-            break;
-
-        case KeyEvent.KEYCODE_DPAD_LEFT:
-            handled |= left(widget, buffer);
-            break;
-
-        case KeyEvent.KEYCODE_DPAD_RIGHT:
-            handled |= right(widget, buffer);
-            break;
-
-        case KeyEvent.KEYCODE_DPAD_CENTER:
-            if (MetaKeyKeyListener.getMetaState(buffer, MetaKeyKeyListener.META_SELECTING) != 0) {
-                if (widget.showContextMenu()) {
-                    handled = true;
-                }
-            }
-            break;
-        case KeyEvent.KEYCODE_VOLUME_UP:
-            if ( sUseVolumeKey ){
-                handled |= volup(widget, buffer);
-            }
-            break;
-        case 92:    // KEYCODE.PAGEUP
+        if ( keyCode == KEYCODE_PAGE_UP ){
             handled |= volup(widget, buffer);
-            break;
-        case 93:    // KEYCODE_PAGE_DOWN
+        }else if ( keyCode == KEYCODE_PAGE_DOWN){
             handled |= voldown(widget, buffer);
-            break;
-        case 122:    // KEYCODE.MOVE_HOME
+        }else if ( keyCode == KEYCODE_MOVE_HOME){
             handled |= movehome(widget, buffer);
-            break;
-        case 123:    // KEYCODE_MOVE_END
+        }else if ( keyCode == KEYCODE_MOVE_END){
             handled |= moveend(widget, buffer);
-            break;
-        }
+        }else{
+            switch (keyCode) {
+            case KeyEvent.KEYCODE_DPAD_UP:
+                handled |= up(widget, buffer);
+                break;
 
+            case KeyEvent.KEYCODE_DPAD_DOWN:
+                handled |= down(widget, buffer);
+                break;
+
+            case KeyEvent.KEYCODE_DPAD_LEFT:
+                handled |= left(widget, buffer);
+                break;
+
+            case KeyEvent.KEYCODE_DPAD_RIGHT:
+                handled |= right(widget, buffer);
+                break;
+
+            case KeyEvent.KEYCODE_DPAD_CENTER:
+                if (MetaKeyKeyListener.getMetaState(buffer, MetaKeyKeyListener.META_SELECTING) != 0) {
+                    if (widget.showContextMenu()) {
+                        handled = true;
+                    }
+                }
+                break;
+            case KeyEvent.KEYCODE_VOLUME_UP:
+                if ( sUseVolumeKey ){
+                    handled |= volup(widget, buffer);
+                }
+                break;
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+                if ( sUseVolumeKey ){
+                    handled |= voldown(widget, buffer);
+                }
+                break;
+            }
+        }
         if (handled) {
             MetaKeyKeyListener.adjustMetaAfterKeypress(buffer);
             resetLockedMeta(buffer);
@@ -679,15 +680,27 @@ implements MovementMethod
     {
         sUseVolumeKey = useVolumeKey;
     }
-	// Jota Text Editor
+    // Jota Text Editor
     public static void setLineNumberWidth( int lineNumberWidth )
     {
         sLineNumberWidth = lineNumberWidth;
     }
+    // Jota Text Editor
+    public static void setHomeEndKeycode( int home , int end )
+    {
+        KEYCODE_MOVE_HOME = home;
+        KEYCODE_MOVE_END = end;
+    }
+
 
     private static int sLineNumberWidth;	// Jota Text Editor
     private static boolean sUseVolumeKey = true;	// Jota Text Editor
     private static Method sMethod;
     private static final Object LAST_TAP_DOWN = new Object();
     private static ArrowKeyMovementMethod sInstance;
+
+    private static int KEYCODE_MOVE_HOME = 122; // Jota Text Editor
+    private static int KEYCODE_MOVE_END = 123;  // Jota Text Editor
+    private static int KEYCODE_PAGE_UP = 92;    // Jota Text Editor
+    private static int KEYCODE_PAGE_DOWN = 93;  // Jota Text Editor
 }
