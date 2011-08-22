@@ -104,6 +104,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
     private String mReplaceWord;
     private boolean mChangeCancel = false;
     private boolean mSharedPreferenceChanged=false;
+    private boolean mBackkeyDown = false;
     private static  boolean mRebootingForConfigChange = false;
 
     class InstanceState {
@@ -657,6 +658,11 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if ( event.getRepeatCount() == 0){
+                mBackkeyDown = true;
+            }
+        }
         return super.onKeyDown(keyCode, event);
     }
 
@@ -666,7 +672,8 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
             mProcSearch.run();
             return true;
         }
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && mBackkeyDown) {
+            mBackkeyDown = false;
             if (mLlSearch.getVisibility() == View.VISIBLE) {
                 mBtnClose.performClick();
                 return true;
@@ -2081,7 +2088,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
         } else if (mSettings.TrackballButton.equals(SettingsActivity.TB_CONTEXTMENU)) {
             mEditor.setDpadCenterFunction(jp.sblo.pandora.jota.text.EditText.FUNCTION_CONTEXTMENU);
         } else {
-            mEditor.setDpadCenterFunction(jp.sblo.pandora.jota.text.EditText.FUNCTION_CENTERING);
+            mEditor.setDpadCenterFunction(jp.sblo.pandora.jota.text.EditText.FUNCTION_NONE);
         }
         mEditor.setShowLineNumbers(mSettings.showLineNumbers);
         mEditor.setAutoIndent(mSettings.autoIndent);
@@ -2090,9 +2097,9 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
 
         mEditor.setNavigationDevice( mSettings.shortcutctrl || (getResources().getConfiguration().navigation != Configuration.NAVIGATION_NONAV && Build.VERSION.SDK_INT < 11) );
         if ( mSettings.shortcutctrlltn ){
-            mEditor.setForwardDelKeycode(111);
-            mEdtSearchWord.setForwardDelKeycode(111);
-            mEdtReplaceWord.setForwardDelKeycode(111);
+            mEditor.setKeycodes(111,112,113);
+            mEdtSearchWord.setKeycodes(111,112,113);
+            mEdtReplaceWord.setKeycodes(111,112,113);
         }
         mEditor.setDontUseSoftkeyWithHardkey( mSettings.specialkey_desirez );
         mEdtSearchWord.setDontUseSoftkeyWithHardkey( mSettings.specialkey_desirez );

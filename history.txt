@@ -540,3 +540,21 @@ HoneycombのPageUp/Down/Home/Endキーに対応
 
 Android Market経由で作者に寄付が出来ます。
 継続してお使いの方は、寄付をお願いします。
+
+
+[2011/08/22 v.0.1.15]
+fixed the bug of BACK key handling.
+fixed the bug of 2-finger scroll of TF101.
+add support for HOME/END key of Lifetouch NOTE.
+
+You can donate to the developer via Android Market.
+Please donate if you continue to use Jota.
+
+[2011/08/22 v.0.1.15]
+バックキーの処理を修正
+TF101の二本指スクロールの処理を修正
+Lifetouch NOTEのHOME/ENDキーに対応
+
+Android Market経由で作者に寄付が出来ます。
+継続してお使いの方は、寄付をお願いします。
+

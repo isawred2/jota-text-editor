@@ -117,6 +117,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 
     public static final String DEFAULT_WRAP_WIDTH_CHAR = "m";
 
+    public static final String TB_NOTHING = "NOTHING";
     public static final String TB_CENTERING = "CENTERING";
     public static final String TB_ENTER = "ENTER";
     public static final String TB_CONTEXTMENU = "CONTEXTMENU";
@@ -577,8 +578,8 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                     final ListPreference pr = new ListPreference(this);
                     pr.setKey( KEY_TRACKBALL_BUTTON );
                     pr.setTitle(R.string.label_trackball_button);
-                    pr.setEntries(new String[]{ getString(R.string.trackball_centering) , getString(R.string.trackball_enter) , getString(R.string.trackball_contextmenu) } );
-                    pr.setEntryValues( new CharSequence[] { TB_CENTERING , TB_ENTER , TB_CONTEXTMENU } );
+                    pr.setEntries(new String[]{ getString(R.string.trackball_do_nothing) , getString(R.string.trackball_centering) , getString(R.string.trackball_enter) , getString(R.string.trackball_contextmenu) } );
+                    pr.setEntryValues( new CharSequence[] { TB_NOTHING , TB_CENTERING , TB_ENTER , TB_CONTEXTMENU } );
                     category.addPreference(pr);
                     mPrefTrackball = pr;
                 }
@@ -1497,6 +1498,14 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                 if ( lastversion < 31 ){
                     editor.putBoolean(KEY_BLINK_CURSOR, true );
                     editor.putString(KEY_ORIENTATION, ORI_AUTO );
+                }
+                if ( lastversion < 35 ){
+                    if ( Build.MODEL.equals("Transformer TF101")){
+                        editor.putString(KEY_TRACKBALL_BUTTON, TB_NOTHING);
+                    }
+                    if ( Build.MODEL.equals("LT-NA7")){
+                        editor.putBoolean(KEY_SHORTCUT_CTRL_LTN, true);
+                    }
                 }
                 editor.commit();
                 SettingsShortcutActivity.writeDefaultShortcuts(ctx);

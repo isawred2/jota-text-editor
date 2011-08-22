@@ -364,9 +364,10 @@ public class EditText extends TextView{
     {
         JotaTextKeyListener.setAutoIndent(autoIndent);
     }
-    public void setForwardDelKeycode( int keycode )
+    public void setKeycodes( int forwarddel , int home , int end )
     {
-        JotaTextKeyListener.setForwardDelKeycode(keycode);
+        JotaTextKeyListener.setForwardDelKeycode(forwarddel);
+        ArrowKeyMovementMethod.setHomeEndKeycode(home, end);
     }
 
 }
