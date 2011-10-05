@@ -332,6 +332,7 @@ public class EditText extends TextView{
     public void setShortcutMetaKey(int altkey,int ctrlkey) {
         mShortcutAltKey = altkey;
         mShortcutCtrlKey = ctrlkey;
+        ArrowKeyMovementMethod.setCtrlKey(ctrlkey);
     }
 
 

@@ -139,31 +139,55 @@ implements MovementMethod
         }
     }
 
-    private boolean movehome(TextView widget, Spannable buffer) {
+    private boolean movehome(TextView widget, Spannable buffer, KeyEvent event) {
         boolean cap = (MetaKeyKeyListener.getMetaState(buffer,
                         KeyEvent.META_SHIFT_ON) == 1) ||
                       (MetaKeyKeyListener.getMetaState(buffer,
                         MetaKeyKeyListener.META_SELECTING) != 0);
         Layout layout = widget.getLayout();
 
-        if (cap) {
-            return Selection.extendToLeftEdge(buffer, layout);
-        } else {
-            return Selection.moveToLeftEdge(buffer, layout);
+        boolean ctrl = (event.getMetaState() & mShortcutCtrlKey)!=0;
+
+        if ( ctrl ){
+            if (cap) {
+                Selection.extendSelection(buffer, 0);
+                return true;
+            } else {
+                Selection.setSelection(buffer, 0);
+                return true;
+            }
+        }else{
+            if (cap) {
+                return Selection.extendToLeftEdge(buffer, layout);
+            } else {
+                return Selection.moveToLeftEdge(buffer, layout);
+            }
         }
     }
 
-    private boolean moveend(TextView widget, Spannable buffer) {
+    private boolean moveend(TextView widget, Spannable buffer, KeyEvent event) {
         boolean cap = (MetaKeyKeyListener.getMetaState(buffer,
                         KeyEvent.META_SHIFT_ON) == 1) ||
                       (MetaKeyKeyListener.getMetaState(buffer,
                         MetaKeyKeyListener.META_SELECTING) != 0);
         Layout layout = widget.getLayout();
 
-        if (cap) {
-            return Selection.extendToRightEdge(buffer, layout);
-        } else {
-            return Selection.moveToRightEdge(buffer, layout);
+        boolean ctrl = (event.getMetaState() & mShortcutCtrlKey)!=0;
+
+        if ( ctrl ){
+            if (cap) {
+                Selection.extendSelection(buffer, buffer.length());
+                return true;
+            } else {
+                Selection.setSelection(buffer, buffer.length());
+                return true;
+            }
+        }else{
+            if (cap) {
+                return Selection.extendToRightEdge(buffer, layout);
+            } else {
+                return Selection.moveToRightEdge(buffer, layout);
+            }
         }
     }
 
@@ -225,7 +249,7 @@ implements MovementMethod
     }
 
     public boolean onKeyDown(TextView widget, Spannable buffer, int keyCode, KeyEvent event) {
-        if (executeDown(widget, buffer, keyCode)) {
+        if (executeDown(widget, buffer, keyCode,event)) {
             MetaKeyKeyListener.adjustMetaAfterKeypress(buffer);
             resetLockedMeta(buffer);
             return true;
@@ -234,7 +258,7 @@ implements MovementMethod
         return false;
     }
 
-    private boolean executeDown(TextView widget, Spannable buffer, int keyCode) {
+    private boolean executeDown(TextView widget, Spannable buffer, int keyCode , KeyEvent event) {
         boolean handled = false;
 
         if ( keyCode == KEYCODE_PAGE_UP ){
@@ -242,9 +266,9 @@ implements MovementMethod
         }else if ( keyCode == KEYCODE_PAGE_DOWN){
             handled |= voldown(widget, buffer);
         }else if ( keyCode == KEYCODE_MOVE_HOME){
-            handled |= movehome(widget, buffer);
+            handled |= movehome(widget, buffer ,event);
         }else if ( keyCode == KEYCODE_MOVE_END){
-            handled |= moveend(widget, buffer);
+            handled |= moveend(widget, buffer , event);
         }else{
             switch (keyCode) {
             case KeyEvent.KEYCODE_DPAD_UP:
@@ -313,7 +337,7 @@ implements MovementMethod
             int repeat = event.getRepeatCount();
             boolean handled = false;
             while ((--repeat) > 0) {
-                handled |= executeDown(view, text, code);
+                handled |= executeDown(view, text, code,event);
             }
             return handled;
         }
@@ -691,6 +715,10 @@ implements MovementMethod
         KEYCODE_MOVE_HOME = home;
         KEYCODE_MOVE_END = end;
     }
+    // Jota Text Editor
+    public static void setCtrlKey(int ctrlkey) {
+        mShortcutCtrlKey = ctrlkey;
+    }
 
 
     private static int sLineNumberWidth;	// Jota Text Editor
@@ -703,4 +731,5 @@ implements MovementMethod
     private static int KEYCODE_MOVE_END = 123;  // Jota Text Editor
     private static int KEYCODE_PAGE_UP = 92;    // Jota Text Editor
     private static int KEYCODE_PAGE_DOWN = 93;  // Jota Text Editor
+    private static int mShortcutCtrlKey = 93;  // Jota Text Editor
 }
