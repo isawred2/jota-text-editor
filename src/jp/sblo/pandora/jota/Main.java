@@ -340,16 +340,16 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
                 }
             } else if (it != null && Intent.ACTION_SEND.equals(it.getAction())) {
                 Bundle extras = it.getExtras();
-                String text = extras.getString(Intent.EXTRA_TEXT);
+                String text = extras.getCharSequence(Intent.EXTRA_TEXT).toString();
                 if (text != null) {
                     mEditor.setText(text);
                 }
 
             } else if (it != null && ACTION_EDIT_SCRIPT.equals(it.getAction())) {
                 Bundle extras = it.getExtras();
-                String path = extras.getString(EXTRA_SCRIPT_PATH);
+                String path = extras.getCharSequence(EXTRA_SCRIPT_PATH).toString();
 
-                String contents = getIntent().getStringExtra(EXTRA_SCRIPT_CONTENT);
+                String contents = extras.getCharSequence(EXTRA_SCRIPT_CONTENT).toString();
                 if (contents != null) {
                     mEditor.setText(contents);
                 } else {
@@ -568,7 +568,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
 
         } else if (intent != null && Intent.ACTION_SEND.equals(intent.getAction())) {
             Bundle extras = intent.getExtras();
-            String inserttext = extras.getString(Intent.EXTRA_TEXT);
+            String inserttext = extras.getCharSequence(Intent.EXTRA_TEXT).toString();
             if (inserttext != null) {
                 if (mSettings.actionShare.equals(SettingsActivity.AS_INSERT)) {
                     Editable text = mEditor.getText();
@@ -587,9 +587,9 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
             }
         } else if (intent != null && ACTION_EDIT_SCRIPT.equals(intent.getAction())) {
             Bundle extras = intent.getExtras();
-            mNewFilename = extras.getString(EXTRA_SCRIPT_PATH);
+            mNewFilename = extras.getCharSequence(EXTRA_SCRIPT_PATH).toString();
 
-            String contents = getIntent().getStringExtra(EXTRA_SCRIPT_CONTENT);
+            String contents = extras.getCharSequence(EXTRA_SCRIPT_CONTENT).toString();
             if (contents != null) {
                 mEditor.setText(contents);
             } else {
