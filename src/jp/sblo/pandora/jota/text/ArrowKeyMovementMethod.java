@@ -731,5 +731,5 @@ implements MovementMethod
     private static int KEYCODE_MOVE_END = 123;  // Jota Text Editor
     private static int KEYCODE_PAGE_UP = 92;    // Jota Text Editor
     private static int KEYCODE_PAGE_DOWN = 93;  // Jota Text Editor
-    private static int mShortcutCtrlKey = 93;  // Jota Text Editor
+    private static int mShortcutCtrlKey = 0x1000;  // Jota Text Editor
 }
