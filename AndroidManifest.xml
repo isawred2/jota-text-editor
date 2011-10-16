@@ -3,8 +3,8 @@
 
       package="jp.sblo.pandora.jota"
 
-      android:versionCode="36"
-      android:versionName="0.1.16"
+      android:versionCode="37"
+      android:versionName="0.1.17"
       android:installLocation="auto"
 >
     <application android:icon="@drawable/icon"

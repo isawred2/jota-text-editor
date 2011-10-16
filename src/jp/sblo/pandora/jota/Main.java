@@ -679,6 +679,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if ( event.getRepeatCount() == 0){
                 mBackkeyDown = true;
+                return true;
             }
         }
         return super.onKeyDown(keyCode, event);
