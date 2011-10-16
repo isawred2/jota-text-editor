@@ -1,8 +1,8 @@
 
 package jp.sblo.pandora.jota;
 
-import java.io.File;
 import java.util.ArrayList;
+import java.io.File;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -123,32 +123,44 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
+//        if ( savedInstanceState == null ){
+//            Log.d("=============>", "onCreate" );
+//        }else{
+//            Log.d("=============>", "onCreate" + savedInstanceState.toString());
+//        }
+//
         applyBootSetting();
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.textviewer);
+
+        mEditor = (jp.sblo.pandora.jota.text.EditText)findViewById(R.id.textedit);
+//        Log.d("=============>", "onCreate created mEditor" );
+
         if (mBootSettings.screenOrientation.equals(SettingsActivity.ORI_AUTO)){
             // Do nothing
         }else if (mBootSettings.screenOrientation.equals(SettingsActivity.ORI_PORTRAIT)){
             setRequestedOrientation( ActivityInfo.SCREEN_ORIENTATION_PORTRAIT );
             if ( getResources().getConfiguration().orientation != Configuration.ORIENTATION_PORTRAIT ){
-                mRebootingForConfigChange = true;
-                return;
+                if ( savedInstanceState == null ){
+                    mRebootingForConfigChange = true;
+                    return;
+                }
             }
         }else if (mBootSettings.screenOrientation.equals(SettingsActivity.ORI_LANDSCAPE)){
             setRequestedOrientation( ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE );
             if ( getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE ){
-                mRebootingForConfigChange = true;
-                return;
+                if ( savedInstanceState == null ){
+                    mRebootingForConfigChange = true;
+                    return;
+                }
             }
         }
-
-        setContentView(R.layout.textviewer);
 
         PreferenceManager.getDefaultSharedPreferences(this)
                 .registerOnSharedPreferenceChangeListener(mOnSharedPreferenceChangeListener);
 
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
-        mEditor = (jp.sblo.pandora.jota.text.EditText)findViewById(R.id.textedit);
 
         mEditor.setDocumentChangedListener(this);
         mEditor.setShortcutListener(this);
@@ -340,22 +352,22 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
                 }
             } else if (it != null && Intent.ACTION_SEND.equals(it.getAction())) {
                 Bundle extras = it.getExtras();
-                String text = extras.getCharSequence(Intent.EXTRA_TEXT).toString();
+                CharSequence text = extras.getCharSequence(Intent.EXTRA_TEXT);
                 if (text != null) {
-                    mEditor.setText(text);
+                    mEditor.setText(text.toString());
                 }
 
             } else if (it != null && ACTION_EDIT_SCRIPT.equals(it.getAction())) {
                 Bundle extras = it.getExtras();
-                String path = extras.getCharSequence(EXTRA_SCRIPT_PATH).toString();
+                CharSequence path = extras.getCharSequence(EXTRA_SCRIPT_PATH);
 
-                String contents = extras.getCharSequence(EXTRA_SCRIPT_CONTENT).toString();
+                CharSequence contents = extras.getCharSequence(EXTRA_SCRIPT_CONTENT);
                 if (contents != null) {
                     mEditor.setText(contents);
                 } else {
                     if (path != null) {
                         mTask = new TextLoadTask(this, this, mLine);
-                        mTask.execute(path, mSettings.CharsetOpen);
+                        mTask.execute(path.toString(), mSettings.CharsetOpen);
                     }
                 }
             } else if (mSettings.rememberlastfile) {
@@ -384,6 +396,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
 
     @Override
     protected void onDestroy() {
+//        Log.d("=============>", "onDestroy");
         super.onDestroy();
         PreferenceManager.getDefaultSharedPreferences(this)
                 .unregisterOnSharedPreferenceChangeListener(mOnSharedPreferenceChangeListener);
@@ -458,9 +471,11 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        if ( mRebootingForConfigChange ){;
-            return;
-        }
+//        Log.d("=============>", "onSaveInstanceState");
+
+//        if ( mRebootingForConfigChange ){;
+//            return;
+//        }
 
         if (mEditor.isChanged() && mInstanceState.filename != null & mSettings.autosave) {
             save();
@@ -480,11 +495,13 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
         // outState.putInt("selend" , mInstanceState.selend );
         outState.putBoolean("changed", mEditor.isChanged());
 
+//        Log.d("=============>", "onSaveInstanceState" + outState);
         super.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
+//        Log.d("=============>", "onRestoreInstanceState" + savedInstanceState);
         super.onRestoreInstanceState(savedInstanceState);
 
         mInstanceState.filename = savedInstanceState.getString("filename");
@@ -568,7 +585,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
 
         } else if (intent != null && Intent.ACTION_SEND.equals(intent.getAction())) {
             Bundle extras = intent.getExtras();
-            String inserttext = extras.getCharSequence(Intent.EXTRA_TEXT).toString();
+            CharSequence inserttext = extras.getCharSequence(Intent.EXTRA_TEXT);
             if (inserttext != null) {
                 if (mSettings.actionShare.equals(SettingsActivity.AS_INSERT)) {
                     Editable text = mEditor.getText();
@@ -581,7 +598,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
                     }
                     text.replace(startsel, endsel, inserttext);
                 } else if (mSettings.actionShare.equals(SettingsActivity.AS_NEWFILE)) {
-                    mSharedString = inserttext;
+                    mSharedString = inserttext.toString();
                     confirmSave(mProcReceiveShare);
                 }
             }
@@ -589,7 +606,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
             Bundle extras = intent.getExtras();
             mNewFilename = extras.getCharSequence(EXTRA_SCRIPT_PATH).toString();
 
-            String contents = extras.getCharSequence(EXTRA_SCRIPT_CONTENT).toString();
+            CharSequence contents = extras.getCharSequence(EXTRA_SCRIPT_CONTENT);
             if (contents != null) {
                 mEditor.setText(contents);
             } else {
@@ -617,6 +634,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
 
     @Override
     protected void onPause() {
+//        Log.d("=============>", "onPause");
         super.onPause();
 
         saveHistory();
@@ -2118,6 +2136,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
 
     @Override
     protected void onResume() {
+//        Log.d("=============>", "onResume");
         super.onResume();
         if (mSharedPreferenceChanged ){
             applySetting();
