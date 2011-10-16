@@ -558,3 +558,18 @@ Lifetouch NOTEのHOME/ENDキーに対応
 Android Market経由で作者に寄付が出来ます。
 継続してお使いの方は、寄付をお願いします。
 
+
+[2011/10/16 v.0.1.16]
+fixed the bug that couldn't receive 'Share' from some applications.
+fixed the bug that force crashed when resume from landscape-fix mode.
+
+You can donate to the developer via Android Market.
+Please donate if you continue to use Jota.
+
+[2011/10/16 v.0.1.16]
+一部のアプリからの共有を受信出来ないバグを修正
+横画面固定モードでスリープから復帰するとクラッシュするバグを修正
+
+Android Market経由で作者に寄付が出来ます。
+継続してお使いの方は、寄付をお願いします。
+
