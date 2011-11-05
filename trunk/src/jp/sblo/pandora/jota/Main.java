@@ -1054,6 +1054,10 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
                 confirmSave(mProcViewByIntent);
             }
                 return true;
+            case R.id.menu_file_share: {
+                confirmSave(mProcShareFile);
+            }
+                return true;
             case R.id.menu_share: {
                 mProcShare.run();
             }
@@ -1457,9 +1461,16 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
 
             TextView tv = new TextView(Main.this);
 
+            String filename = mInstanceState.filename;
+            if ( filename == null ){
+                filename = "";
+            }
+            String[] items = getResources().getStringArray(R.array.LineBreak);
+            String codelb = mInstanceState.charset + "/" + items[mInstanceState.linebreak];
+
             String resstr = String.format(getString(R.string.result_word_count),
                     result.charactrers, result.lines, result.logicallines, result.words,
-                    mInstanceState.filename);
+                    filename , codelb);
 
             tv.setText(resstr);
 
@@ -1708,6 +1719,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
         abstract public void setIntent(Intent i);
     }
 
+
     private ViewByIntent mProcViewByIntent = new ViewByIntent() {
         Intent mIntent = null;
 
@@ -1717,6 +1729,31 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
                 mIntent.setAction(Intent.ACTION_VIEW);
             }
             mIntent.setDataAndType(Uri.parse("file://" + mInstanceState.filename), "text/plain");
+            try {
+                startActivity(mIntent);
+            } catch (ActivityNotFoundException e) {
+            }
+            mIntent = null;
+        }
+
+        public void setIntent(Intent i) {
+            mIntent = i;
+        }
+
+    };
+
+    private ViewByIntent mProcShareFile = new ViewByIntent() {
+        Intent mIntent = null;
+
+        public void run() {
+            if (mIntent == null) {
+                mIntent = new Intent();
+                mIntent.setAction(Intent.ACTION_SEND);
+            }
+            String url = "file://" + mInstanceState.filename;
+            mIntent.setType("text/plain");
+            mIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(url));
+            mIntent.putExtra(Intent.EXTRA_TITLE, url);
             try {
                 startActivity(mIntent);
             } catch (ActivityNotFoundException e) {

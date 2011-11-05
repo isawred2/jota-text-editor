@@ -31,6 +31,9 @@
 		android:title="@string/menu_file_view"		
 		android:alphabeticShortcut = "U"
 	 />
+        <item android:id="@+id/menu_file_share" 		
+		android:title="@string/menu_file_share"		
+	 />
         <item android:id="@+id/menu_file_charcode" 
 		android:title="@string/menu_file_charcode" 
 	/>

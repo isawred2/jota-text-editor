@@ -38,6 +38,7 @@ public class FileSelectorActivity extends ListActivity {
 	public static final String MODE_OPEN = "OPEN";
     public static final String MODE_SAVE = "SAVE";
     public static final String MODE_DIR = "DIR";
+    public static final String MODE_FONT = "FONT";
     public static final String INTENT_TITLE = "TITLE";
 
 
@@ -127,8 +128,16 @@ public class FileSelectorActivity extends ListActivity {
             mCharsetSpinnerSave.setVisibility(View.GONE);
             mLinebreakSpinner.setVisibility(View.GONE);
 
+        } else if ( MODE_FONT.equals(mMode)){
+            setTitle(R.string.fs_title_font);
+            mEdtFileName.setEnabled(false);
+            mEdtFileName.setVisibility(View.GONE);
+            mCharsetSpinnerOpen.setVisibility(View.GONE);
+            mCharsetSpinnerSave.setVisibility(View.GONE);
+            mLinebreakSpinner.setVisibility(View.GONE);
+
         }else{
-            Log.e("JotaFileSelector", "MODE parameter must be OPEN , SAVE or DIR.");
+            Log.e("JotaFileSelector", "MODE parameter must be OPEN , SAVE , FONT or DIR.");
             finish();
             return;
         }
@@ -299,7 +308,8 @@ public class FileSelectorActivity extends ListActivity {
 			fillList();
 		} else {
             // file
-		    if ( MODE_OPEN.equals(mMode)) {
+		    if ( MODE_OPEN.equals(mMode) ||
+		         MODE_FONT.equals(mMode)   ) {
     		    Intent intent = getIntent();
                 String strFilePath;
                 if( m_strDirPath.equals("/")) {

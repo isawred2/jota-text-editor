@@ -589,3 +589,26 @@ Android 1.6でバックキーを押下してすぐに終了するバグを修正
 Android Market経由で作者に寄付が出来ます。
 継続してお使いの方は、寄付をお願いします。
 
+[2011/11/05 v.0.1.18]
+- added a support of external font.
+  (Preferences-Font Settings-Font Type-External-Select TTF)
+- added a function to share text files.
+  (File-Share as file)
+  You can send a text file into Dropbox!
+- Fixed minor bugs.
+
+You can donate to the developer via Android Market.
+Please donate if you continue to use Jota.
+
+
+[2011/11/05 v.0.1.18]
+- 外部フォントのサポートを追加しました。
+ (設定-フォント設定-フォント種類-外部フォント-TTFファイルを選択)
+- ファイルとして共有する機能を追加しました。
+ (ファイル-ファイルを共有)
+ この機能を使用することでDropboxに直接アップロードが出来ます。
+- 細かいバグ修正
+
+Android Market経由で作者に寄付が出来ます。
+継続してお使いの方は、寄付をお願いします。
+
