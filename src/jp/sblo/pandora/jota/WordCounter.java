@@ -40,7 +40,7 @@ public class WordCounter {
         Editable text = (Editable)textview.getText();
         result.charactrers = text.length();
         result.lines = textview.getLineCount();
-        result.logicallines = countPatterns( "\n" , text );
+        result.logicallines = countPatterns( "\n" , text ) + 1;
         result.words = countPatterns( "\\w+" , text);
         return result;
     }

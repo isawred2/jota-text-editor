@@ -1,11 +1,11 @@
 package jp.sblo.pandora.jota;
 
+import java.io.File;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 
 import jp.sblo.pandora.jota.text.EditText.ShortcutSettings;
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -114,6 +114,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
     private static final int REQUEST_CODE_PICK_SEARCH2 = 7;
     private static final int REQUEST_CODE_PICK_MUSHROOM2 = 8;
     private static final int REQUEST_CODE_PICK_VIEW2 = 9;
+    private static final int REQUEST_CODE_PICK_FONT = 10;
 
     public static final String DEFAULT_WRAP_WIDTH_CHAR = "m";
 
@@ -244,9 +245,10 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                     final ListPreference pr = new ListPreference(this);
                     pr.setKey( KEY_FONT);
                     pr.setTitle(R.string.label_font_type);
-                    pr.setEntries(new String[]{ getString(R.string.label_font_type_normal) , getString(R.string.label_font_type_monospace) } );
-                    pr.setEntryValues( new CharSequence[] { "NORMAL" , "MONOSPACE" } );
+                    pr.setEntries(new String[]{ getString(R.string.label_font_type_normal) , getString(R.string.label_font_type_monospace), getString(R.string.label_font_type_external) } );
+                    pr.setEntryValues( new CharSequence[] { "NORMAL" , "MONOSPACE"  , "EXTERNAL"} );
 //                    pr.setSummary(sp.getString(pr.getKey(), ""));
+                    pr.setOnPreferenceChangeListener( mProcFontType );
                     catfont.addPreference(pr);
                     mPrefFont = pr;
                 }
@@ -771,6 +773,17 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                     setSummary();
                     break;
                 }
+                case REQUEST_CODE_PICK_FONT:
+                {
+                    final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this);
+                    Editor editor = sp.edit();
+                    Bundle extras = data.getExtras();
+                    String path = extras.getString(FileSelectorActivity.INTENT_FILEPATH);
+                    editor.putString(KEY_FONT, path );
+                    editor.commit();
+                    setSummary();
+                    break;
+                }
             }
         }else if ( resultCode == RESULT_FIRST_USER ){
             switch( requestCode ){
@@ -811,6 +824,15 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                     editor.putString(KEY_DIRECT_INTENT_INTENT2, "" );
                     editor.commit();
                     mPrefInsert.setValueIndex(0);
+                    setSummary();
+                    break;
+                }
+                case REQUEST_CODE_PICK_FONT:
+                {
+                    final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this);
+                    Editor editor = sp.edit();
+                    editor.putString(KEY_FONT, "NORMAL" );
+                    editor.commit();
                     setSummary();
                     break;
                 }
@@ -1149,6 +1171,22 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         }
     };
 
+    private OnPreferenceChangeListener mProcFontType = new OnPreferenceChangeListener() {
+        public boolean onPreferenceChange(Preference preference, Object newValue) {
+            // lets launch app picker if the user selected to launch an app on gesture
+            if ("EXTERNAL".equals( newValue ))
+            {
+                Intent intent = new Intent(SettingsActivity.this, FileSelectorActivity.class );
+                intent.putExtra(FileSelectorActivity.INTENT_MODE, FileSelectorActivity.MODE_FONT);
+                intent.putExtra(FileSelectorActivity.INTENT_EXTENSION, new String[]{"ttf","otf"});
+                intent.putExtra(FileSelectorActivity.INTENT_INIT_PATH, sSettings.defaultdirectory);
+
+                startActivityForResult( intent,REQUEST_CODE_PICK_FONT);
+            }
+            return true;
+        }
+    };
+
     private OnPreferenceChangeListener mProcTheme = new OnPreferenceChangeListener() {
         public boolean onPreferenceChange(Preference preference, Object newValue) {
 
@@ -1355,8 +1393,18 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
             ret.fontface = Typeface.DEFAULT;
         }else if ("MONOSPACE".equals(font)) {
             ret.fontface = Typeface.MONOSPACE;
-        }else{
+        }else if ("EXTERNAL".equals(font)) {
             ret.fontface = Typeface.DEFAULT;
+        }else{
+            try{
+                ret.fontface = Typeface.createFromFile(font.toString());
+                if ( ret.fontface == null ){
+                    ret.fontface = Typeface.DEFAULT;
+                }
+            }
+            catch( Exception e ){
+                ret.fontface = Typeface.DEFAULT;
+            }
         }
         ret.defaultdirectory = sp.getString( KEY_DEFAULT_FOLDER , Environment.getExternalStorageDirectory().getPath() );
         ret.shortcutaltleft = sp.getBoolean( KEY_SHORTCUT_ALT_LEFT, false);
@@ -1581,9 +1629,16 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
             }
         }
         if ( mPrefFont != null ){
-            entry = mPrefFont.getEntry();
-            if ( entry != null ){
-                mPrefFont.setSummary(entry);
+            String key = mPs.getSharedPreferences().getString(KEY_FONT, "NORMAL");
+            if ( "NORMAL".equals(key)||"MONOSPACE".equals(key)||"EXTERNAL".equals(key)){
+                entry = mPrefFont.getEntry();
+                if ( entry != null ){
+                    mPrefFont.setSummary(entry);
+                }
+            }else{
+                if ( key!=null ){
+                    mPrefFont.setSummary((new File(key)).getName());
+                }
             }
         }
         if ( mPrefFontSize != null ){

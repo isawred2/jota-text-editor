@@ -355,17 +355,16 @@ extends Layout
                           (reflowed.getParagraphDirection(i) << DIR_SHIFT) |
                           (reflowed.getLineContainsTab(i) ? TAB_MASK : 0);
 
-            int top = reflowed.getLineTop(i) + startv;
-            if (i > 0)
-                top -= toppad;
 // Jota Text Editor
+//            int top = reflowed.getLineTop(i) + startv;
+//            if (i > 0)
+//                top -= toppad;
 //            ints[TOP] = top;
 
             int desc = reflowed.getLineDescent(i);
-            if (i == n - 1)
-                desc += botpad;
-
 // Jota Text Editor
+//            if (i == n - 1)
+//                desc += botpad;
 //            ints[DESCENT] = desc;
             mDescent = desc;
             objects[0] = reflowed.getLineDirections(i);
