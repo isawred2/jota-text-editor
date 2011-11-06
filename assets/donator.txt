@@ -67,3 +67,5 @@ SoftAllan
 moon_st
 ayati
 Varvitski
+Michael
+James
