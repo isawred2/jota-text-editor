@@ -377,8 +377,8 @@ public class FileSelectorActivity extends ListActivity {
                     for (String ext : mExtension) {
                         if (smallname.endsWith(ext)) {
                             items.add(name);
+                            break;
                         }
-                        break;
                     }
                 } else {
                     items.add(file.getName());

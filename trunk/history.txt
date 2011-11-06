@@ -597,6 +597,9 @@ Android Market経由で作者に寄付が出来ます。
   You can send a text file into Dropbox!
 - Fixed minor bugs.
 
+[2011/11/06 v.0.1.19]
+- added a support of ".otf" font files.
+
 You can donate to the developer via Android Market.
 Please donate if you continue to use Jota.
 
@@ -608,6 +611,9 @@ Please donate if you continue to use Jota.
  (ファイル-ファイルを共有)
  この機能を使用することでDropboxに直接アップロードが出来ます。
 - 細かいバグ修正
+
+[2011/11/06 v.0.1.19]
+- ".otf"フォントファイルのサポートとを追加
 
 Android Market経由で作者に寄付が出来ます。
 継続してお使いの方は、寄付をお願いします。
