@@ -177,6 +177,15 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
             if ( CAT_TOP.equals(categ) ){
                 setTitle(R.string.menu_preferences);
                 {
+                    if ( !"".equals(RecoveryActivity.getRecoveryFileName(this)) ){
+                        final Preference pr = new Preference(this);
+                        pr.setTitle(R.string.label_crash_title);
+                        pr.setSummary(R.string.summary_crash);
+                        pr.setOnPreferenceClickListener(mProcPrefRecovery);
+                        mPs.addPreference(pr);
+                    }
+                }
+                {
                     final Preference pr = new Preference(this);
                     pr.setTitle(R.string.menu_pref_search);
                     pr.setOnPreferenceClickListener(mProcPrefSearch);
@@ -931,6 +940,14 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
     private OnPreferenceClickListener mProcAbout = new OnPreferenceClickListener(){
         public boolean onPreferenceClick(Preference preference) {
             Intent intent = new Intent( SettingsActivity.this,AboutActivity.class);
+            startActivity(intent);
+            return true;
+        }
+    };
+
+    private OnPreferenceClickListener mProcPrefRecovery = new OnPreferenceClickListener(){
+        public boolean onPreferenceClick(Preference preference) {
+            Intent intent = new Intent(SettingsActivity.this, RecoveryActivity.class);
             startActivity(intent);
             return true;
         }

@@ -4,11 +4,18 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
@@ -18,6 +25,10 @@ public     class TextSaveTask extends AsyncTask<CharSequence, Integer, String>{
     Runnable mPostProc=null;
     Activity mActivity;
     private ProgressDialog mProgressDialog;
+
+    public static final String RECOVERY_FILENAME = "lost.found";
+    public static final String PREF_NAME = "recoverey_pref";
+    public static final String PREF_KEY_FILENAME = "filename";
 
     public TextSaveTask( Activity activity ,Runnable preProc , Runnable postProc)
     {
@@ -47,15 +58,9 @@ public     class TextSaveTask extends AsyncTask<CharSequence, Integer, String>{
             mProgressDialog = null;
         }
     }
-    @Override
-    protected String doInBackground(CharSequence... params)
-    {
-        String filename = (String)params[0] ;
-        String charset = (String)params[1] ;
-        String lb = (String)params[2] ;
-        CharSequence text = params[3];
-        boolean createBackup = "true".equals(params[4]);
 
+    private boolean createBackup(String filename , boolean createBackup)
+    {
         File f = new File(filename);
 
         if (f.exists()) {
@@ -81,7 +86,7 @@ public     class TextSaveTask extends AsyncTask<CharSequence, Integer, String>{
                     out.close();
                 } catch (Exception e) {
                     e.printStackTrace();
-                    return null;
+                    return false;
                 }
             } else {
                 // patch by matthias.gruenewald@googlemail.com
@@ -90,10 +95,15 @@ public     class TextSaveTask extends AsyncTask<CharSequence, Integer, String>{
                 // f.delete();
             }
         }
+        return true;
+    }
+
+    private boolean saveFile(OutputStream os , String charset , String lb , CharSequence text)
+    {
 
         try{
             BufferedWriter bw=null;
-            bw = new BufferedWriter( new OutputStreamWriter( new FileOutputStream( f ) , Charset.forName(charset) ) , 65536 );
+            bw = new BufferedWriter( new OutputStreamWriter( os , Charset.forName(charset) ) , 65536 );
 
             if ( charset.startsWith("UTF-16") || charset.startsWith("UTF-32") ){
                 char bom = 0xFEFF;
@@ -127,9 +137,65 @@ public     class TextSaveTask extends AsyncTask<CharSequence, Integer, String>{
             bw.close();
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return false;
         }
-        return filename;
+        return true;
+    }
+
+    @Override
+    protected String doInBackground(CharSequence... params)
+    {
+        String filename = (String)params[0] ;
+        String charset = (String)params[1] ;
+        String lb = (String)params[2] ;
+        CharSequence text = params[3];
+        boolean createBackup = "true".equals(params[4]);
+
+        try{
+            if ( createBackup( filename , createBackup ) ){
+                if ( saveFile( new FileOutputStream( new File(filename) ), charset , lb , text) ){
+                    return filename;
+                }
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        // failsafe
+        try{
+            OutputStream os = mActivity.openFileOutput(RECOVERY_FILENAME, Context.MODE_PRIVATE);
+            saveFile(os , charset , lb , text);
+
+            SharedPreferences sp = mActivity.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+            sp.edit().putString( PREF_KEY_FILENAME , filename ).commit();
+
+            NotificationManager notificationManager = (NotificationManager) mActivity.getSystemService(Context.NOTIFICATION_SERVICE);
+
+            Notification notification = new Notification(
+                    R.drawable.icon,
+                    mActivity.getString(R.string.notify_title),
+                    System.currentTimeMillis());
+
+            notification.flags |= Notification.FLAG_AUTO_CANCEL;
+
+            Intent intent = new Intent(mActivity , RecoveryActivity.class );
+            PendingIntent contentIntent =
+                  PendingIntent.getActivity(mActivity, 0, intent, 0);
+
+            notification.setLatestEventInfo(
+                    mActivity.getApplicationContext(),
+                    mActivity.getString(R.string.notify_title),
+                    mActivity.getString(R.string.notify_message),
+                    contentIntent);
+
+            notificationManager.notify(R.string.app_name, notification);
+        }
+        catch( Exception e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+
     }
 
     @Override
