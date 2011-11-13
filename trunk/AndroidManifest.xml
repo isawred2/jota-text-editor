@@ -3,8 +3,8 @@
 
       package="jp.sblo.pandora.jota"
 
-      android:versionCode="39"
-      android:versionName="0.1.19"
+      android:versionCode="40"
+      android:versionName="0.1.20"
       android:installLocation="auto"
 >
     <application android:icon="@drawable/icon"
@@ -65,6 +65,7 @@
         <activity android:name="jp.sblo.pandora.jota.SettingsActivity"/>
         <activity android:name="jp.sblo.pandora.jota.SettingsShortcutActivity"/>
         <activity android:name="jp.sblo.pandora.jota.DonateActivity"/>
+        <activity android:name="jp.sblo.pandora.jota.RecoveryActivity" android:theme="@style/Theme.Dialog" />
 
 	<!--- for donation -->
         <service android:name="jp.sblo.pandora.billing.BillingService" />

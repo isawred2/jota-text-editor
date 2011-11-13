@@ -618,3 +618,22 @@ Please donate if you continue to use Jota.
 Android Market経由で作者に寄付が出来ます。
 継続してお使いの方は、寄付をお願いします。
 
+[2011/11/13 v.0.1.20]
+- added a "Crash Recovery" feature.
+  If save was failed, Jota will save it into local storage.
+  Later you can recover it.
+- Updated Koreak resource.(Thanks to Noah!)
+
+You can donate to the developer via Android Market.
+Please donate if you continue to use Jota.
+
+
+[2011/11/13 v.0.1.20]
+- クラッシュリカバリ機能を追加しました。
+  保存に失敗した場合、ローカルストレージに保存されます。
+　後で、そのファイルを復旧させることが出来るようになります。
+- 韓国語リソースの更新.(Thanks to Noah!)
+
+Android Market経由で作者に寄付が出来ます。
+継続してお使いの方は、寄付をお願いします。
+

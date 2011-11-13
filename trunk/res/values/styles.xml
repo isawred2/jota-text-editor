@@ -18,4 +18,8 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
+    <style name="Theme.Dialog" parent="android:Theme.Dialog">
+        <item name="android:windowNoTitle">false</item>
+    </style>
+
 </resources>
