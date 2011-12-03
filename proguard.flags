@@ -2,5 +2,7 @@
   public java.lang.String getAboutStrings(java.lang.String);
   public void throwIntentByUrl(java.lang.String,int);
   public void startBilling();
+  public void confirmBilling1(java.lang.String);
+  public void confirmBilling2();
 }
 

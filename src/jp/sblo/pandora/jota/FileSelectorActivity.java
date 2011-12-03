@@ -39,6 +39,7 @@ public class FileSelectorActivity extends ListActivity {
     public static final String MODE_SAVE = "SAVE";
     public static final String MODE_DIR = "DIR";
     public static final String MODE_FONT = "FONT";
+    public static final String MODE_PICTURE = "PICTURE";
     public static final String INTENT_TITLE = "TITLE";
 
 
@@ -130,6 +131,14 @@ public class FileSelectorActivity extends ListActivity {
 
         } else if ( MODE_FONT.equals(mMode)){
             setTitle(R.string.fs_title_font);
+            mEdtFileName.setEnabled(false);
+            mEdtFileName.setVisibility(View.GONE);
+            mCharsetSpinnerOpen.setVisibility(View.GONE);
+            mCharsetSpinnerSave.setVisibility(View.GONE);
+            mLinebreakSpinner.setVisibility(View.GONE);
+
+        } else if ( MODE_PICTURE.equals(mMode)){
+            setTitle(R.string.fs_title_picture);
             mEdtFileName.setEnabled(false);
             mEdtFileName.setVisibility(View.GONE);
             mCharsetSpinnerOpen.setVisibility(View.GONE);
@@ -309,7 +318,8 @@ public class FileSelectorActivity extends ListActivity {
 		} else {
             // file
 		    if ( MODE_OPEN.equals(mMode) ||
-		         MODE_FONT.equals(mMode)   ) {
+		         MODE_FONT.equals(mMode) ||
+		         MODE_PICTURE.equals(mMode)) {
     		    Intent intent = getIntent();
                 String strFilePath;
                 if( m_strDirPath.equals("/")) {

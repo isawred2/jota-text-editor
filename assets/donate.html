@@ -41,19 +41,17 @@
     </span></strong>
     - This is NOT a donation given to a registered charity, but a support for a developer.</p>
     <p>
-    - There is no Premium version for donator. (Donator only gets a Star on this page.)</p>
+    - Donator will get the right to use "Beta testing feature".</p>
     <p>
     - If you want to put your name on about-page, send a mail with your order-ID and
         your
         nickname for me.</p>
     <p>
-    - Both donator and free-user will be treated equally.</p>
-    <p>
     - Google gets 30% of your donation.</p>
     <p>
     - You can't donate anonymous. Personal informations are NOT used for any purpose.</p>
     <p>
-    - You can donate multiple times you like. 
+    - You can donate only one time. 
     </p>
     <p>
     - Transaction may take a minute or two. Please wait while "wait" message is shown.
@@ -61,6 +59,18 @@
     <p>
 
 	<button type="button" style="WIDTH: 100%; HEIGHT: 100px" onclick="startBilling()" >Donate</button>
+	<hr/>
+    - If you donated after 12/04/2011, push below button to re-activate your donation.
+	<button type="button" style="WIDTH: 100%; HEIGHT: 100px" onclick="confirmBilling2()" >Re-Activate</button>
+    <br/>
+	<hr/>
+    - If you donated before 12/04/2011, input your order-id (15-numbers) in the order mail from Google and push below button to re-activate your donation.
+	<form name="form1">
+	<input type="text" name="orderid" style="WIDTH: 100%; HEIGHT: 100px">
+	</form>
+	<button type="button" style="WIDTH: 100%; HEIGHT: 100px" onclick="confirmBilling1(document.form1.orderid.value)" >Re-Activate</button>
+	<hr/>
+    - If you donated from other than Android Market or you contributed for Jota, please mail to developer. I'll send you the activation code.
     <br />
     <br />
 
@@ -76,6 +86,12 @@
 	}
 	function startBilling( ){
 		jscallback.startBilling() ;
+	}
+	function confirmBilling1( orderid ){
+		jscallback.confirmBilling1(orderid) ;
+	}
+	function confirmBilling2( ){
+		jscallback.confirmBilling2() ;
 	}
     setItem('version');
     setTag('stars');
