@@ -55,15 +55,15 @@
 
 	<button type="button" style="WIDTH: 100%; HEIGHT: 100px" onclick="startBilling()" >寄付する</button>
 	<hr/>
-    ・2011/12/04以降に寄付された方は、この下のボタンを押すとアプリで再アクティベートします。
-	<button type="button" style="WIDTH: 100%; HEIGHT: 100px" onclick="confirmBilling2()" >寄付の確認</button>
+    ・2011/12/04以降に寄付された方は、この下のボタンで再アクティベートできます。
+	<button type="button" style="WIDTH: 100%; HEIGHT: 100px" onclick="confirmBilling2()" >再アクティベート</button>
     <br/>
 	<hr/>
-    ・2011/12/04以前に寄付された方は、注文メールに記載された15桁の注文番号を下の欄に入力して、確認ボタンを押してください。
+    ・2011/12/04以前に寄付された方は、注文メールに記載された15桁の注文番号を下の欄に入力してボタンを押すと、再アクティベートできます。
 	<form name="form1">
-	<input type="text" name="orderid" style="WIDTH: 100%; HEIGHT: 100px">
+	<input type="text" name="orderid" style="WIDTH: 100%; HEIGHT: 50px">
 	</form>
-	<button type="button" style="WIDTH: 100%; HEIGHT: 100px" onclick="confirmBilling1(document.form1.orderid.value)" >確認</button>
+	<button type="button" style="WIDTH: 100%; HEIGHT: 100px" onclick="confirmBilling1(document.form1.orderid.value)" >再アクティベート</button>
 	<hr/>
     ・Android Market以外で寄付された方は、作者までメール連絡してください。
     <br />

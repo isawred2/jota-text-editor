@@ -5834,7 +5834,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
 
         int left = (int) FloatMath.floor(mLayout.getLineLeft(line));
         int right = (int) FloatMath.ceil(mLayout.getLineRight(line)+mLineNumberWidth); // Jota Text Editor
-        int ht = mLayout.getHeight();
+        int ht = mLayout.getHeight() + mLayout.getLineTop(7);
 
         int grav;
 
