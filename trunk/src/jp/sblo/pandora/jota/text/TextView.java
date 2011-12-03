@@ -8845,9 +8845,10 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
                             final int slopSquared = doubleTapSlop * doubleTapSlop;
                             if (distanceSquared < slopSquared) {
                                 startTextSelectionMode();
-                                // Hacky: onTapUpEvent will open a context menu with cut/copy
-                                // Prevent this by hiding handles which will be revived instead.
-                                hide();
+                                // Jota Text Editor
+                                //// Hacky: onTapUpEvent will open a context menu with cut/copy
+                                //// Prevent this by hiding handles which will be revived instead.
+                                //hide();
                             }
                         }
                         mPreviousTapPositionX = x;
