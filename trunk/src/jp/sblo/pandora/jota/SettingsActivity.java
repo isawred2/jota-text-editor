@@ -14,6 +14,8 @@ import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
@@ -28,6 +30,7 @@ import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.SeekBar;
@@ -84,6 +87,9 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
     private static final String KEY_AUTO_CAPITALIZE         = "KEY_AUTO_CAPITALIZE";
     private static final String KEY_BLINK_CURSOR            = "KEY_BLINK_CURSOR";
     private static final String KEY_ORIENTATION             = "KEY_ORIENTATION";
+    private static final String KEY_WALLPAPER_PORTRAIT      = "KEY_WALLPAPER_PORTRAIT";
+    private static final String KEY_WALLPAPER_LANDSCAPE     = "KEY_WALLPAPER_LANDSCAPE";
+    private static final String KEY_WALLPAPER_TRANSPARENCY     = "KEY_WALLPAPER_TRANSPARENCY";
 
 	public static final String KEY_LASTVERSION = "LastVersion";
 
@@ -115,6 +121,8 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
     private static final int REQUEST_CODE_PICK_MUSHROOM2 = 8;
     private static final int REQUEST_CODE_PICK_VIEW2 = 9;
     private static final int REQUEST_CODE_PICK_FONT = 10;
+    private static final int REQUEST_CODE_PICK_WALLPAPER_PORTRAIT = 11;
+    private static final int REQUEST_CODE_PICK_WALLPAPER_LANDSCAPE = 12;
 
     public static final String DEFAULT_WRAP_WIDTH_CHAR = "m";
 
@@ -356,6 +364,33 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                     };
                     pr.setEntryValues(values);
                     pr.setOnPreferenceChangeListener( mProcTheme );
+                    cat.addPreference(pr);
+                }
+                {
+                    // Wallpaper portrait
+                    final Preference pr = new Preference(this);
+                    pr.setKey( KEY_FONT );
+                    pr.setTitle(R.string.label_wallpaper_portrait);
+                    pr.setSummary(R.string.summary_wallpaper);
+                    pr.setOnPreferenceClickListener(mProcWallpaperPortrait);
+                    cat.addPreference(pr);
+                }
+                {
+                    // Wallpaper landscape
+                    final Preference pr = new Preference(this);
+                    pr.setKey( KEY_FONT );
+                    pr.setTitle(R.string.label_wallpaper_landscape);
+                    pr.setSummary(R.string.summary_wallpaper);
+                    pr.setOnPreferenceClickListener(mProcWallpaperLandscape);
+                    cat.addPreference(pr);
+                }
+                {
+                    // Wallpaper transparency
+                    final ListPreference pr = new ListPreference(this);
+                    pr.setKey( KEY_WALLPAPER_TRANSPARENCY);
+                    pr.setTitle(R.string.label_wallpaper_transparency );
+                    pr.setEntries(new String[]     {"20%", "30%" , "40%", "50%" , "60%",  });
+                    pr.setEntryValues(new String[] {"20",  "30"  , "40",  "50",   "60",   });
                     cat.addPreference(pr);
                 }
                 {
@@ -793,6 +828,34 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                     setSummary();
                     break;
                 }
+                case REQUEST_CODE_PICK_WALLPAPER_PORTRAIT:
+                {
+                    final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this);
+                    Editor editor = sp.edit();
+                    Bundle extras = data.getExtras();
+                    String path = extras.getString(FileSelectorActivity.INTENT_FILEPATH);
+                    Bitmap bmp = BitmapFactory.decodeFile(path);
+                    if ( bmp != null ){
+                        editor.putString(KEY_WALLPAPER_PORTRAIT, path );
+                        editor.commit();
+                        bmp.recycle();
+                    }
+                    break;
+                }
+                case REQUEST_CODE_PICK_WALLPAPER_LANDSCAPE:
+                {
+                    final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this);
+                    Editor editor = sp.edit();
+                    Bundle extras = data.getExtras();
+                    String path = extras.getString(FileSelectorActivity.INTENT_FILEPATH);
+                    Bitmap bmp = BitmapFactory.decodeFile(path);
+                    if ( bmp != null ){
+                        editor.putString(KEY_WALLPAPER_LANDSCAPE, path );
+                        editor.commit();
+                        bmp.recycle();
+                    }
+                    break;
+                }
             }
         }else if ( resultCode == RESULT_FIRST_USER ){
             switch( requestCode ){
@@ -843,6 +906,22 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                     editor.putString(KEY_FONT, "NORMAL" );
                     editor.commit();
                     setSummary();
+                    break;
+                }
+                case REQUEST_CODE_PICK_WALLPAPER_PORTRAIT:
+                {
+                    final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this);
+                    Editor editor = sp.edit();
+                    editor.putString(KEY_WALLPAPER_PORTRAIT, "" );
+                    editor.commit();
+                    break;
+                }
+                case REQUEST_CODE_PICK_WALLPAPER_LANDSCAPE:
+                {
+                    final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this);
+                    Editor editor = sp.edit();
+                    editor.putString(KEY_WALLPAPER_LANDSCAPE, "" );
+                    editor.commit();
                     break;
                 }
             }
@@ -1289,6 +1368,34 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
     };
 
 
+    private OnPreferenceClickListener mProcWallpaperPortrait = new OnPreferenceClickListener(){
+        public boolean onPreferenceClick(Preference preference) {
+            Intent intent = new Intent(SettingsActivity.this, FileSelectorActivity.class );
+            intent.putExtra(FileSelectorActivity.INTENT_MODE, FileSelectorActivity.MODE_PICTURE);
+            intent.putExtra(FileSelectorActivity.INTENT_EXTENSION, new String[]{"jpg","png","jpeg"});
+            intent.putExtra(FileSelectorActivity.INTENT_INIT_PATH, sSettings.defaultdirectory);
+
+            startActivityForResult( intent,REQUEST_CODE_PICK_WALLPAPER_PORTRAIT);
+
+            return true;
+        }
+
+    };
+
+    private OnPreferenceClickListener mProcWallpaperLandscape = new OnPreferenceClickListener(){
+        public boolean onPreferenceClick(Preference preference) {
+            Intent intent = new Intent(SettingsActivity.this, FileSelectorActivity.class );
+            intent.putExtra(FileSelectorActivity.INTENT_MODE, FileSelectorActivity.MODE_PICTURE);
+            intent.putExtra(FileSelectorActivity.INTENT_EXTENSION, new String[]{"jpg","png","jpeg"});
+            intent.putExtra(FileSelectorActivity.INTENT_INIT_PATH, sSettings.defaultdirectory);
+
+            startActivityForResult( intent,REQUEST_CODE_PICK_WALLPAPER_LANDSCAPE);
+
+            return true;
+        }
+
+    };
+
     private OnPreferenceClickListener mProcDefaultDirectory = new OnPreferenceClickListener(){
         public boolean onPreferenceClick(Preference preference) {
             Intent intent = new Intent( SettingsActivity.this , FileSelectorActivity.class );
@@ -1362,6 +1469,9 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         int donateCounter;
         boolean specialkey_desirez;
         boolean blinkCursor;
+        String wallpaperPortrait;
+        String wallpaperLandscape;
+        String wallpaperTransparency;
 	}
 
 	public static class BootSettings {
@@ -1375,7 +1485,27 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
     private static Settings sSettings;
     private static BootSettings sBootSettings;
 
-	public	static Settings readSettings(Context ctx)
+    public  static boolean checkDonate(Context ctx)
+    {
+        boolean result = false;
+        final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(ctx);
+        int donateCounter = sp.getInt(DonateActivity.DONATION_COUNTER,0);
+        if ( donateCounter == 0 ){
+            String wallpaperPortrait = sp.getString(KEY_WALLPAPER_PORTRAIT, "");
+            String wallpaperLandscape = sp.getString(KEY_WALLPAPER_LANDSCAPE, "");
+            if ( !TextUtils.isEmpty(wallpaperPortrait) || !TextUtils.isEmpty(wallpaperLandscape)  ){
+                result = true;
+            }
+            Editor editor = sp.edit();
+            editor.remove(KEY_WALLPAPER_PORTRAIT);
+            editor.remove(KEY_WALLPAPER_LANDSCAPE);
+            editor.commit();
+        }
+        return result;
+    }
+
+
+    public	static Settings readSettings(Context ctx)
 	{
 		final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(ctx);
 		Settings ret = new Settings();
@@ -1458,6 +1588,9 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         ret.actionShare = sp.getString(KEY_ACTION_SHARE, AS_INSERT);
         ret.donateCounter = sp.getInt(DonateActivity.DONATION_COUNTER,0);
         ret.blinkCursor = sp.getBoolean(KEY_BLINK_CURSOR, true);
+        ret.wallpaperPortrait = sp.getString(KEY_WALLPAPER_PORTRAIT, "");
+        ret.wallpaperLandscape = sp.getString(KEY_WALLPAPER_LANDSCAPE, "");
+        ret.wallpaperTransparency = sp.getString(KEY_WALLPAPER_TRANSPARENCY, "");
         sSettings = ret;
         return ret;
 	}
@@ -1571,6 +1704,9 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                     if ( Build.MODEL.equals("LT-NA7")){
                         editor.putBoolean(KEY_SHORTCUT_CTRL_LTN, true);
                     }
+                }
+                if ( lastversion < 41 ){
+                    editor.putString(KEY_WALLPAPER_TRANSPARENCY, "30");
                 }
                 editor.commit();
                 SettingsShortcutActivity.writeDefaultShortcuts(ctx);

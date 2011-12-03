@@ -63,7 +63,10 @@ public class AboutActivity extends Activity
 
 	public class JsCallbackObj
 	{
-	    public Runnable mProcBilling = null;
+        public Runnable mProcBilling = null;
+        public Runnable mProcConfirm1 = null;
+        public Runnable mProcConfirm2 = null;
+        public String mOrderid="";
 
 		public JsCallbackObj()
 		{
@@ -126,7 +129,22 @@ public class AboutActivity extends Activity
             }
         }
 
-		public void throwIntentByUrl( String url , int requestcode )
+        public void confirmBilling1(String orderid)
+        {
+            if ( mProcConfirm1 != null ){
+                mOrderid = orderid;
+                mProcConfirm1.run();
+            }
+        }
+
+        public void confirmBilling2()
+        {
+            if ( mProcConfirm2 != null ){
+                mProcConfirm2.run();
+            }
+        }
+
+        public void throwIntentByUrl( String url , int requestcode )
 		{
 			if ( url!=null && url.length()>0 ){
 				Intent it = new Intent( Intent.ACTION_VIEW , Uri.parse(url) );

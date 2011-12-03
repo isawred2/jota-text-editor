@@ -1,8 +1,8 @@
 
 package jp.sblo.pandora.jota;
 
-import java.util.ArrayList;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -35,6 +35,8 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -45,7 +47,6 @@ import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -58,6 +59,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.TextView;
@@ -106,6 +108,8 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
     private boolean mSharedPreferenceChanged=false;
     private boolean mBackkeyDown = false;
     private static  boolean mRebootingForConfigChange = false;
+    private ImageView mWallpaper;
+    private Bitmap mWallpaperBmp;
 
     class InstanceState {
         String filename;
@@ -135,6 +139,8 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
 
         mEditor = (jp.sblo.pandora.jota.text.EditText)findViewById(R.id.textedit);
 //        Log.d("=============>", "onCreate created mEditor" );
+
+        mWallpaper = (ImageView)findViewById(R.id.wallpaper);
 
         if (mBootSettings.screenOrientation.equals(SettingsActivity.ORI_AUTO)){
             // Do nothing
@@ -279,6 +285,10 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
             public void onClick(View v) {
                 String searchword = mEdtSearchWord.getText().toString();
                 mReplaceWord = mEdtReplaceWord.getText().toString();
+                if ( mSettings.re ){
+                    mReplaceWord.replace("\\n", "\n");
+                    mReplaceWord.replace("\\t", "\t");
+                }
                 doReplace(searchword);
             }
         });
@@ -286,6 +296,10 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
             public void onClick(View v) {
                 String searchword = mEdtSearchWord.getText().toString();
                 mReplaceWord = mEdtReplaceWord.getText().toString();
+                if ( mSettings.re ){
+                    mReplaceWord.replace("\\n", "\n");
+                    mReplaceWord.replace("\\t", "\t");
+                }
                 doReplaceAll(searchword);
             }
         });
@@ -400,6 +414,9 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
         super.onDestroy();
         PreferenceManager.getDefaultSharedPreferences(this)
                 .unregisterOnSharedPreferenceChangeListener(mOnSharedPreferenceChangeListener);
+        if ( mWallpaperBmp!=null ){
+            mWallpaperBmp.recycle();
+        }
     }
 
     @Override
@@ -2115,10 +2132,40 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
         mEditor.setTextColor(mSettings.textcolor);
         mEditor.setHighlightColor(mSettings.highlightcolor);
 
-        if (SettingsActivity.THEME_DEFAULT.equals(mSettings.theme)) {
-            mEditor.setBackgroundResource(R.drawable.textfield_default);
-        } else if (SettingsActivity.THEME_BLACK.equals(mSettings.theme)) {
-            mEditor.setBackgroundResource(R.drawable.textfield_black);
+        String wallpaper;
+        if ( getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ){
+            wallpaper = mSettings.wallpaperPortrait;
+        }else{
+            wallpaper = mSettings.wallpaperLandscape;
+        }
+
+        if ( TextUtils.isEmpty(wallpaper) ){
+            if (SettingsActivity.THEME_DEFAULT.equals(mSettings.theme)) {
+                mEditor.setBackgroundResource(R.drawable.textfield_default);
+            } else if (SettingsActivity.THEME_BLACK.equals(mSettings.theme)) {
+                mEditor.setBackgroundResource(R.drawable.textfield_black);
+            }
+            mWallpaper.setVisibility(View.GONE);
+        }else{
+            int transparency = 30;
+            try{
+                transparency = Integer.parseInt( mSettings.wallpaperTransparency );
+            }catch(Exception e){}
+
+            int tr = 255*(100-transparency)/100;
+            tr <<= 24;
+
+            if (SettingsActivity.THEME_DEFAULT.equals(mSettings.theme)) {
+                mEditor.setBackgroundColor(tr|0xF0F0F0);
+            }else{
+                mEditor.setBackgroundColor(tr|0x101010);
+            }
+
+            mWallpaper.setVisibility(View.VISIBLE);
+            mWallpaperBmp = BitmapFactory.decodeFile(wallpaper);
+            if ( mWallpaperBmp != null ){
+                mWallpaper.setImageBitmap(mWallpaperBmp);
+            }
         }
 
         mEditor.enableUnderline(mSettings.underline);
@@ -2170,6 +2217,9 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
             setTheme(R.style.Theme_NoTitleBar);
         }
 
+        if ( SettingsActivity.checkDonate(this) ){
+            Toast.makeText(this, R.string.summary_wallpaper, Toast.LENGTH_LONG ).show();
+        }
     }
 
     @Override
