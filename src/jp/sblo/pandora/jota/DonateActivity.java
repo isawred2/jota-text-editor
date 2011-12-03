@@ -87,7 +87,15 @@ public class DonateActivity extends AboutActivity  {
             mProgressDialog = null;
 
             if (purchaseState == PurchaseState.PURCHASED) {
-                donatedAction(orderId);
+                final int index;
+                if ( isDebuggable() ){
+                    index = 1;
+                }else{
+                    index = 0;
+                }
+                if ( itemId.equals(CATALOG[index]) ){
+                    donatedAction(orderId);
+                }
             }
         }
 
