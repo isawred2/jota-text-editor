@@ -64,6 +64,7 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.LinearLayout.LayoutParams;
 
 public class Main extends Activity implements JotaDocumentWatcher, ShortcutListener,
         OnFileLoadListener {
@@ -109,7 +110,9 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
     private boolean mBackkeyDown = false;
     private static  boolean mRebootingForConfigChange = false;
     private ImageView mWallpaper;
+    private View mTransparency;
     private Bitmap mWallpaperBmp;
+    private LinearLayout mToolbar;
 
     class InstanceState {
         String filename;
@@ -184,7 +187,8 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
         mEdtReplaceWord.setShortcutListener(null);
         mBtnReplace = (Button)findViewById(R.id.btnReplace);
         mBtnReplaceAll = (Button)findViewById(R.id.btnReplaceAll);
-
+        mToolbar = (LinearLayout)findViewById(R.id.toolbar);
+        mTransparency = findViewById(R.id.trasparencylayer);
         applySetting();
 
         mEdtSearchWord.addTextChangedListener(new TextWatcher() {
@@ -303,6 +307,9 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
                 doReplaceAll(searchword);
             }
         });
+
+
+        initToolbar();
 
         mProcNew.run();
 
@@ -2146,6 +2153,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
                 mEditor.setBackgroundResource(R.drawable.textfield_black);
             }
             mWallpaper.setVisibility(View.GONE);
+            mTransparency.setVisibility(View.GONE);
         }else{
             int transparency = 30;
             try{
@@ -2156,12 +2164,14 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
             tr <<= 24;
 
             if (SettingsActivity.THEME_DEFAULT.equals(mSettings.theme)) {
-                mEditor.setBackgroundColor(tr|0xF0F0F0);
+                mTransparency.setBackgroundColor(tr|0xF0F0F0);
             }else{
-                mEditor.setBackgroundColor(tr|0x101010);
+                mTransparency.setBackgroundColor(tr|0x101010);
             }
+            mEditor.setBackgroundColor(0);
 
             mWallpaper.setVisibility(View.VISIBLE);
+            mTransparency.setVisibility(View.VISIBLE);
             mWallpaperBmp = BitmapFactory.decodeFile(wallpaper);
             if ( mWallpaperBmp != null ){
                 mWallpaper.setImageBitmap(mWallpaperBmp);
@@ -2208,6 +2218,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
         mEdtSearchWord.setDontUseSoftkeyWithHardkey( mSettings.specialkey_desirez );
         mEdtReplaceWord.setDontUseSoftkeyWithHardkey( mSettings.specialkey_desirez );
         mEditor.enableBlinkCursor(mSettings.blinkCursor);
+        mToolbar.setVisibility(mSettings.showToolbar?View.VISIBLE:View.GONE);
     }
 
     void applyBootSetting() {
@@ -2232,6 +2243,89 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
         if (mBootSettings.hideSoftkeyIS01) {
             IS01FullScreen.setFullScreenOnIS01();
         }
+    }
+
+    private OnClickListener mOnClickSave = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            save();
+        }
+    };
+
+    private OnClickListener mOnClickUndo = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            mEditor.onKeyShortcut(KeyEvent.KEYCODE_Z, new KeyEvent(KeyEvent.ACTION_DOWN,
+                    KeyEvent.KEYCODE_Z));
+        }
+    };
+    private OnClickListener mOnClickRedo = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            mEditor.onKeyShortcut(KeyEvent.KEYCODE_Y, new KeyEvent(KeyEvent.ACTION_DOWN,
+                    KeyEvent.KEYCODE_Y));
+        }
+    };
+    private OnClickListener mOnClickCut = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            mEditor.onKeyShortcut(KeyEvent.KEYCODE_X, new KeyEvent(KeyEvent.ACTION_DOWN,
+                    KeyEvent.KEYCODE_X));
+        }
+    };
+    private OnClickListener mOnClickCopy = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            mEditor.onKeyShortcut(KeyEvent.KEYCODE_C, new KeyEvent(KeyEvent.ACTION_DOWN,
+                    KeyEvent.KEYCODE_C));
+        }
+    };
+    private OnClickListener mOnClickPaste = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            mEditor.onKeyShortcut(KeyEvent.KEYCODE_V, new KeyEvent(KeyEvent.ACTION_DOWN,
+                    KeyEvent.KEYCODE_V));
+        }
+    };
+    private OnClickListener mOnClickQuit = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            confirmSave(mProcQuit);
+        }
+    };
+
+    class ToolbarDefine {
+        String label;
+        OnClickListener handler;
+
+        ToolbarDefine( String l , OnClickListener h){
+            label = l;
+            handler = h;
+        }
+    }
+
+    @SuppressWarnings("deprecation")
+    private void initToolbar()
+    {
+        ToolbarDefine[] defines = {
+                new ToolbarDefine("Save" , mOnClickSave ),
+                new ToolbarDefine("Undo"  ,mOnClickUndo ),
+                new ToolbarDefine("Redo"  ,mOnClickRedo  ),
+                new ToolbarDefine("Copy"  ,mOnClickCopy  ),
+                new ToolbarDefine(" Cut "   ,mOnClickCut  ),
+                new ToolbarDefine("Paste" ,mOnClickPaste ),
+                new ToolbarDefine("Quit"  ,mOnClickQuit ),
+        };
+
+        for( ToolbarDefine td : defines ){
+            Button button = new Button(this);
+            LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.FILL_PARENT);
+            button.setBackgroundResource(android.R.drawable.btn_default_small);
+            button.setText(td.label);
+            button.setOnClickListener(td.handler);
+            mToolbar.addView(button,lp);
+        }
+
     }
 
 }
