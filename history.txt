@@ -637,3 +637,30 @@ Please donate if you continue to use Jota.
 Android Market経由で作者に寄付が出来ます。
 継続してお使いの方は、寄付をお願いします。
 
+
+[2011/12/04 v.0.1.21]
+- 壁紙機能を追加(寄付した方向けのβテスト)
+- ツールバー機能を追加
+- ショートカットキーの割り当て直しの機能を追加
+- ダブルタップした後すぐにセレクションマーカーが出るように修正
+- エディタ最下行のバタつきを修正
+- 置換時に\nと\tを展開するように修正
+- 寄付の再アクティベート機能を追加
+- 寄付のポリシーの変更
+
+Android Market経由で作者に寄付が出来ます。
+継続してお使いの方は、寄付をお願いします。
+
+
+[2011/12/04 v.0.1.21]
+- added Wallpaper. (Beta test for donator)
+- added Toolbar.
+- added re-assign shortcut key.
+- added support \n,\t when replace.
+- fixed minor bugs.
+- changed Donation policy.
+
+You can donate to the developer via Android Market.
+Please donate if you continue to use Jota.
+
+
