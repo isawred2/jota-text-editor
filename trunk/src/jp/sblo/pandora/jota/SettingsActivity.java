@@ -4,7 +4,6 @@ import java.io.File;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 
-import jp.sblo.pandora.jota.text.EditText.ShortcutSettings;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -1446,7 +1445,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         int underlinecolor;
         boolean underline;
         boolean createbackup;
-        HashMap<Integer,ShortcutSettings> shortcuts;
+        HashMap<Integer,Integer> shortcuts;
         String CharsetOpen;
         String CharsetSave;
         int LinebreakSave;
@@ -1826,6 +1825,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         }
 	}
 
+	@Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         setSummary();
     }
