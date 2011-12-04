@@ -16,32 +16,32 @@ import android.view.inputmethod.InputMethodManager;
 
 public class EditText extends TextView{
 
-    public final static int FUNCTION_NONE=-1;
-    public final static int FUNCTION_SELECT_ALL=0;
-    public final static int FUNCTION_UNDO=1;
-    public final static int FUNCTION_COPY=2;
-    public final static int FUNCTION_CUT=3;
-    public final static int FUNCTION_PASTE=4;
-    public final static int FUNCTION_DIRECTINTENT=5;
-    public final static int FUNCTION_SAVE=6;
-    public final static int FUNCTION_ENTER=7;
-    public final static int FUNCTION_TAB=8;
-    public final static int FUNCTION_DEL=9;
-    public final static int FUNCTION_CENTERING=10;
-    public final static int FUNCTION_SEARCH=11;
-    public final static int FUNCTION_OPEN=12;
-    public final static int FUNCTION_NEWFILE=13;
-    public final static int FUNCTION_REDO=14;
-    public final static int FUNCTION_CONTEXTMENU=15;
-    public final static int FUNCTION_JUMP=16;
-    public final static int FUNCTION_FORWARD_DEL=17;
+    public final static int FUNCTION_NONE=0;
+    public final static int FUNCTION_SELECT_ALL=1;
+    public final static int FUNCTION_UNDO=2;
+    public final static int FUNCTION_COPY=3;
+    public final static int FUNCTION_CUT=4;
+    public final static int FUNCTION_PASTE=5;
+    public final static int FUNCTION_DIRECTINTENT=6;
+    public final static int FUNCTION_SAVE=7;
+    public final static int FUNCTION_ENTER=8;
+    public final static int FUNCTION_TAB=9;
+    public final static int FUNCTION_DEL=10;
+    public final static int FUNCTION_CENTERING=11;
+    public final static int FUNCTION_SEARCH=12;
+    public final static int FUNCTION_OPEN=13;
+    public final static int FUNCTION_NEWFILE=14;
+    public final static int FUNCTION_REDO=15;
+    public final static int FUNCTION_CONTEXTMENU=16;
+    public final static int FUNCTION_JUMP=17;
+    public final static int FUNCTION_FORWARD_DEL=18;
 
 
     private JotaTextWatcher mTextWatcher;
     private WeakReference<ShortcutListener> mShortcutListener;
     private int mShortcutCtrlKey = 0;
     private int mShortcutAltKey = 0;
-    private HashMap<Integer,ShortcutSettings> mShortcuts;;
+    private HashMap<Integer,Integer> mShortcuts;;
     private int mDpadCenterFunction = FUNCTION_CENTERING;
 
 
@@ -291,10 +291,10 @@ public class EditText extends TextView{
 
     public boolean doShortcut(int keycode) {
 
-        ShortcutSettings ss = mShortcuts.get(keycode);
+        Integer ss = mShortcuts.get(keycode);
 
-        if (ss != null && ss.enabled) {
-            return doFunction( ss.function );
+        if (ss!=null && ss != EditText.FUNCTION_NONE ) {
+            return doFunction( ss );
         }
         return false;
     }
@@ -335,18 +335,7 @@ public class EditText extends TextView{
         ArrowKeyMovementMethod.setCtrlKey(ctrlkey);
     }
 
-
-    public static class ShortcutSettings {
-        boolean enabled;
-        int function;
-
-        public ShortcutSettings( boolean e , int f){
-            enabled=e;
-            function=f;
-        }
-    };
-
-    public void setShortcutSettings( HashMap<Integer,ShortcutSettings> s )
+    public void setShortcutSettings( HashMap<Integer,Integer> s )
     {
         mShortcuts = s;
     }
