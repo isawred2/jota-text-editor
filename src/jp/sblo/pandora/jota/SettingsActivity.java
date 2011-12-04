@@ -88,7 +88,8 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
     private static final String KEY_ORIENTATION             = "KEY_ORIENTATION";
     private static final String KEY_WALLPAPER_PORTRAIT      = "KEY_WALLPAPER_PORTRAIT";
     private static final String KEY_WALLPAPER_LANDSCAPE     = "KEY_WALLPAPER_LANDSCAPE";
-    private static final String KEY_WALLPAPER_TRANSPARENCY     = "KEY_WALLPAPER_TRANSPARENCY";
+    private static final String KEY_WALLPAPER_TRANSPARENCY  = "KEY_WALLPAPER_TRANSPARENCY";
+    private static final String KEY_SHOW_TOOLBAR            = "KEY_SHOW_TOOLBAR";
 
 	public static final String KEY_LASTVERSION = "LastVersion";
 
@@ -449,6 +450,13 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                     pr.setEntryValues(values);
                     cat.addPreference(pr);
                     mPrefOrientation = pr;
+                }
+                {
+                    // show toolbar
+                    final CheckBoxPreference pr = new CheckBoxPreference(this);
+                    pr.setKey(KEY_SHOW_TOOLBAR);
+                    pr.setTitle(R.string.label_show_toolbar);
+                    cat.addPreference(pr);
                 }
                 if ( IS01FullScreen.isIS01orLynx() ){
                     // hide softkey
@@ -1471,6 +1479,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         String wallpaperPortrait;
         String wallpaperLandscape;
         String wallpaperTransparency;
+        boolean showToolbar;
 	}
 
 	public static class BootSettings {
@@ -1590,6 +1599,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         ret.wallpaperPortrait = sp.getString(KEY_WALLPAPER_PORTRAIT, "");
         ret.wallpaperLandscape = sp.getString(KEY_WALLPAPER_LANDSCAPE, "");
         ret.wallpaperTransparency = sp.getString(KEY_WALLPAPER_TRANSPARENCY, "");
+        ret.showToolbar = sp.getBoolean(KEY_SHOW_TOOLBAR, true);
         sSettings = ret;
         return ret;
 	}
@@ -1706,6 +1716,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                 }
                 if ( lastversion < 41 ){
                     editor.putString(KEY_WALLPAPER_TRANSPARENCY, "30");
+                    editor.putBoolean(KEY_SHOW_TOOLBAR, true);
                 }
                 editor.commit();
                 SettingsShortcutActivity.writeDefaultShortcuts(ctx);
