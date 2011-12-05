@@ -290,8 +290,8 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
                 String searchword = mEdtSearchWord.getText().toString();
                 mReplaceWord = mEdtReplaceWord.getText().toString();
                 if ( mSettings.re ){
-                    mReplaceWord.replace("\\n", "\n");
-                    mReplaceWord.replace("\\t", "\t");
+                    mReplaceWord = mReplaceWord.replace("\\n", "\n");
+                    mReplaceWord = mReplaceWord.replace("\\t", "\t");
                 }
                 doReplace(searchword);
             }
@@ -301,8 +301,8 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
                 String searchword = mEdtSearchWord.getText().toString();
                 mReplaceWord = mEdtReplaceWord.getText().toString();
                 if ( mSettings.re ){
-                    mReplaceWord.replace("\\n", "\n");
-                    mReplaceWord.replace("\\t", "\t");
+                    mReplaceWord = mReplaceWord.replace("\\n", "\n");
+                    mReplaceWord = mReplaceWord.replace("\\t", "\t");
                 }
                 doReplaceAll(searchword);
             }
