@@ -221,7 +221,6 @@ public class DonateActivity extends AboutActivity  {
                 final String orderId = mjsobj.mOrderid.trim();
                 if ( checkOrderid(orderId) ){
                     runOnUiThread(new Runnable() {
-
                         @Override
                         public void run() {
                             donatedAction(orderId);
