@@ -59,9 +59,11 @@ public class JotaTextKeyListener extends TextKeyListener {
                 }
             }
         }
-        if (keyCode == KEYCODE_FORWARD_DEL) {
-            forwardDelete(view, content, keyCode, event);
-            return true;
+        if (keyCode == KEYCODE_FORWARD_DEL ) {
+            if ( (event.getMetaState() & 512) == 0 ){       // workaround for Galaxy Note
+                forwardDelete(view, content, keyCode, event);
+                return true;
+            }
         }
 
         return result;
