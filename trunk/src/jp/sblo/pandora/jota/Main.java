@@ -1881,7 +1881,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
                         substr = text.subSequence(startsel, endsel).toString();
                         int cr = TextUtils.indexOf(substr, '\n');
                         if (cr != -1) {
-                            substr = substr.subSequence(startsel, endsel).toString();
+                            substr = substr.subSequence(0, cr).toString();
                         }
                         mEdtSearchWord.setText(substr);
                     }
