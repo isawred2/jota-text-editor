@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -113,6 +114,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
     private View mTransparency;
     private Bitmap mWallpaperBmp;
     private LinearLayout mToolbar;
+    private View mToolbarBase;
 
     class InstanceState {
         String filename;
@@ -188,6 +190,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
         mBtnReplace = (Button)findViewById(R.id.btnReplace);
         mBtnReplaceAll = (Button)findViewById(R.id.btnReplaceAll);
         mToolbar = (LinearLayout)findViewById(R.id.toolbar);
+        mToolbarBase = findViewById(R.id.toolbarbase);
         mTransparency = findViewById(R.id.trasparencylayer);
         applySetting();
 
@@ -308,9 +311,6 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
             }
         });
 
-
-        initToolbar();
-
         mProcNew.run();
 
         if (mRebootingForConfigChange || savedInstanceState == null) {
@@ -322,54 +322,56 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
             ) {
                 mLine = -1;
                 Uri data = it.getData();
-                String scheme = data.getScheme();
-                String path = null;
-                if (ContentResolver.SCHEME_FILE.equals(scheme)) {
-                    path = Uri.decode(data.getEncodedPath());
-                    String lineparam = data.getQueryParameter("line");
-                    if (lineparam != null) {
+                if ( data != null ){
+                    String scheme = data.getScheme();
+                    String path = null;
+                    if (ContentResolver.SCHEME_FILE.equals(scheme)) {
+                        path = Uri.decode(data.getEncodedPath());
+                        String lineparam = data.getQueryParameter("line");
+                        if (lineparam != null) {
+                            try {
+                                mLine = Integer.parseInt(lineparam);
+                            } catch (Exception e) {
+                            }
+                        }
+                    } else if (ContentResolver.SCHEME_CONTENT.equals(scheme)) {
+                        ContentResolver cr = getContentResolver();
+                        Cursor cur = null;
                         try {
-                            mLine = Integer.parseInt(lineparam);
+                            cur = cr.query(data, null, null, null, null);
                         } catch (Exception e) {
                         }
-                    }
-                } else if (ContentResolver.SCHEME_CONTENT.equals(scheme)) {
-                    ContentResolver cr = getContentResolver();
-                    Cursor cur = null;
-                    try {
-                        cur = cr.query(data, null, null, null, null);
-                    } catch (Exception e) {
-                    }
-                    if (cur != null) {
-                        cur.moveToFirst();
-                        try {
-                            path = cur.getString(cur.getColumnIndex("_data"));
-                            if (path == null
-                                    || !path.startsWith(Environment.getExternalStorageDirectory()
-                                            .getPath())) {
-                                // from content provider
+                        if (cur != null) {
+                            cur.moveToFirst();
+                            try {
+                                path = cur.getString(cur.getColumnIndex("_data"));
+                                if (path == null
+                                        || !path.startsWith(Environment.getExternalStorageDirectory()
+                                                .getPath())) {
+                                    // from content provider
+                                    path = data.toString();
+                                }
+                            } catch (Exception e) {
                                 path = data.toString();
                             }
-                        } catch (Exception e) {
+                        } else {
                             path = data.toString();
                         }
                     } else {
-                        path = data.toString();
                     }
-                } else {
-                }
 
-                // mSearchWord = null;
-                // mLine = -1;
-                //
-                // Bundle extra = it.getExtras();
-                // if ( extra!=null ){
-                // mSearchWord = extra.getString("query");
-                // mLine = extra.getInt("line");
-                // }
-                if (path != null) {
-                    mTask = new TextLoadTask(this, this, mLine);
-                    mTask.execute(path, mSettings.CharsetOpen);
+                    // mSearchWord = null;
+                    // mLine = -1;
+                    //
+                    // Bundle extra = it.getExtras();
+                    // if ( extra!=null ){
+                    // mSearchWord = extra.getString("query");
+                    // mLine = extra.getInt("line");
+                    // }
+                    if (path != null) {
+                        mTask = new TextLoadTask(this, this, mLine);
+                        mTask.execute(path, mSettings.CharsetOpen);
+                    }
                 }
             } else if (it != null && Intent.ACTION_SEND.equals(it.getAction())) {
                 Bundle extras = it.getExtras();
@@ -1037,33 +1039,27 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
             }
                 return true;
             case R.id.menu_edit_undo: {
-                mEditor.onKeyShortcut(KeyEvent.KEYCODE_Z, new KeyEvent(KeyEvent.ACTION_DOWN,
-                        KeyEvent.KEYCODE_Z));
+                mEditor.doFunction(jp.sblo.pandora.jota.text.EditText.FUNCTION_UNDO);
             }
                 return true;
             case R.id.menu_edit_redo: {
-                mEditor.onKeyShortcut(KeyEvent.KEYCODE_Y, new KeyEvent(KeyEvent.ACTION_DOWN,
-                        KeyEvent.KEYCODE_Y));
+                mEditor.doFunction(jp.sblo.pandora.jota.text.EditText.FUNCTION_REDO);
             }
                 return true;
             case R.id.menu_edit_cut: {
-                mEditor.onKeyShortcut(KeyEvent.KEYCODE_X, new KeyEvent(KeyEvent.ACTION_DOWN,
-                        KeyEvent.KEYCODE_X));
+                mEditor.doFunction(jp.sblo.pandora.jota.text.EditText.FUNCTION_CUT);
             }
                 return true;
             case R.id.menu_edit_copy: {
-                mEditor.onKeyShortcut(KeyEvent.KEYCODE_C, new KeyEvent(KeyEvent.ACTION_DOWN,
-                        KeyEvent.KEYCODE_C));
+                mEditor.doFunction(jp.sblo.pandora.jota.text.EditText.FUNCTION_COPY);
             }
                 return true;
             case R.id.menu_edit_paste: {
-                mEditor.onKeyShortcut(KeyEvent.KEYCODE_V, new KeyEvent(KeyEvent.ACTION_DOWN,
-                        KeyEvent.KEYCODE_V));
+                mEditor.doFunction(jp.sblo.pandora.jota.text.EditText.FUNCTION_PASTE);
             }
                 return true;
             case R.id.menu_edit_select_all: {
-                mEditor.onKeyShortcut(KeyEvent.KEYCODE_A, new KeyEvent(KeyEvent.ACTION_DOWN,
-                        KeyEvent.KEYCODE_A));
+                mEditor.doFunction(jp.sblo.pandora.jota.text.EditText.FUNCTION_SELECT_ALL);
             }
                 return true;
             case R.id.menu_edit_jump: {
@@ -1159,26 +1155,51 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
     }
 
     // @Override
-    public boolean onCommand(int keycode) {
-        switch (keycode) {
-            case KeyEvent.KEYCODE_S:
+    public boolean onCommand(int function) {
+        switch (function) {
+            case jp.sblo.pandora.jota.text.TextView.FUNCTION_SAVE:
                 save();
                 return true;
-            case KeyEvent.KEYCODE_D:
+            case jp.sblo.pandora.jota.text.TextView.FUNCTION_DIRECTINTENT:
                 mProcDirect.run();
                 return true;
-            case KeyEvent.KEYCODE_O:
+            case jp.sblo.pandora.jota.text.TextView.FUNCTION_OPEN:
                 confirmSave(mProcOpen);
                 return true;
-            case KeyEvent.KEYCODE_N:
+            case jp.sblo.pandora.jota.text.TextView.FUNCTION_NEWFILE:
                 confirmSave(mProcNew);
                 return true;
-            case KeyEvent.KEYCODE_F:
+            case jp.sblo.pandora.jota.text.TextView.FUNCTION_SEARCH:
                 mProcSearch.run();
                 return true;
-            case KeyEvent.KEYCODE_J:
+            case jp.sblo.pandora.jota.text.TextView.FUNCTION_JUMP:
                 mProcJump.run();
                 return true;
+            case jp.sblo.pandora.jota.text.TextView.FUNCTION_PROPERTY:
+                mProcProperty.run();
+                return true;
+            case jp.sblo.pandora.jota.text.TextView.FUNCTION_HISTORY:
+                confirmSave(mProcHistory);
+                return true;
+            case jp.sblo.pandora.jota.text.TextView.FUNCTION_OPENAPP:
+                confirmSave(mProcViewByIntent);
+                return true;
+            case jp.sblo.pandora.jota.text.TextView.FUNCTION_SHARE:
+                mProcShare.run();
+                return true;
+            case jp.sblo.pandora.jota.text.TextView.FUNCTION_SHAREFILE:
+                confirmSave(mProcShareFile);
+                return true;
+            case jp.sblo.pandora.jota.text.TextView.FUNCTION_INSERT:
+                mProcInsert.run();
+                return true;
+            case jp.sblo.pandora.jota.text.TextView.FUNCTION_QUIT:
+                confirmSave(mProcQuit);
+                return true;
+            case jp.sblo.pandora.jota.text.TextView.FUNCTION_SEARCHAPP:
+                mProcSearchByIntent.run();
+                return true;
+
         }
         return false;
     }
@@ -2218,7 +2239,9 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
         mEdtSearchWord.setDontUseSoftkeyWithHardkey( mSettings.specialkey_desirez );
         mEdtReplaceWord.setDontUseSoftkeyWithHardkey( mSettings.specialkey_desirez );
         mEditor.enableBlinkCursor(mSettings.blinkCursor);
-        mToolbar.setVisibility(mSettings.showToolbar?View.VISIBLE:View.GONE);
+        mToolbarBase.setVisibility(mSettings.showToolbar?View.VISIBLE:View.GONE);
+        mEditor.setForceScroll(mSettings.forceScroll);
+        initToolbar(mSettings.toolbars);
     }
 
     void applyBootSetting() {
@@ -2252,77 +2275,68 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
         }
     };
 
-    private OnClickListener mOnClickUndo = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            mEditor.onKeyShortcut(KeyEvent.KEYCODE_Z, new KeyEvent(KeyEvent.ACTION_DOWN,
-                    KeyEvent.KEYCODE_Z));
+    private jp.sblo.pandora.jota.text.EditText getCurrentFocusEditText( )
+    {
+        jp.sblo.pandora.jota.text.EditText target = null;
+        if ( mEditor.hasFocus() ){
+            target = mEditor;
+        }else if ( mEdtSearchWord.hasFocus() ){
+            target = mEdtSearchWord;
+        }else if ( mEdtReplaceWord.hasFocus() ){
+            target = mEdtReplaceWord;
         }
-    };
-    private OnClickListener mOnClickRedo = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            mEditor.onKeyShortcut(KeyEvent.KEYCODE_Y, new KeyEvent(KeyEvent.ACTION_DOWN,
-                    KeyEvent.KEYCODE_Y));
-        }
-    };
-    private OnClickListener mOnClickCut = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            mEditor.onKeyShortcut(KeyEvent.KEYCODE_X, new KeyEvent(KeyEvent.ACTION_DOWN,
-                    KeyEvent.KEYCODE_X));
-        }
-    };
-    private OnClickListener mOnClickCopy = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            mEditor.onKeyShortcut(KeyEvent.KEYCODE_C, new KeyEvent(KeyEvent.ACTION_DOWN,
-                    KeyEvent.KEYCODE_C));
-        }
-    };
-    private OnClickListener mOnClickPaste = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            mEditor.onKeyShortcut(KeyEvent.KEYCODE_V, new KeyEvent(KeyEvent.ACTION_DOWN,
-                    KeyEvent.KEYCODE_V));
-        }
-    };
-    private OnClickListener mOnClickQuit = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            confirmSave(mProcQuit);
-        }
-    };
-
-    class ToolbarDefine {
-        String label;
-        OnClickListener handler;
-
-        ToolbarDefine( String l , OnClickListener h){
-            label = l;
-            handler = h;
-        }
+        return target;
     }
 
-    @SuppressWarnings("deprecation")
-    private void initToolbar()
-    {
-        ToolbarDefine[] defines = {
-                new ToolbarDefine("Save" , mOnClickSave ),
-                new ToolbarDefine("Undo"  ,mOnClickUndo ),
-                new ToolbarDefine("Redo"  ,mOnClickRedo  ),
-                new ToolbarDefine("Copy"  ,mOnClickCopy  ),
-                new ToolbarDefine(" Cut "   ,mOnClickCut  ),
-                new ToolbarDefine("Paste" ,mOnClickPaste ),
-                new ToolbarDefine("Quit"  ,mOnClickQuit ),
-        };
+    private OnClickListener mOnClickToolbar = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
 
-        for( ToolbarDefine td : defines ){
+            Integer function = (Integer)v.getTag();
+            switch( function ){
+                case jp.sblo.pandora.jota.text.TextView.FUNCTION_UNDO:
+                case jp.sblo.pandora.jota.text.TextView.FUNCTION_COPY:
+                case jp.sblo.pandora.jota.text.TextView.FUNCTION_CUT:
+                case jp.sblo.pandora.jota.text.TextView.FUNCTION_PASTE:
+                case jp.sblo.pandora.jota.text.TextView.FUNCTION_REDO:
+                case jp.sblo.pandora.jota.text.TextView.FUNCTION_SELECT_ALL:
+                    jp.sblo.pandora.jota.text.EditText target = getCurrentFocusEditText();
+                    if ( target != null ){
+                        target.doFunction(function);
+                    }
+                    break;
+                default:
+                    mEditor.doFunction(function);
+                    break;
+            }
+        }
+    };
+
+    private String getToolbarLabel(int f) {
+
+        int[] tblFunc = SettingsShortcutActivity.TBL_FUNCTION;
+        String[] tblLabel = SettingsShortcutActivity.TBL_TOOLNAME;
+        for (int i = 0; i < tblFunc.length; i++) {
+            if (tblFunc[i] == f) {
+                return tblLabel[i];
+            }
+        }
+        return "";
+    }
+
+
+    @SuppressWarnings("deprecation")
+    private void initToolbar( ArrayList<Integer> toolbars)
+    {
+        mToolbar.removeAllViews();
+        for( Integer function : toolbars ){
             Button button = new Button(this);
             LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.FILL_PARENT);
             button.setBackgroundResource(android.R.drawable.btn_default_small);
-            button.setText(td.label);
-            button.setOnClickListener(td.handler);
+            button.setText(getToolbarLabel(function));
+            button.setTag(function);
+            button.setOnClickListener(mOnClickToolbar);
+            button.setFocusable(false);
             mToolbar.addView(button,lp);
         }
 

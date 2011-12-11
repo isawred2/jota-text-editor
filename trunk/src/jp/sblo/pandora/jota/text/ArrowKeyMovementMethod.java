@@ -23,6 +23,7 @@ import java.lang.reflect.Method;
 import android.text.NoCopySpan;
 import android.text.Spannable;
 import android.text.method.MetaKeyKeyListener;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.ViewConfiguration;
@@ -35,6 +36,145 @@ public class
 ArrowKeyMovementMethod
 implements MovementMethod
 {
+    private boolean moveUp( TextView widget, Spannable buffer , boolean cap )
+    {
+        Layout layout = widget.getLayout();
+        if ( cap ){
+            return Selection.extendUp(buffer, layout);
+        }else{
+            return Selection.moveUp(buffer, layout);
+        }
+    }
+
+    private boolean moveDown( TextView widget, Spannable buffer , boolean cap )
+    {
+        Layout layout = widget.getLayout();
+        if ( cap ){
+            return Selection.extendDown(buffer, layout);
+        }else{
+            return Selection.moveDown(buffer, layout);
+        }
+    }
+
+    private boolean moveLeft( TextView widget, Spannable buffer , boolean cap )
+    {
+        Layout layout = widget.getLayout();
+        if ( cap ){
+            return Selection.extendLeft(buffer, layout);
+        }else{
+            return Selection.moveLeft(buffer, layout);
+        }
+    }
+
+    private boolean moveRight( TextView widget, Spannable buffer , boolean cap )
+    {
+        Layout layout = widget.getLayout();
+        if ( cap ){
+            return Selection.extendRight(buffer, layout);
+        }else{
+            return Selection.moveRight(buffer, layout);
+        }
+    }
+
+    private boolean movePageUp( TextView widget, Spannable buffer , boolean cap )
+    {
+        if ( cap ){
+            widget.movePage(true,true);
+            return true;
+        }else{
+            widget.movePage(true,false);
+            return true;
+        }
+    }
+
+    private boolean movePageDown( TextView widget, Spannable buffer , boolean cap )
+    {
+        if ( cap ){
+            widget.movePage(false,true);
+            return true;
+        }else{
+            widget.movePage(false,false);
+            return true;
+        }
+    }
+
+    private boolean moveHome(TextView widget, Spannable buffer, boolean cap )
+    {
+        Layout layout = widget.getLayout();
+        if (cap) {
+            return Selection.extendToLeftEdge(buffer, layout);
+        } else {
+            return Selection.moveToLeftEdge(buffer, layout);
+        }
+    }
+
+    private boolean moveTop(TextView widget, Spannable buffer, boolean cap )
+    {
+        if (cap) {
+            Selection.extendSelection(buffer, 0);
+            return true;
+        } else {
+            Selection.setSelection(buffer, 0);
+            return true;
+        }
+    }
+
+    private boolean moveEnd(TextView widget, Spannable buffer, boolean cap )
+    {
+        Layout layout = widget.getLayout();
+        if (cap) {
+            return Selection.extendToRightEdge(buffer, layout);
+        } else {
+            return Selection.moveToRightEdge(buffer, layout);
+        }
+    }
+
+    private boolean moveBottom(TextView widget, Spannable buffer, boolean cap )
+    {
+        if (cap) {
+            Selection.extendSelection(buffer, buffer.length());
+            return true;
+        } else {
+            Selection.setSelection(buffer, buffer.length());
+            return true;
+        }
+    }
+    public boolean doFunction(TextView widget, Spannable buffer, int function)
+    {
+        boolean cap = (MetaKeyKeyListener.getMetaState(buffer,
+                KeyEvent.META_SHIFT_ON) == 1) ||
+              (MetaKeyKeyListener.getMetaState(buffer,
+                MetaKeyKeyListener.META_SELECTING) != 0);
+
+        Log.d("=========================>","cap="+cap);
+
+        switch( function )
+        {
+            case TextView.FUNCTION_CURSOR_LEFT:
+                return moveLeft(widget, buffer, cap);
+            case TextView.FUNCTION_CURSOR_RIGHT:
+                return moveRight(widget, buffer, cap);
+            case TextView.FUNCTION_CURSOR_UP:
+                return moveUp(widget, buffer, cap);
+            case TextView.FUNCTION_CURSOR_DOWN:
+                return moveDown(widget, buffer, cap);
+            case TextView.FUNCTION_PAGE_UP:
+                return movePageUp(widget, buffer, cap);
+            case TextView.FUNCTION_PAGE_DOWN:
+                return movePageDown(widget, buffer, cap);
+            case TextView.FUNCTION_HOME:
+                return moveHome(widget, buffer, cap);
+            case TextView.FUNCTION_END:
+                return moveEnd(widget, buffer, cap);
+            case TextView.FUNCTION_TOP:
+                return moveTop(widget, buffer, cap);
+            case TextView.FUNCTION_BOTTOM:
+                return moveBottom(widget, buffer, cap);
+        }
+        return false;
+    }
+
+
     private boolean up(TextView widget, Spannable buffer) {
         boolean cap = (MetaKeyKeyListener.getMetaState(buffer,
                         KeyEvent.META_SHIFT_ON) == 1) ||

@@ -5834,7 +5834,11 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
 
         int left = (int) FloatMath.floor(mLayout.getLineLeft(line));
         int right = (int) FloatMath.ceil(mLayout.getLineRight(line)+mLineNumberWidth); // Jota Text Editor
-        int ht = mLayout.getHeight() + mLayout.getLineTop(7);
+        int ht = mLayout.getHeight();
+        // Jota Text Editor
+        if ( mForceScroll ){
+            ht += mLayout.getLineTop(7);
+        }
 
         int grav;
 
@@ -7379,50 +7383,122 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
 
     @Override
     public boolean onKeyShortcut(int keyCode, KeyEvent event) {
-        switch (keyCode) {
-        case KeyEvent.KEYCODE_A:
-            if (canSelectText()) {
-                return onTextContextMenuItem(ID_SELECT_ALL);
-            }
-
-            break;
-
-        case KeyEvent.KEYCODE_X:
-            if (canCut()) {
-                return onTextContextMenuItem(ID_CUT);
-            }
-
-            break;
-
-        case KeyEvent.KEYCODE_C:
-            if (canCopy()) {
-                return onTextContextMenuItem(ID_COPY);
-            }
-
-            break;
-
-        case KeyEvent.KEYCODE_V:
-            if (canPaste()) {
-                return onTextContextMenuItem(ID_PASTE);
-            }
-
-            break;
-
-// Jota Text Editor
-        case KeyEvent.KEYCODE_Z:
-            if (canUndo()) {
-                return onTextContextMenuItem(ID_UNDO);
-            }
- // Jota Text Editor
-        case KeyEvent.KEYCODE_Y:
-            if (canRedo()) {
-                return onTextContextMenuItem(ID_REDO);
-            }
-
-            break;
-        }
+//        switch (keyCode) {
+//        case KeyEvent.KEYCODE_A:
+//            if (canSelectText()) {
+//                return onTextContextMenuItem(ID_SELECT_ALL);
+//            }
+//
+//            break;
+//
+//        case KeyEvent.KEYCODE_X:
+//            if (canCut()) {
+//                return onTextContextMenuItem(ID_CUT);
+//            }
+//
+//            break;
+//
+//        case KeyEvent.KEYCODE_C:
+//            if (canCopy()) {
+//                return onTextContextMenuItem(ID_COPY);
+//            }
+//
+//            break;
+//
+//        case KeyEvent.KEYCODE_V:
+//            if (canPaste()) {
+//                return onTextContextMenuItem(ID_PASTE);
+//            }
+//
+//            break;
+//
+//// Jota Text Editor
+//        case KeyEvent.KEYCODE_Z:
+//            if (canUndo()) {
+//                return onTextContextMenuItem(ID_UNDO);
+//            }
+// // Jota Text Editor
+//        case KeyEvent.KEYCODE_Y:
+//            if (canRedo()) {
+//                return onTextContextMenuItem(ID_REDO);
+//            }
+//
+//            break;
+//        }
 
         return super.onKeyShortcut(keyCode, event);
+    }
+
+    // Jota Text Editor
+    public boolean doCommand( int function )
+    {
+        switch (function) {
+            case FUNCTION_SELECT_ALL:
+                if (canSelectText()) {
+                    return onTextContextMenuItem(ID_SELECT_ALL);
+                }
+                break;
+
+            case FUNCTION_CUT:
+                if (canCut()) {
+                    return onTextContextMenuItem(ID_CUT);
+                }
+
+                break;
+
+            case FUNCTION_COPY:
+                if (canCopy()) {
+                    return onTextContextMenuItem(ID_COPY);
+                }
+
+                break;
+
+            case FUNCTION_PASTE:
+                if (canPaste()) {
+                    return onTextContextMenuItem(ID_PASTE);
+                }
+
+                break;
+
+            case FUNCTION_UNDO:
+                if (canUndo()) {
+                    return onTextContextMenuItem(ID_UNDO);
+                }
+                break;
+
+            case FUNCTION_REDO:
+                if (canRedo()) {
+                    return onTextContextMenuItem(ID_REDO);
+                }
+                break;
+
+            case FUNCTION_WORDWRAP:
+                setHorizontallyScrolling(!mHorizontallyScrolling);
+                return true;
+            case FUNCTION_SHOWIME:
+                showIme(true);
+                return true;
+
+            case TextView.FUNCTION_CURSOR_LEFT:
+            case TextView.FUNCTION_CURSOR_RIGHT:
+            case TextView.FUNCTION_CURSOR_UP:
+            case TextView.FUNCTION_CURSOR_DOWN:
+            case TextView.FUNCTION_PAGE_UP:
+            case TextView.FUNCTION_PAGE_DOWN:
+            case TextView.FUNCTION_HOME:
+            case TextView.FUNCTION_END:
+            case TextView.FUNCTION_TOP:
+            case TextView.FUNCTION_BOTTOM:
+            {
+                if ( mMovement instanceof ArrowKeyMovementMethod ){
+                    ArrowKeyMovementMethod amm = (ArrowKeyMovementMethod)mMovement;
+                    amm.doFunction(this, (Spannable)mText, function);
+                }
+                return true;
+            }
+
+        }
+        return false;
     }
 
     private boolean canSelectAll() {
@@ -9073,6 +9149,55 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
         return mBlinkCursorEnabled;
     }
 
+    // Jota Text Editor
+    public void setForceScroll(boolean value) {
+        mForceScroll=value;
+    }
+
+
+    // Jota Text Editor
+    public final static int FUNCTION_NONE=0;
+    public final static int FUNCTION_SELECT_ALL=1;
+    public final static int FUNCTION_UNDO=2;
+    public final static int FUNCTION_COPY=3;
+    public final static int FUNCTION_CUT=4;
+    public final static int FUNCTION_PASTE=5;
+    public final static int FUNCTION_DIRECTINTENT=6;
+    public final static int FUNCTION_SAVE=7;
+    public final static int FUNCTION_ENTER=8;
+    public final static int FUNCTION_TAB=9;
+    public final static int FUNCTION_DEL=10;
+    public final static int FUNCTION_CENTERING=11;
+    public final static int FUNCTION_SEARCH=12;
+    public final static int FUNCTION_OPEN=13;
+    public final static int FUNCTION_NEWFILE=14;
+    public final static int FUNCTION_REDO=15;
+    public final static int FUNCTION_CONTEXTMENU=16;
+    public final static int FUNCTION_JUMP=17;
+    public final static int FUNCTION_FORWARD_DEL=18;
+
+    public final static int FUNCTION_CURSOR_LEFT=19;
+    public final static int FUNCTION_CURSOR_RIGHT=20;
+    public final static int FUNCTION_CURSOR_UP=21;
+    public final static int FUNCTION_CURSOR_DOWN=22;
+    public final static int FUNCTION_PAGE_UP=23;
+    public final static int FUNCTION_PAGE_DOWN=24;
+    public final static int FUNCTION_HOME=25;
+    public final static int FUNCTION_END=26;
+    public final static int FUNCTION_TOP=27;
+    public final static int FUNCTION_BOTTOM=28;
+    public final static int FUNCTION_PROPERTY=29;
+    public final static int FUNCTION_HISTORY=30;
+    public final static int FUNCTION_OPENAPP=31;
+    public final static int FUNCTION_SHARE=32;
+    public final static int FUNCTION_SHAREFILE=33;
+    public final static int FUNCTION_INSERT=34;
+    public final static int FUNCTION_QUIT=35;
+    public final static int FUNCTION_SEARCHAPP=36;
+    public final static int FUNCTION_WORDWRAP=37;
+    public final static int FUNCTION_SHOWIME=38;
+
+
     @ViewDebug.ExportedProperty
     private CharSequence            mText;
     private CharSequence            mTransformed;
@@ -9200,4 +9325,5 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
     private boolean mHasNavigationDevice;
     private boolean mDontUseSoftkeyWithHardkey=false;
     private boolean mBlinkCursorEnabled;
+    private boolean mForceScroll=true;
 }

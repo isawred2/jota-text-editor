@@ -16,34 +16,16 @@ import android.view.inputmethod.InputMethodManager;
 
 public class EditText extends TextView{
 
-    public final static int FUNCTION_NONE=0;
-    public final static int FUNCTION_SELECT_ALL=1;
-    public final static int FUNCTION_UNDO=2;
-    public final static int FUNCTION_COPY=3;
-    public final static int FUNCTION_CUT=4;
-    public final static int FUNCTION_PASTE=5;
-    public final static int FUNCTION_DIRECTINTENT=6;
-    public final static int FUNCTION_SAVE=7;
-    public final static int FUNCTION_ENTER=8;
-    public final static int FUNCTION_TAB=9;
-    public final static int FUNCTION_DEL=10;
-    public final static int FUNCTION_CENTERING=11;
-    public final static int FUNCTION_SEARCH=12;
-    public final static int FUNCTION_OPEN=13;
-    public final static int FUNCTION_NEWFILE=14;
-    public final static int FUNCTION_REDO=15;
-    public final static int FUNCTION_CONTEXTMENU=16;
-    public final static int FUNCTION_JUMP=17;
-    public final static int FUNCTION_FORWARD_DEL=18;
 
 
     private JotaTextWatcher mTextWatcher;
     private WeakReference<ShortcutListener> mShortcutListener;
     private int mShortcutCtrlKey = 0;
     private int mShortcutAltKey = 0;
-    private HashMap<Integer,Integer> mShortcuts;;
+    private HashMap<Integer,Integer> mShortcuts;
     private int mDpadCenterFunction = FUNCTION_CENTERING;
 
+    private static Boolean sIWnnFlag = null;
 
     public EditText(Context context) {
         this(context, null);
@@ -158,22 +140,37 @@ public class EditText extends TextView{
 
         if ( alt && event.getAction() == KeyEvent.ACTION_DOWN ){
             if (doShortcut(keycode)){
-                InputMethodManager imm = InputMethodManager.peekInstance();
-                if (imm != null){
+                if ( sIWnnFlag == null ){
                     // for IS01 w/iWnn
                     // iWnn eats ALT key so we needs to reset ime.
-                    try {
-                        Class<?> c = imm.getClass();
-                        Field f = c.getDeclaredField("mCurId");
-                        f.setAccessible(true);
-                        String immId = (String)f.get(imm);
-                        if ( "jp.co.omronsoft.iwnnime/.iWnnIME".equals(immId) ){
-                            imm.restartInput(this);
+                    InputMethodManager imm = InputMethodManager.peekInstance();
+                    if (imm != null){
+                        try {
+                            Class<?> c = imm.getClass();
+                            Field f = c.getDeclaredField("mCurId");
+                            f.setAccessible(true);
+                            String immId = (String)f.get(imm);
+                            if ( "jp.co.omronsoft.iwnnime/.iWnnIME".equals(immId) ){
+                                sIWnnFlag = true;
+                            }
+                        } catch (Exception e) {
                         }
-                    } catch (Exception e) {
                     }
                 }
-                TextKeyListener.resetMetaState((Spannable)getEditableText());
+                if ( sIWnnFlag != null && sIWnnFlag ){
+                    InputMethodManager imm = InputMethodManager.peekInstance();
+                    if (imm != null){
+                        imm.restartInput(this);
+                    }
+                }
+                if ( (meta & KeyEvent.META_ALT_ON) != 0  ){
+                    TextKeyListener.clearMetaKeyState(getEditableText(),KeyEvent.META_ALT_ON);
+                }
+                return true;
+            }
+        }
+        if ( alt && event.getAction() == KeyEvent.ACTION_UP ){
+            if (isShortcut(keycode)){
                 return true;
             }
         }
@@ -211,35 +208,24 @@ public class EditText extends TextView{
 
         switch ( function) {
             case FUNCTION_SELECT_ALL:
-                return onKeyShortcut(KeyEvent.KEYCODE_A, new KeyEvent(KeyEvent.ACTION_DOWN,KeyEvent.KEYCODE_A));
-
             case FUNCTION_CUT:
-                return onKeyShortcut(KeyEvent.KEYCODE_X, new KeyEvent(KeyEvent.ACTION_DOWN,KeyEvent.KEYCODE_X));
-
             case FUNCTION_COPY:
-                return onKeyShortcut(KeyEvent.KEYCODE_C, new KeyEvent(KeyEvent.ACTION_DOWN,KeyEvent.KEYCODE_C));
-
             case FUNCTION_UNDO:
-                return onKeyShortcut(KeyEvent.KEYCODE_Z, new KeyEvent(KeyEvent.ACTION_DOWN,KeyEvent.KEYCODE_Z));
-
             case FUNCTION_REDO:
-                return onKeyShortcut(KeyEvent.KEYCODE_Y, new KeyEvent(KeyEvent.ACTION_DOWN,KeyEvent.KEYCODE_Y));
-
             case FUNCTION_PASTE:
-                return onKeyShortcut(KeyEvent.KEYCODE_V, new KeyEvent(KeyEvent.ACTION_DOWN,KeyEvent.KEYCODE_V));
-
-
-            case FUNCTION_SAVE:
-                if (sl != null) {
-                    return sl.onCommand(KeyEvent.KEYCODE_S);
-                }
-                break;
-
-            case FUNCTION_DIRECTINTENT:
-                if (sl != null) {
-                    return sl.onCommand(KeyEvent.KEYCODE_D);
-                }
-                break;
+            case FUNCTION_WORDWRAP:
+            case FUNCTION_SHOWIME:
+            case FUNCTION_CURSOR_LEFT:
+            case FUNCTION_CURSOR_RIGHT:
+            case FUNCTION_CURSOR_UP:
+            case FUNCTION_CURSOR_DOWN:
+            case FUNCTION_PAGE_UP:
+            case FUNCTION_PAGE_DOWN:
+            case FUNCTION_HOME:
+            case FUNCTION_END:
+            case FUNCTION_TOP:
+            case FUNCTION_BOTTOM:
+                return doCommand(function);
 
             case FUNCTION_ENTER:
                 return onKeyDown(KeyEvent.KEYCODE_ENTER ,new KeyEvent(KeyEvent.ACTION_DOWN,KeyEvent.KEYCODE_ENTER));
@@ -252,30 +238,31 @@ public class EditText extends TextView{
                 int key = JotaTextKeyListener.getForwardDelKeycode();
                 return onKeyDown( key ,new KeyEvent(KeyEvent.ACTION_DOWN,key));
             }
+
             case FUNCTION_CENTERING:
                 return centerCursor();
 
+            case FUNCTION_SAVE:
+                if (sl != null) {
+                    return sl.onCommand(function);
+                }
+                break;
+
+            case FUNCTION_DIRECTINTENT:
             case FUNCTION_OPEN:
-                if (sl != null) {
-                    return sl.onCommand(KeyEvent.KEYCODE_O);
-                }
-                break;
-
             case FUNCTION_NEWFILE:
-                if (sl != null) {
-                    return sl.onCommand(KeyEvent.KEYCODE_N);
-                }
-                break;
-
             case FUNCTION_SEARCH:
-                if (sl != null) {
-                    return sl.onCommand(KeyEvent.KEYCODE_F);
-                }
-                break;
-
             case FUNCTION_JUMP:
+            case FUNCTION_PROPERTY:
+            case FUNCTION_HISTORY:
+            case FUNCTION_OPENAPP:
+            case FUNCTION_SHARE:
+            case FUNCTION_SHAREFILE:
+            case FUNCTION_INSERT:
+            case FUNCTION_QUIT:
+            case FUNCTION_SEARCHAPP:
                 if (sl != null) {
-                    return sl.onCommand(KeyEvent.KEYCODE_J);
+                    return sl.onCommand(function);
                 }
                 break;
 
@@ -295,6 +282,16 @@ public class EditText extends TextView{
 
         if (ss!=null && ss != EditText.FUNCTION_NONE ) {
             return doFunction( ss );
+        }
+        return false;
+    }
+
+    public boolean isShortcut(int keycode) {
+
+        Integer ss = mShortcuts.get(keycode);
+
+        if (ss!=null && ss != EditText.FUNCTION_NONE ) {
+            return true;
         }
         return false;
     }

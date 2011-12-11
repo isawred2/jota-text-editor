@@ -2,6 +2,7 @@ package jp.sblo.pandora.jota;
 
 import java.io.File;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.app.AlertDialog;
@@ -89,7 +90,8 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
     private static final String KEY_WALLPAPER_PORTRAIT      = "KEY_WALLPAPER_PORTRAIT";
     private static final String KEY_WALLPAPER_LANDSCAPE     = "KEY_WALLPAPER_LANDSCAPE";
     private static final String KEY_WALLPAPER_TRANSPARENCY  = "KEY_WALLPAPER_TRANSPARENCY";
-    private static final String KEY_SHOW_TOOLBAR            = "KEY_SHOW_TOOLBAR";
+    public static final String KEY_SHOW_TOOLBAR            = "KEY_SHOW_TOOLBAR";
+    private static final String KEY_FORCE_SCROLL            = "KEY_FORCE_SCROLL";
 
 	public static final String KEY_LASTVERSION = "LastVersion";
 
@@ -140,6 +142,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
     public static final String CAT_VIEW = "view";
     public static final String CAT_INPUT = "input";
     public static final String CAT_FILE = "file";
+    public static final String CAT_TOOLBAR = "toolbar";
     public static final String CAT_MISC = "misc";
 
     public static final String ORI_AUTO="auto";
@@ -221,6 +224,12 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                     final Preference pr = new Preference(this);
                     pr.setTitle(R.string.menu_pref_input);
                     pr.setOnPreferenceClickListener(mProcPrefInput);
+                    mPs.addPreference(pr);
+                }
+                {
+                    final Preference pr = new Preference(this);
+                    pr.setTitle(R.string.menu_pref_toolbar);
+                    pr.setOnPreferenceClickListener(mProcPrefToolbar);
                     mPs.addPreference(pr);
                 }
                 {
@@ -452,10 +461,10 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                     mPrefOrientation = pr;
                 }
                 {
-                    // show toolbar
+                    // force scroll
                     final CheckBoxPreference pr = new CheckBoxPreference(this);
-                    pr.setKey(KEY_SHOW_TOOLBAR);
-                    pr.setTitle(R.string.label_show_toolbar);
+                    pr.setKey(KEY_FORCE_SCROLL);
+                    pr.setTitle(R.string.label_force_scroll);
                     cat.addPreference(pr);
                 }
                 if ( IS01FullScreen.isIS01orLynx() ){
@@ -720,6 +729,20 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                     category.addPreference(pr);
                 }
             }
+//            if ( CAT_TOOLBAR.equals(categ) ){
+//                // View Category
+//                setTitle(R.string.menu_pref_toolbar);
+//                final PreferenceCategory cat = new PreferenceCategory(this);
+//                cat.setTitle(R.string.label_toolbar);
+//                mPs.addPreference(cat);
+//                {
+//                    // show toolbar
+//                    final CheckBoxPreference pr = new CheckBoxPreference(this);
+//                    pr.setKey(KEY_SHOW_TOOLBAR);
+//                    pr.setTitle(R.string.label_show_toolbar);
+//                    cat.addPreference(pr);
+//                }
+//            }
 
             if ( CAT_MISC.equals(categ) ){
                 // Help Category
@@ -762,7 +785,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                 }
             }
             if ( CAT_TOP.equals(categ) ){
-                if ( sSettings.donateCounter == 0 ){      // donate
+                if ( sSettings == null || sSettings.donateCounter == 0 ){      // donate
                     final Preference pr = new Preference(this);
                     pr.setTitle(R.string.label_donate);
                     pr.setSummary(R.string.summary_donate);
@@ -947,7 +970,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                     dialog.dismiss();
                     final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this);
                     Editor editor = sp.edit();
-                    editor.putInt(KEY_LASTVERSION, 0 );
+                    editor.clear();
                     editor.commit();
                     isVersionUp(SettingsActivity.this);
                     finish();
@@ -1075,6 +1098,13 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         public boolean onPreferenceClick(Preference preference) {
             Intent intent = new Intent(SettingsActivity.this, SettingsActivity.class);
             intent.putExtra( SettingsActivity.EXTRA_CATEGORY, SettingsActivity.CAT_FILE);
+            startActivity(intent);
+            return true;
+        }
+    };
+    private OnPreferenceClickListener mProcPrefToolbar = new OnPreferenceClickListener(){
+        public boolean onPreferenceClick(Preference preference) {
+            Intent intent = new Intent(SettingsActivity.this, SettingsToolbarActivity.class);
             startActivity(intent);
             return true;
         }
@@ -1480,6 +1510,8 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         String wallpaperLandscape;
         String wallpaperTransparency;
         boolean showToolbar;
+        boolean forceScroll;
+        ArrayList<Integer> toolbars;
 	}
 
 	public static class BootSettings {
@@ -1600,6 +1632,8 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         ret.wallpaperLandscape = sp.getString(KEY_WALLPAPER_LANDSCAPE, "");
         ret.wallpaperTransparency = sp.getString(KEY_WALLPAPER_TRANSPARENCY, "");
         ret.showToolbar = sp.getBoolean(KEY_SHOW_TOOLBAR, true);
+        ret.forceScroll = sp.getBoolean(KEY_FORCE_SCROLL, true);
+        ret.toolbars = SettingsToolbarActivity.readToolbarSettings(ctx);
         sSettings = ret;
         return ret;
 	}
@@ -1718,8 +1752,12 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                     editor.putString(KEY_WALLPAPER_TRANSPARENCY, "30");
                     editor.putBoolean(KEY_SHOW_TOOLBAR, true);
                 }
+                if ( lastversion < 42 ){
+                    editor.putBoolean(KEY_FORCE_SCROLL, true);
+                }
                 editor.commit();
                 SettingsShortcutActivity.writeDefaultShortcuts(ctx);
+                SettingsToolbarActivity.writeDefaultToolbarSettings(ctx);
 			}
 
 		} catch (NameNotFoundException e) {
