@@ -2300,6 +2300,13 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
                 case jp.sblo.pandora.jota.text.TextView.FUNCTION_PASTE:
                 case jp.sblo.pandora.jota.text.TextView.FUNCTION_REDO:
                 case jp.sblo.pandora.jota.text.TextView.FUNCTION_SELECT_ALL:
+                case jp.sblo.pandora.jota.text.TextView.FUNCTION_CURSOR_LEFT:
+                case jp.sblo.pandora.jota.text.TextView.FUNCTION_CURSOR_RIGHT:
+                case jp.sblo.pandora.jota.text.TextView.FUNCTION_HOME:
+                case jp.sblo.pandora.jota.text.TextView.FUNCTION_END:
+                case jp.sblo.pandora.jota.text.TextView.FUNCTION_TAB:
+                case jp.sblo.pandora.jota.text.TextView.FUNCTION_DEL:
+                case jp.sblo.pandora.jota.text.TextView.FUNCTION_FORWARD_DEL:
                     jp.sblo.pandora.jota.text.EditText target = getCurrentFocusEditText();
                     if ( target != null ){
                         target.doFunction(function);
