@@ -675,6 +675,9 @@ Please donate if you continue to use Jota.
 - その他バグ修正
 - 韓国語リソースを更新（Thanks to Noah!)
 
+[2011/12/12 v.0.1.23]
+- 複数行検索でクラッシュするバグを修正
+
 Android Market経由で作者に寄付が出来ます。
 継続してお使いの方は、寄付をお願いします。
 
@@ -685,6 +688,9 @@ Android Market経由で作者に寄付が出来ます。
 - added workaround for Galaxy Note.
 - fixed minor bugs.
 - updated Korean resources.(Thanks to Noah!)
+
+[2011/12/12 v.0.1.23]
+- fixed the bug that crashes when search multiline.
 
 You can donate to the developer via Android Market.
 Please donate if you continue to use Jota.
