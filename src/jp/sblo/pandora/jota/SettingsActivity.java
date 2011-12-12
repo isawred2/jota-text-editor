@@ -90,7 +90,8 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
     private static final String KEY_WALLPAPER_PORTRAIT      = "KEY_WALLPAPER_PORTRAIT";
     private static final String KEY_WALLPAPER_LANDSCAPE     = "KEY_WALLPAPER_LANDSCAPE";
     private static final String KEY_WALLPAPER_TRANSPARENCY  = "KEY_WALLPAPER_TRANSPARENCY";
-    public static final String KEY_SHOW_TOOLBAR            = "KEY_SHOW_TOOLBAR";
+    public static final String KEY_SHOW_TOOLBAR             = "KEY_SHOW_TOOLBAR";
+    public static final String KEY_TOOLBAR_BIGBUTTON        = "KEY_TOOLBAR_BIGBUTTON";
     private static final String KEY_FORCE_SCROLL            = "KEY_FORCE_SCROLL";
 
 	public static final String KEY_LASTVERSION = "LastVersion";
@@ -1512,6 +1513,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         boolean showToolbar;
         boolean forceScroll;
         ArrayList<Integer> toolbars;
+        boolean toolbarBigButton;
 	}
 
 	public static class BootSettings {
@@ -1634,6 +1636,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         ret.showToolbar = sp.getBoolean(KEY_SHOW_TOOLBAR, true);
         ret.forceScroll = sp.getBoolean(KEY_FORCE_SCROLL, true);
         ret.toolbars = SettingsToolbarActivity.readToolbarSettings(ctx);
+        ret.toolbarBigButton = sp.getBoolean(KEY_TOOLBAR_BIGBUTTON, false);
         sSettings = ret;
         return ret;
 	}
@@ -1754,6 +1757,9 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                 }
                 if ( lastversion < 42 ){
                     editor.putBoolean(KEY_FORCE_SCROLL, true);
+                }
+                if ( lastversion < 44 ){
+                    editor.putBoolean(KEY_TOOLBAR_BIGBUTTON, false);
                 }
                 editor.commit();
                 SettingsShortcutActivity.writeDefaultShortcuts(ctx);

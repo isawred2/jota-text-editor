@@ -27,6 +27,7 @@ public class SettingsToolbarActivity extends Activity  {
     private ToolAdapter mAdapter;
     private ImageButton mAddButton;
     private CheckBox mUseToolbar;
+    private CheckBox mToolbarBigButton;
 
     private String[] mSummarys;
     private int[] mFunctions;
@@ -104,6 +105,16 @@ public class SettingsToolbarActivity extends Activity  {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 mSp.edit().putBoolean(SettingsActivity.KEY_SHOW_TOOLBAR, isChecked).commit();
+            }
+        });
+
+        mToolbarBigButton = (CheckBox)findViewById(R.id.bigbutton);
+        boolean toolbarBigButton = mSp.getBoolean(SettingsActivity.KEY_TOOLBAR_BIGBUTTON, false);
+        mToolbarBigButton.setChecked(toolbarBigButton);
+        mToolbarBigButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mSp.edit().putBoolean(SettingsActivity.KEY_TOOLBAR_BIGBUTTON, isChecked).commit();
             }
         });
     }

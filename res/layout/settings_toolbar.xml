@@ -7,15 +7,29 @@
   <LinearLayout
     android:orientation="horizontal" 
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content" 
+    android:gravity="bottom" 
+  >
 
-    <CheckBox
-      android:id="@+id/usetoolbar" 
+    <LinearLayout
+      android:orientation="vertical" 
       android:layout_width="fill_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="wrap_content" 
       android:layout_weight="1"
-      android:text="@string/label_show_toolbar"
-     />
+    >
+      <CheckBox
+        android:id="@+id/usetoolbar" 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/label_show_toolbar"
+       />
+      <CheckBox
+        android:id="@+id/bigbutton" 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/label_toolbar_bigbutton"
+       />
+    </LinearLayout>
     <ImageButton
       android:id="@+id/addtoolbar" 
       android:layout_width="wrap_content"

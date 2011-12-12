@@ -2241,7 +2241,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
         mEditor.enableBlinkCursor(mSettings.blinkCursor);
         mToolbarBase.setVisibility(mSettings.showToolbar?View.VISIBLE:View.GONE);
         mEditor.setForceScroll(mSettings.forceScroll);
-        initToolbar(mSettings.toolbars);
+        initToolbar(mSettings.toolbars,mSettings.toolbarBigButton);
     }
 
     void applyBootSetting() {
@@ -2333,17 +2333,22 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
 
 
     @SuppressWarnings("deprecation")
-    private void initToolbar( ArrayList<Integer> toolbars)
+    private void initToolbar( ArrayList<Integer> toolbars , boolean bigButton)
     {
         mToolbar.removeAllViews();
         for( Integer function : toolbars ){
             Button button = new Button(this);
             LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.FILL_PARENT);
-            button.setBackgroundResource(android.R.drawable.btn_default_small);
             button.setText(getToolbarLabel(function));
             button.setTag(function);
             button.setOnClickListener(mOnClickToolbar);
             button.setFocusable(false);
+            if ( bigButton ){
+                button.setTextSize(24);
+                button.setBackgroundResource( android.R.drawable.btn_default );
+            }else{
+                button.setBackgroundResource( android.R.drawable.btn_default_small);
+            }
             mToolbar.addView(button,lp);
         }
 
