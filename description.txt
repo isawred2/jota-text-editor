@@ -861,3 +861,100 @@ OPGELET
  gebruik mijn app "aGrep".
 
 (translated by Jean Marc Lietaer)
+--------------------------------------------------------------------------------
+Jota Text Editor (Italiano)
+
+Jota è un editor di testo adatto anche per la gestione di file testuali molto lunghi.
+Si pronuncia "i-o-ta".
+
+Funzioni:
+- Supporta fino a 1 milione di caratteri.
+
+- Riconoscimento automatico della codifica dei caratteri.
+  UTF-8
+  UTF-16BE
+  UTF-16LE
+  UTF-32BE
+  UTF-32LE
+  WINDOWS-1251
+  WINDOWS-1252
+  WINDOWS-1253
+  WINDOWS-1255
+  SHIFT_JIS
+  ISO-2022-JP
+  ISO-2022-CN
+  ISO-2022-KR
+  ISO-8859-5
+  ISO-8859-7
+  ISO-8859-8
+  BIG5
+  GB18030
+  EUC-JP
+  EUC-KR
+  EUC-TW
+  IBM855
+  IBM866
+  KOI8-R
+  MACCYRILLIC
+  HZ-GB-2312
+  X-ISO-10646-UCS-4-3412
+  X-ISO-10646-UCS-4-2143
+  (Se puoi decodificare o meno dipende da Android.)
+
+- Cambia codifica caratteri.
+- Riconoscimento automatico del codice di interruzione di linea (newline).
+- Cambia il codice di interruzione di linea (newline).
+- Mantieni il codice di interruzione di linea fino al salvataggio del file.
+- Salva la posizione del cursorse insieme al file.
+- Salva la cronologia dei file recenti.
+
+- Cerca/Sostituisci (Supporta le RegExp)
+
+- Condivisione testo con applicazioni esterne
+  Mushroom
+  Condividi (ACTION_SEND)
+  Cerca (ACTION_SEARCH)
+  Apri (ACTION_VIEW)
+
+  ★Direct Intent : Puoi lanciare qualsiasi applicazione dal menù.
+
+- Scrolling trascinando il pollice.
+- Flick scrolling (scroll a colpi di polpastrelli).
+- Indietro/Ripeti
+- Supporta la Scorciatoia con ALT/CTRL.
+- Colori Personalizzabili.
+- Creare una scorciatoia nella HOME.
+- Personalizzazione della scorciatoia 
+- Selezione testo come in Gingerbread.
+(Doppio tap per selezione la parola, poi toccare l'area seleziona per mostrare il marcatore.)
+- Word wrap (spezza parola) ON/OFF e imposta la larghezza del wrapping della parola.
+- Imposta larghezza tab.
+- Modalità Spettatore.
+- Mostra numero linee.
+- Conta Parole.
+- Supporta la modalità landscape correttamente.
+- Salvataggio Automatico.
+- Indentazione Automatica.
+- Mostra Tab/Interruzione di linea.
+- Maiuscole automatiche.
+- Puoi usarlo come editor SL4A.
+
+- Supporta Android OS 1.6 e successivi.
+- Supporta sia i dispositivi touch-screen che i dispositivi con keyboard qwerty.
+
+- Per sempre GRATUITO e SENZA PUBBLICITÀ.
+- Questo software è Open Soruce ed è rilasciato sotto licenza Apache.
+- Le donazioni sono sempre benvenute. Potete donare dal menù Preferenze (GRAZIE)
+
+ATTENZIONE
+  I linguaggi RTL e bi-direzionali NON sono supportati.
+
+★Se necessiti di una risposta NON scrivermi tramite commenti nel Market.
+Per favore scrivimi una E-mail o twettami su Twitter(@jiro_aqua)
+Puoi mandarmi un messaggio anche dal menù Preferenze di Jota.
+
+★Se hai bisogno anche di grep (ricerca in più file di testo), prova la mia app "aGrep".
+
+(translated by Paolo Stivanin a.k.a. Polslinux)
+
+--------------------------------------------------------------------------------
