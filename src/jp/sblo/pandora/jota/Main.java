@@ -5,7 +5,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -44,8 +43,10 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -56,6 +57,7 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -115,6 +117,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
     private Bitmap mWallpaperBmp;
     private LinearLayout mToolbar;
     private View mToolbarBase;
+    private Handler mHandler = new Handler();
 
     class InstanceState {
         String filename;
@@ -1083,6 +1086,11 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
             }
                 return true;
 
+            case R.id.menu_share_screenshot: {
+                mProcShareScreenshot.run();
+            }
+                return true;
+
             case R.id.menu_direct: {
                 mProcDirect.run();
             }
@@ -1851,6 +1859,35 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
         }
     };
 
+    private Runnable mProcShareScreenshot = new Runnable() {
+        public void run() {
+            final View view = getWindow().getDecorView();
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(),0);
+            mHandler.postDelayed( new Runnable() {
+                @Override
+                public void run() {
+                    view.setDrawingCacheEnabled(true);
+                    Bitmap bitmap=view.getDrawingCache();
+                    if (bitmap!=null){
+                        try{
+                            ContentResolver cr = getContentResolver();
+                            String url = MediaStore.Images.Media.insertImage(cr, bitmap, "Jota screen shot", "Jota screen shot");
+                            Uri U = Uri.parse(url);
+
+                            Intent i = new Intent(Intent.ACTION_SEND);
+                            i.setType("image/jpg");
+                            i.putExtra(Intent.EXTRA_STREAM, U);
+                            startActivity(Intent.createChooser(i,getString(R.string.label_share_to)));
+                        }
+                        catch(ActivityNotFoundException e){}
+                    }
+                    view.setDrawingCacheEnabled(false);
+                }
+            },100);
+        }
+    };
+
     private Runnable mProcDirect = new Runnable() {
         public void run() {
             sendDirectIntent(mSettings.directintent);
@@ -2136,13 +2173,16 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
     };
 
     void applySetting() {
+        boolean landscape=false;
+        jp.sblo.pandora.jota.text.EditText editor = mEditor;
+
         mSharedPreferenceChanged=false;
-        mEditor.setAutoCapitalize(mBootSettings.autoCapitalize);
+        editor.setAutoCapitalize(mBootSettings.autoCapitalize);
 
         mSettings = SettingsActivity.readSettings(Main.this);
-        mEditor.setNameDirectIntent(mSettings.intentname);
-        mEditor.setTypeface(mSettings.fontface);
-        mEditor.setTextSize(mSettings.fontsize);
+        editor.setNameDirectIntent(mSettings.intentname);
+        editor.setTypeface(mSettings.fontface);
+        editor.setTextSize(mSettings.fontsize);
 
         int altkey = (mSettings.shortcutaltleft ? KeyEvent.META_ALT_LEFT_ON : 0)
         | (mSettings.shortcutaltright ? KeyEvent.META_ALT_RIGHT_ON : 0);
@@ -2151,27 +2191,29 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
         | 0x1000                            // ctrl key on Honeycomb and Lifetouch Note;
         ;
 
-        mEditor.setShortcutMetaKey(altkey,ctrlkey);
+        editor.setShortcutMetaKey(altkey,ctrlkey);
         mEdtSearchWord.setShortcutMetaKey(altkey,ctrlkey);
         mEdtReplaceWord.setShortcutMetaKey(altkey,ctrlkey);
 
-        mEditor.setHorizontallyScrolling(!mSettings.wordwrap);
+        editor.setHorizontallyScrolling(!mSettings.wordwrap);
 
-        mEditor.setTextColor(mSettings.textcolor);
-        mEditor.setHighlightColor(mSettings.highlightcolor);
+        editor.setTextColor(mSettings.textcolor);
+        editor.setHighlightColor(mSettings.highlightcolor);
 
         String wallpaper;
-        if ( getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ){
-            wallpaper = mSettings.wallpaperPortrait;
-        }else{
+        landscape = getResources().getConfiguration().orientation != Configuration.ORIENTATION_PORTRAIT;
+
+        if ( landscape ){
             wallpaper = mSettings.wallpaperLandscape;
+        }else{
+            wallpaper = mSettings.wallpaperPortrait;
         }
 
         if ( TextUtils.isEmpty(wallpaper) ){
             if (SettingsActivity.THEME_DEFAULT.equals(mSettings.theme)) {
-                mEditor.setBackgroundResource(R.drawable.textfield_default);
+                editor.setBackgroundResource(R.drawable.textfield_default);
             } else if (SettingsActivity.THEME_BLACK.equals(mSettings.theme)) {
-                mEditor.setBackgroundResource(R.drawable.textfield_black);
+                editor.setBackgroundResource(R.drawable.textfield_black);
             }
             mWallpaper.setVisibility(View.GONE);
             mTransparency.setVisibility(View.GONE);
@@ -2189,7 +2231,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
             }else{
                 mTransparency.setBackgroundColor(tr|0x101010);
             }
-            mEditor.setBackgroundColor(0);
+            editor.setBackgroundColor(0);
 
             mWallpaper.setVisibility(View.VISIBLE);
             mTransparency.setVisibility(View.VISIBLE);
@@ -2199,48 +2241,48 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
             }
         }
 
-        mEditor.enableUnderline(mSettings.underline);
+        editor.enableUnderline(mSettings.underline);
         mEdtSearchWord.enableUnderline(false);
         mEdtReplaceWord.enableUnderline(false);
-        mEditor.setUnderlineColor(mSettings.underlinecolor);
-        mEditor.setShortcutSettings(mSettings.shortcuts);
+        editor.setUnderlineColor(mSettings.underlinecolor);
+        editor.setShortcutSettings(mSettings.shortcuts);
         mEdtSearchWord.setShortcutSettings(mSettings.shortcuts);
         mEdtReplaceWord.setShortcutSettings(mSettings.shortcuts);
 
-        mEditor.setUseVolumeKey(mSettings.useVolumeKey);
+        editor.setUseVolumeKey(mSettings.useVolumeKey);
 
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            mEditor.setWrapWidth(mSettings.WrapCharP, mSettings.WrapWidthP);
+        if ( landscape ) {
+            editor.setWrapWidth(mSettings.WrapCharL, mSettings.WrapWidthL);
         } else {
-            mEditor.setWrapWidth(mSettings.WrapCharL, mSettings.WrapWidthL);
+            editor.setWrapWidth(mSettings.WrapCharP, mSettings.WrapWidthP);
         }
-        mEditor.setTabWidth(mSettings.TabChar, mSettings.TabWidth);
+        editor.setTabWidth(mSettings.TabChar, mSettings.TabWidth);
         if (mSettings.TrackballButton.equals(SettingsActivity.TB_CENTERING)) {
-            mEditor.setDpadCenterFunction(jp.sblo.pandora.jota.text.EditText.FUNCTION_CENTERING);
+            editor.setDpadCenterFunction(jp.sblo.pandora.jota.text.EditText.FUNCTION_CENTERING);
         } else if (mSettings.TrackballButton.equals(SettingsActivity.TB_ENTER)) {
-            mEditor.setDpadCenterFunction(jp.sblo.pandora.jota.text.EditText.FUNCTION_ENTER);
+            editor.setDpadCenterFunction(jp.sblo.pandora.jota.text.EditText.FUNCTION_ENTER);
         } else if (mSettings.TrackballButton.equals(SettingsActivity.TB_CONTEXTMENU)) {
-            mEditor.setDpadCenterFunction(jp.sblo.pandora.jota.text.EditText.FUNCTION_CONTEXTMENU);
+            editor.setDpadCenterFunction(jp.sblo.pandora.jota.text.EditText.FUNCTION_CONTEXTMENU);
         } else {
-            mEditor.setDpadCenterFunction(jp.sblo.pandora.jota.text.EditText.FUNCTION_NONE);
+            editor.setDpadCenterFunction(jp.sblo.pandora.jota.text.EditText.FUNCTION_NONE);
         }
-        mEditor.setShowLineNumbers(mSettings.showLineNumbers);
-        mEditor.setAutoIndent(mSettings.autoIndent);
-        mEditor.setLineSpacing(0.0F, (100.0F + mSettings.lineSpace) / 100.0F);
-        mEditor.setShowTab(mSettings.showTab);
+        editor.setShowLineNumbers(mSettings.showLineNumbers);
+        editor.setAutoIndent(mSettings.autoIndent);
+        editor.setLineSpacing(0.0F, (100.0F + mSettings.lineSpace) / 100.0F);
+        editor.setShowTab(mSettings.showTab);
 
-        mEditor.setNavigationDevice( mSettings.shortcutctrl || (getResources().getConfiguration().navigation != Configuration.NAVIGATION_NONAV && Build.VERSION.SDK_INT < 11) );
+        editor.setNavigationDevice( mSettings.shortcutctrl || (getResources().getConfiguration().navigation != Configuration.NAVIGATION_NONAV && Build.VERSION.SDK_INT < 11) );
         if ( mSettings.shortcutctrlltn ){
-            mEditor.setKeycodes(111,112,113);
+            editor.setKeycodes(111,112,113);
             mEdtSearchWord.setKeycodes(111,112,113);
             mEdtReplaceWord.setKeycodes(111,112,113);
         }
-        mEditor.setDontUseSoftkeyWithHardkey( mSettings.specialkey_desirez );
+        editor.setDontUseSoftkeyWithHardkey( mSettings.specialkey_desirez );
         mEdtSearchWord.setDontUseSoftkeyWithHardkey( mSettings.specialkey_desirez );
         mEdtReplaceWord.setDontUseSoftkeyWithHardkey( mSettings.specialkey_desirez );
-        mEditor.enableBlinkCursor(mSettings.blinkCursor);
-        mToolbarBase.setVisibility(mSettings.showToolbar?View.VISIBLE:View.GONE);
-        mEditor.setForceScroll(mSettings.forceScroll);
+        editor.enableBlinkCursor(mSettings.blinkCursor);
+        mToolbarBase.setVisibility(mSettings.showToolbar&&(!landscape || !mSettings.toolbarHideLandscape)?View.VISIBLE:View.GONE);
+        editor.setForceScroll(mSettings.forceScroll);
         initToolbar(mSettings.toolbars,mSettings.toolbarBigButton);
     }
 

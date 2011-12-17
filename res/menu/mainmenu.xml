@@ -98,6 +98,9 @@
 		android:title="@string/menu_share" 
 		android:alphabeticShortcut = "P"
 	/>
+        <item android:id="@+id/menu_share_screenshot" 	
+		android:title="@string/menu_share_screenshot" 
+	/>
     </menu>
 
 </item>
