@@ -418,6 +418,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
             // mInstanceState.selend);
             mEditor.setChanged(mInstanceState.changed);
         }
+        SettingsActivity.showWelcomeMessage(this);
     }
 
     @Override

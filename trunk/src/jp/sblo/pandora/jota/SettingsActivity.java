@@ -1,6 +1,8 @@
 package jp.sblo.pandora.jota;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,6 +33,7 @@ import android.preference.PreferenceScreen;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.SeekBar;
@@ -150,6 +153,8 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
     public static final String ORI_AUTO="auto";
     public static final String ORI_PORTRAIT="portrait";
     public static final String ORI_LANDSCAPE="landscape";
+
+    private static int sLastVersion=0;
 
     private PreferenceScreen mPs = null;
 	private PreferenceManager mPm = getPreferenceManager();
@@ -768,6 +773,12 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                     pr.setSummary(R.string.label_tweet_summary);
                     category.addPreference(pr);
                 }
+                {      // change log
+                    final Preference pr = new Preference(this);
+                    pr.setTitle(R.string.label_changelog);
+                    pr.setOnPreferenceClickListener(mProcChangeLog);
+                    category.addPreference(pr);
+                }
                 {      // donate
                     final Preference pr = new Preference(this);
                     pr.setTitle(R.string.label_donate);
@@ -1041,6 +1052,12 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
             intent.putExtra( AboutActivity.EXTRA_URL ,  getString( R.string.url_donate ) );
             intent.putExtra( AboutActivity.EXTRA_TITLE ,  getString( R.string.label_donate ) );
             startActivity(intent);
+            return true;
+        }
+    };
+    private OnPreferenceClickListener mProcChangeLog = new OnPreferenceClickListener(){
+        public boolean onPreferenceClick(Preference preference) {
+            showChangeLog(SettingsActivity.this,true);
             return true;
         }
     };
@@ -1669,11 +1686,15 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 		final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(ctx);
 		boolean ret = false;
 		int lastversion = sp.getInt(KEY_LASTVERSION, 0 );
+		sLastVersion = lastversion;
 		int versioncode;
 		try {
 		    String pkgname = ctx.getApplicationInfo().packageName;
 			versioncode = ctx.getPackageManager().getPackageInfo(pkgname, 0).versionCode;
 			ret = (lastversion != versioncode);
+			if ( !ret ){
+			    sLastVersion = -1;
+			}
 
 			if ( ret ){
 				Editor editor = sp.edit();
@@ -1903,6 +1924,65 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
     protected void onPause() {
         super.onPause();
         mPs.getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    public static void showChangeLog(final Context context,boolean changelog)
+    {
+        int filename;
+        int title;
+        if ( changelog ){
+            filename = R.string.file_changelog;
+            title = R.string.label_changelog;
+        }else{
+            // welcome message
+            filename = R.string.file_welcome;
+            title = R.string.app_name;
+        }
+
+        String text="";
+        try{
+            BufferedReader br = new BufferedReader(new InputStreamReader(context.getAssets().open(context.getString(filename))));
+            String line;
+            while( (line = br.readLine())!=null ){
+                text += line + '\n';
+            }
+            br.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context)
+        .setMessage( text )
+        .setTitle( title )
+        .setPositiveButton(R.string.label_ok, null);
+
+        if ( changelog && (sSettings !=null && sSettings.donateCounter ==0) ){
+            builder.setNegativeButton(R.string.label_donate, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent intent = new Intent( context, DonateActivity.class);
+                    intent.putExtra( AboutActivity.EXTRA_URL ,  context.getString( R.string.url_donate ) );
+                    intent.putExtra( AboutActivity.EXTRA_TITLE ,  context.getString( R.string.label_donate ) );
+                    context.startActivity(intent);
+                }
+            });
+        }
+        builder.show();
+    }
+
+    public static void showWelcomeMessage(Context context)
+    {
+        Log.e("======================>",""+sLastVersion);
+        if ( sLastVersion == -1 ){
+            // Do nothing
+        }else if (sLastVersion == 0 ){
+            // Welcome
+            showChangeLog(context,false);
+        }else{
+            // change log
+            showChangeLog(context,true);
+        }
+        sLastVersion = -1;
     }
 }
 
