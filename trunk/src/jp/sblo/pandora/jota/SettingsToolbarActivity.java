@@ -17,7 +17,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 public class SettingsToolbarActivity extends Activity  {
@@ -28,6 +27,7 @@ public class SettingsToolbarActivity extends Activity  {
     private ImageButton mAddButton;
     private CheckBox mUseToolbar;
     private CheckBox mToolbarBigButton;
+    private CheckBox mHideInLandscape;
 
     private String[] mSummarys;
     private int[] mFunctions;
@@ -117,6 +117,17 @@ public class SettingsToolbarActivity extends Activity  {
                 mSp.edit().putBoolean(SettingsActivity.KEY_TOOLBAR_BIGBUTTON, isChecked).commit();
             }
         });
+
+        mHideInLandscape = (CheckBox)findViewById(R.id.hidelandscape);
+        boolean hideLnadscape = mSp.getBoolean(SettingsActivity.KEY_TOOLBAR_HIDE_LANDSCAPE, false);
+        mHideInLandscape.setChecked(hideLnadscape);
+        mHideInLandscape.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mSp.edit().putBoolean(SettingsActivity.KEY_TOOLBAR_HIDE_LANDSCAPE, isChecked).commit();
+            }
+        });
+
     }
 
     private void checkAddButton()

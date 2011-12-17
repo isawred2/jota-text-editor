@@ -92,6 +92,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
     private static final String KEY_WALLPAPER_TRANSPARENCY  = "KEY_WALLPAPER_TRANSPARENCY";
     public static final String KEY_SHOW_TOOLBAR             = "KEY_SHOW_TOOLBAR";
     public static final String KEY_TOOLBAR_BIGBUTTON        = "KEY_TOOLBAR_BIGBUTTON";
+    public static final String KEY_TOOLBAR_HIDE_LANDSCAPE   = "KEY_TOOLBAR_HIDE_LANDSCAPE";
     private static final String KEY_FORCE_SCROLL            = "KEY_FORCE_SCROLL";
 
 	public static final String KEY_LASTVERSION = "LastVersion";
@@ -143,7 +144,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
     public static final String CAT_VIEW = "view";
     public static final String CAT_INPUT = "input";
     public static final String CAT_FILE = "file";
-    public static final String CAT_TOOLBAR = "toolbar";
+    public static final String CAT_WALLPAPER = "wallpaper";
     public static final String CAT_MISC = "misc";
 
     public static final String ORI_AUTO="auto";
@@ -231,6 +232,13 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                     final Preference pr = new Preference(this);
                     pr.setTitle(R.string.menu_pref_toolbar);
                     pr.setOnPreferenceClickListener(mProcPrefToolbar);
+                    mPs.addPreference(pr);
+                }
+                {
+                    final Preference pr = new Preference(this);
+                    pr.setTitle(R.string.menu_pref_wallpaper);
+                    pr.setSummary(R.string.summary_wallpaper);
+                    pr.setOnPreferenceClickListener(mProcPrefWallpaper);
                     mPs.addPreference(pr);
                 }
                 {
@@ -355,73 +363,6 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                     final CheckBoxPreference pr = new CheckBoxPreference(this);
                     pr.setKey(KEY_SHOW_TAB);
                     pr.setTitle(R.string.label_show_tab);
-                    cat.addPreference(pr);
-                }
-                {   // theme
-                    final ListPreference pr = new ListPreference(this);
-                    pr.setDialogTitle(R.string.label_theme);
-                    pr.setKey(KEY_THEME);
-                    pr.setTitle(R.string.label_theme);
-
-                    pr.setEntries(new String[] {
-                            getResources().getString(R.string.label_background_white),
-                            getResources().getString(R.string.label_background_black),
-                    });
-
-                    final String[] values = new String[] {
-                            THEME_DEFAULT,
-                            THEME_BLACK,
-                    };
-                    pr.setEntryValues(values);
-                    pr.setOnPreferenceChangeListener( mProcTheme );
-                    cat.addPreference(pr);
-                }
-                {
-                    // Wallpaper portrait
-                    final Preference pr = new Preference(this);
-                    pr.setKey( KEY_FONT );
-                    pr.setTitle(R.string.label_wallpaper_portrait);
-                    pr.setSummary(R.string.summary_wallpaper);
-                    pr.setOnPreferenceClickListener(mProcWallpaperPortrait);
-                    cat.addPreference(pr);
-                }
-                {
-                    // Wallpaper landscape
-                    final Preference pr = new Preference(this);
-                    pr.setKey( KEY_FONT );
-                    pr.setTitle(R.string.label_wallpaper_landscape);
-                    pr.setSummary(R.string.summary_wallpaper);
-                    pr.setOnPreferenceClickListener(mProcWallpaperLandscape);
-                    cat.addPreference(pr);
-                }
-                {
-                    // Wallpaper transparency
-                    final ListPreference pr = new ListPreference(this);
-                    pr.setKey( KEY_WALLPAPER_TRANSPARENCY);
-                    pr.setTitle(R.string.label_wallpaper_transparency );
-                    pr.setEntries(new String[]     {"20%", "30%" , "40%", "50%" , "60%",  });
-                    pr.setEntryValues(new String[] {"20",  "30"  , "40",  "50",   "60",   });
-                    cat.addPreference(pr);
-                }
-                {
-                    // Text Color
-                    final Preference pr = new Preference(this);
-                    pr.setTitle(R.string.label_text_color);
-                    pr.setOnPreferenceClickListener(mProcTextColor);
-                    cat.addPreference(pr);
-                }
-                {
-                    // Selection Color
-                    final Preference pr = new Preference(this);
-                    pr.setTitle(R.string.label_highlight_color);
-                    pr.setOnPreferenceClickListener(mProcHighlightColor);
-                    cat.addPreference(pr);
-                }
-                {
-                    // Underline Color
-                    final Preference pr = new Preference(this);
-                    pr.setTitle(R.string.label_underline_color);
-                    pr.setOnPreferenceClickListener(mProcUnderlineColor);
                     cat.addPreference(pr);
                 }
                 {
@@ -730,20 +671,76 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                     category.addPreference(pr);
                 }
             }
-//            if ( CAT_TOOLBAR.equals(categ) ){
-//                // View Category
-//                setTitle(R.string.menu_pref_toolbar);
-//                final PreferenceCategory cat = new PreferenceCategory(this);
-//                cat.setTitle(R.string.label_toolbar);
-//                mPs.addPreference(cat);
-//                {
-//                    // show toolbar
-//                    final CheckBoxPreference pr = new CheckBoxPreference(this);
-//                    pr.setKey(KEY_SHOW_TOOLBAR);
-//                    pr.setTitle(R.string.label_show_toolbar);
-//                    cat.addPreference(pr);
-//                }
-//            }
+            if ( CAT_WALLPAPER.equals(categ) ){
+                // View Category
+                setTitle(R.string.menu_pref_wallpaper);
+                final PreferenceCategory cat = new PreferenceCategory(this);
+                {   // theme
+                    final ListPreference pr = new ListPreference(this);
+                    pr.setDialogTitle(R.string.label_theme);
+                    pr.setKey(KEY_THEME);
+                    pr.setTitle(R.string.label_theme);
+
+                    pr.setEntries(new String[] {
+                            getResources().getString(R.string.label_background_white),
+                            getResources().getString(R.string.label_background_black),
+                    });
+
+                    final String[] values = new String[] {
+                            THEME_DEFAULT,
+                            THEME_BLACK,
+                    };
+                    pr.setEntryValues(values);
+                    pr.setOnPreferenceChangeListener( mProcTheme );
+                    mPs.addPreference(pr);
+                }
+                {
+                    // Wallpaper portrait
+                    final Preference pr = new Preference(this);
+                    pr.setKey( KEY_FONT );
+                    pr.setTitle(R.string.label_wallpaper_portrait);
+                    pr.setOnPreferenceClickListener(mProcWallpaperPortrait);
+                    mPs.addPreference(pr);
+                }
+                {
+                    // Wallpaper landscape
+                    final Preference pr = new Preference(this);
+                    pr.setKey( KEY_FONT );
+                    pr.setTitle(R.string.label_wallpaper_landscape);
+                    pr.setOnPreferenceClickListener(mProcWallpaperLandscape);
+                    mPs.addPreference(pr);
+                }
+                {
+                    // Wallpaper transparency
+                    final ListPreference pr = new ListPreference(this);
+                    pr.setKey( KEY_WALLPAPER_TRANSPARENCY);
+                    pr.setTitle(R.string.label_wallpaper_transparency );
+                    pr.setEntries(new String[]     {"20%", "30%" , "40%", "50%" , "60%",  });
+                    pr.setEntryValues(new String[] {"20",  "30"  , "40",  "50",   "60",   });
+                    mPs.addPreference(pr);
+                }
+                {
+                    // Text Color
+                    final Preference pr = new Preference(this);
+                    pr.setTitle(R.string.label_text_color);
+                    pr.setOnPreferenceClickListener(mProcTextColor);
+                    mPs.addPreference(pr);
+                }
+                {
+                    // Selection Color
+                    final Preference pr = new Preference(this);
+                    pr.setTitle(R.string.label_highlight_color);
+                    pr.setOnPreferenceClickListener(mProcHighlightColor);
+                    mPs.addPreference(pr);
+                }
+                {
+                    // Underline Color
+                    final Preference pr = new Preference(this);
+                    pr.setTitle(R.string.label_underline_color);
+                    pr.setOnPreferenceClickListener(mProcUnderlineColor);
+                    mPs.addPreference(pr);
+                }
+            }
 
             if ( CAT_MISC.equals(categ) ){
                 // Help Category
@@ -1110,6 +1107,16 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
             return true;
         }
     };
+
+    private OnPreferenceClickListener mProcPrefWallpaper = new OnPreferenceClickListener(){
+        public boolean onPreferenceClick(Preference preference) {
+            Intent intent = new Intent(SettingsActivity.this, SettingsActivity.class);
+            intent.putExtra( SettingsActivity.EXTRA_CATEGORY, SettingsActivity.CAT_WALLPAPER);
+            startActivity(intent);
+            return true;
+        }
+    };
+
     private OnPreferenceClickListener mProcPrefMisc = new OnPreferenceClickListener(){
         public boolean onPreferenceClick(Preference preference) {
             Intent intent = new Intent(SettingsActivity.this, SettingsActivity.class);
@@ -1514,6 +1521,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         boolean forceScroll;
         ArrayList<Integer> toolbars;
         boolean toolbarBigButton;
+        boolean toolbarHideLandscape;
 	}
 
 	public static class BootSettings {
@@ -1637,6 +1645,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         ret.forceScroll = sp.getBoolean(KEY_FORCE_SCROLL, true);
         ret.toolbars = SettingsToolbarActivity.readToolbarSettings(ctx);
         ret.toolbarBigButton = sp.getBoolean(KEY_TOOLBAR_BIGBUTTON, false);
+        ret.toolbarHideLandscape = sp.getBoolean(KEY_TOOLBAR_HIDE_LANDSCAPE, false);
         sSettings = ret;
         return ret;
 	}
@@ -1760,6 +1769,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                 }
                 if ( lastversion < 44 ){
                     editor.putBoolean(KEY_TOOLBAR_BIGBUTTON, false);
+                    editor.putBoolean(KEY_TOOLBAR_HIDE_LANDSCAPE, false);
                 }
                 editor.commit();
                 SettingsShortcutActivity.writeDefaultShortcuts(ctx);
