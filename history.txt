@@ -694,3 +694,37 @@ Android Market経由で作者に寄付が出来ます。
 
 You can donate to the developer via Android Market.
 Please donate if you continue to use Jota.
+
+
+[2011/12/17 v.0.1.24]
+- ツールバーのボタンサイズを大きくする設定を追加
+  (タブレットユーザー向け機能)
+- ツールバー設定に「横画面で隠すボタン」を追加
+- スクリーンショット取得機能を追加
+  (メニュー -> 編集 -> スクリーンショットを共有)
+  ★バグ報告や壁紙を晒すのに使ってください。
+  ★Jotaの画面しかキャプチャできません。
+
+- 設定項目を整理
+- イタリア語のリソースを追加
+  (Thanks to Paolo Stivanin!)
+
+Android Market経由で作者に寄付が出来ます。
+継続してお使いの方は、寄付をお願いします。
+
+
+[2011/12/17 v.0.1.24]
+- Added the option to enlarge toolbar buttons.
+  (for Tablet users.)
+- Added the option to hide toolbar in landscape mode.
+- added the function to captcher screen shot.
+  (Menu -> Edit -> Share screenshot)
+  ★Please use this for bug report or to appeal your wallpaper!
+  ★You can captcher only Jota's screen.
+
+- Restructed Preference items.
+- Added Italian resources.
+  (Thanks to Paolo Stivanin!)
+
+You can donate to the developer via Android Market.
+Please donate if you continue to use Jota.

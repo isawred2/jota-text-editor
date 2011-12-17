@@ -1,0 +1,32 @@
+[2011/12/17 v.0.1.24]
+- Added the option to enlarge toolbar buttons.
+  (for Tablet users.)
+- Added the option to hide toolbar in landscape mode.
+- added the function to captcher screen shot.
+  (Menu -> Edit -> Share screenshot)
+  ★Please use this for bug report or to appeal your wallpaper!
+  ★You can captcher only Jota's screen.
+
+- Restructed Preference items.
+- Added Italian resources.
+  (Thanks to Paolo Stivanin!)
+
+
+[2011/12/12 v.0.1.23]
+- fixed the bug that crashes when search multiline.
+
+[2011/12/11 v.0.1.22]
+- added toolbar customize.
+- added shortcut customize.
+- added workaround for Galaxy Note.
+- fixed minor bugs.
+- updated Korean resources.(Thanks to Noah!)
+
+[2011/12/04 v.0.1.21]
+- added Wallpaper. (Beta test for donator)
+- added Toolbar.
+- added re-assign shortcut key.
+- added support \n,\t when replace.
+- fixed minor bugs.
+- changed Donation policy.
+
