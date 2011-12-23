@@ -73,6 +73,11 @@ public class SettingsShortcutActivity extends PreferenceActivity implements OnSh
         R.string.menu_search_byintent,
         R.string.label_word_wrap,
         R.string.show_ime,
+        R.string.menu_font_size_up,
+        R.string.menu_font_size_down,
+        R.string.menu_select_line,
+        R.string.menu_select_block,
+
     };
 
     public final static int[] TBL_FUNCTION = {
@@ -115,6 +120,10 @@ public class SettingsShortcutActivity extends PreferenceActivity implements OnSh
         TextView.FUNCTION_SEARCHAPP,
         TextView.FUNCTION_WORDWRAP,
         TextView.FUNCTION_SHOWIME,
+        TextView.FUNCTION_FONTUP,
+        TextView.FUNCTION_FONTDOWN,
+        TextView.FUNCTION_SELECT_LINE,
+        TextView.FUNCTION_SELECT_BLOCK,
     };
 
     public final static String[] TBL_TOOLNAME = {
@@ -157,6 +166,10 @@ public class SettingsShortcutActivity extends PreferenceActivity implements OnSh
         "Search App",
         "Word Wrap",
         "Show IME",
+        "Font+",
+        "Font-",
+        "Sel Line",
+        "Sel Block",
     };
 
     public String getFunctionName(int func)

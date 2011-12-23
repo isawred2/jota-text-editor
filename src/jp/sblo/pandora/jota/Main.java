@@ -49,6 +49,7 @@ import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -1220,6 +1221,19 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
             case jp.sblo.pandora.jota.text.TextView.FUNCTION_SEARCHAPP:
                 mProcSearchByIntent.run();
                 return true;
+            case jp.sblo.pandora.jota.text.TextView.FUNCTION_FONTUP:
+                mProcFontUp.run();
+                return true;
+            case jp.sblo.pandora.jota.text.TextView.FUNCTION_FONTDOWN:
+                mProcFontDown.run();
+                return true;
+            case jp.sblo.pandora.jota.text.TextView.FUNCTION_SELECT_LINE:
+                mProcSelectLine.run();
+                return true;
+            case jp.sblo.pandora.jota.text.TextView.FUNCTION_SELECT_BLOCK:
+                mProcSelectBlock.run();
+                return true;
+
 
         }
         return false;
@@ -1765,7 +1779,6 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
 
             }
         }
-
         private void searchWord(String substr) {
             Intent intent = new Intent(Intent.ACTION_SEARCH);
             intent.putExtra(SearchManager.QUERY, substr);
@@ -1778,6 +1791,35 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
                 startActivityForResult(pickIntent, REQUESTCODE_APPCHOOSER);
             } catch (Exception e) {
             }
+        }
+    };
+
+    private Runnable mProcFontUp = new Runnable() {
+        public void run() {
+            float size = mEditor.getTextSize();
+            size +=2;
+            if ( size <= 96 ){
+                mEditor.setTextSize(TypedValue.COMPLEX_UNIT_PX,size);
+            }
+        }
+    };
+    private Runnable mProcFontDown = new Runnable() {
+        public void run() {
+            float size = mEditor.getTextSize();
+            size -= 2;
+            if ( size >= 2 ){
+                mEditor.setTextSize(TypedValue.COMPLEX_UNIT_PX,size);
+            }
+        }
+    };
+    private Runnable mProcSelectLine = new Runnable() {
+        public void run() {
+            mEditor.selectLine();
+        }
+    };
+    private Runnable mProcSelectBlock = new Runnable() {
+        public void run() {
+            mEditor.selectBlock();
         }
     };
 
