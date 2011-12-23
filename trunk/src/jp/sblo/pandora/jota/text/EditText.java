@@ -243,11 +243,6 @@ public class EditText extends TextView{
                 return centerCursor();
 
             case FUNCTION_SAVE:
-                if (sl != null) {
-                    return sl.onCommand(function);
-                }
-                break;
-
             case FUNCTION_DIRECTINTENT:
             case FUNCTION_OPEN:
             case FUNCTION_NEWFILE:
@@ -261,6 +256,10 @@ public class EditText extends TextView{
             case FUNCTION_INSERT:
             case FUNCTION_QUIT:
             case FUNCTION_SEARCHAPP:
+            case FUNCTION_FONTUP:
+            case FUNCTION_FONTDOWN:
+            case FUNCTION_SELECT_BLOCK:
+            case FUNCTION_SELECT_LINE:
                 if (sl != null) {
                     return sl.onCommand(function);
                 }

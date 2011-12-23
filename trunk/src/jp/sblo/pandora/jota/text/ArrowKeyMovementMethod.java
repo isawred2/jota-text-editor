@@ -684,6 +684,12 @@ implements MovementMethod
                 findWordEnd(buffer, off));
     }
 
+    public static void selectBlock( Spannable buffer , int off ){
+        Selection.setSelection(buffer,
+                findBlockStart(buffer, off),
+                findBlockEnd(buffer, off));
+    }
+
     private static class DoubleTapState implements NoCopySpan {
         long mWhen;
     }
@@ -768,6 +774,38 @@ implements MovementMethod
                     break;
                 }
             }else if ( c0 != cb ){
+                break;
+            }
+        }
+
+        return end;
+    }
+
+    private static int findBlockStart(CharSequence text, int start) {
+        if ( text.length() <= start ){
+            return start;
+        }
+
+        for (; start > 0; start--) {
+            char c = text.charAt(start - 1);
+            if ( c == '\n' ){
+                break;
+            }
+        }
+        return start;
+    }
+
+    // TODO: Unify with TextView.getWordForDictionary()
+    private static int findBlockEnd(CharSequence text, int end) {
+        int len = text.length();
+
+        if ( len <= end ){
+            return end;
+        }
+
+        for (; end < len; end++) {
+            char c = text.charAt(end);
+            if ( c == '\n' ){
                 break;
             }
         }

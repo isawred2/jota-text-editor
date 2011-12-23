@@ -7020,6 +7020,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
                 boolean selectAllGotFocus = mSelectAllOnFocus && mTouchFocusSelected;
                 if (hasInsertionController() && !selectAllGotFocus) {
                     getInsertionController().show();
+                    hideSelectionModifierCursorController();
                 }
             }
         }
@@ -9154,6 +9155,25 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
         mForceScroll=value;
     }
 
+    // Jota Text Editor
+    public void selectLine()
+    {
+        Layout layout =getLayout();
+        int start = getSelectionStart();
+        int line = layout.getLineForOffset(start);
+        int newStart = layout.getLineStart(line);
+        int newEnd = layout.getLineEnd(line);
+        Selection.setSelection( (Spannable)mText , newStart, newEnd);
+        getSelectionController().show();
+    }
+
+    // Jota Text Editor
+    public void selectBlock()
+    {
+        int start = getSelectionStart();
+        ArrowKeyMovementMethod.selectBlock((Spannable)mText, start);
+        getSelectionController().show();
+    }
 
     // Jota Text Editor
     public final static int FUNCTION_NONE=0;
@@ -9196,6 +9216,10 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
     public final static int FUNCTION_SEARCHAPP=36;
     public final static int FUNCTION_WORDWRAP=37;
     public final static int FUNCTION_SHOWIME=38;
+    public final static int FUNCTION_FONTUP=39;
+    public final static int FUNCTION_FONTDOWN=40;
+    public final static int FUNCTION_SELECT_LINE=41;
+    public final static int FUNCTION_SELECT_BLOCK=42;
 
 
     @ViewDebug.ExportedProperty
