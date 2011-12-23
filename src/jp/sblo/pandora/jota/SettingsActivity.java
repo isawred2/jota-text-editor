@@ -33,7 +33,6 @@ import android.preference.PreferenceScreen;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.SeekBar;
@@ -1972,7 +1971,6 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 
     public static void showWelcomeMessage(Context context)
     {
-        Log.e("======================>",""+sLastVersion);
         if ( sLastVersion == -1 ){
             // Do nothing
         }else if (sLastVersion == 0 ){

@@ -8902,7 +8902,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
         public boolean onTouchEvent(MotionEvent event) {
             // This is done even when the View does not have focus, so that long presses can start
             // selection and tap can move cursor from this tap position.
-            if (isTextEditable()) {
+//            if (isTextEditable()) {
                 switch (event.getAction() & MotionEvent.ACTION_MASK ) {
                     case MotionEvent.ACTION_DOWN:
                         final int x = (int) event.getX();
@@ -8946,7 +8946,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
                         mPreviousTapUpTime = SystemClock.uptimeMillis();
                         break;
                 }
-            }
+//            }
             return false;
         }
 
