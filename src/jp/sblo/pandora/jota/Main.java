@@ -197,6 +197,18 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
         mTransparency = findViewById(R.id.trasparencylayer);
         applySetting();
 
+        mEditor.addTextChangedListener(new TextWatcher() {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mSearchResult = null;
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
         mEdtSearchWord.addTextChangedListener(new TextWatcher() {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 boolean enabled = (s.length() > 0);
