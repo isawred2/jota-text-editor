@@ -5,7 +5,7 @@
 - added the function to captcher screen shot.
   (Menu -> Edit -> Share screenshot)
   ★Please use this for bug report or to appeal your wallpaper!
-  ★You can captcher only Jota's screen.
+  ★You can capture only Jota's screen.
 
 - Restructed Preference items.
 - Added Italian resources.
