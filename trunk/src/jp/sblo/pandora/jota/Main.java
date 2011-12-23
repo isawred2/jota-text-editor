@@ -84,7 +84,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
     private static final String EXTRA_SCRIPT_PATH = "com.googlecode.android_scripting.extra.SCRIPT_PATH";
     private static final String EXTRA_SCRIPT_CONTENT = "com.googlecode.android_scripting.extra.SCRIPT_CONTENT";
     private static final String ACTION_EDIT_SCRIPT = "com.googlecode.android_scripting.action.EDIT_SCRIPT";
-    private jp.sblo.pandora.jota.text.EditText mEditor;
+    protected jp.sblo.pandora.jota.text.EditText mEditor;
     private LinearLayout mLlSearch;
     private jp.sblo.pandora.jota.text.EditText mEdtSearchWord;
     private ImageButton mBtnForward;
@@ -111,14 +111,15 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
     private String mReplaceWord;
     private boolean mChangeCancel = false;
     private boolean mSharedPreferenceChanged=false;
-    private boolean mBackkeyDown = false;
+    protected boolean mBackkeyDown = false;
     private static  boolean mRebootingForConfigChange = false;
-    private ImageView mWallpaper;
+    protected ImageView mWallpaper;
     private View mTransparency;
     private Bitmap mWallpaperBmp;
     private LinearLayout mToolbar;
     private View mToolbarBase;
     private Handler mHandler = new Handler();
+    protected boolean mRotationControl=false;
 
     class InstanceState {
         String filename;
@@ -151,7 +152,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
 
         mWallpaper = (ImageView)findViewById(R.id.wallpaper);
 
-        if (mBootSettings.screenOrientation.equals(SettingsActivity.ORI_AUTO)){
+        if (mBootSettings.screenOrientation.equals(SettingsActivity.ORI_AUTO) || mRotationControl){
             // Do nothing
         }else if (mBootSettings.screenOrientation.equals(SettingsActivity.ORI_PORTRAIT)){
             setRequestedOrientation( ActivityInfo.SCREEN_ORIENTATION_PORTRAIT );

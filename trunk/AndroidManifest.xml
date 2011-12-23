@@ -67,6 +67,11 @@
         <activity android:name="jp.sblo.pandora.jota.SettingsToolbarActivity"/>
         <activity android:name="jp.sblo.pandora.jota.DonateActivity"/>
         <activity android:name="jp.sblo.pandora.jota.RecoveryActivity" android:theme="@style/Theme.Dialog" />
+        <activity android:name="jp.sblo.pandora.jota.PreviewThemeActivity"
+              android:label="@string/app_name_debug"
+			  android:theme="@style/Theme.Normal"
+			  android:launchMode="singleTask"
+		/>
 
 	<!--- for donation -->
         <service android:name="jp.sblo.pandora.billing.BillingService" />
