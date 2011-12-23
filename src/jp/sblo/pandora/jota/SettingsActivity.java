@@ -744,6 +744,13 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                     pr.setOnPreferenceClickListener(mProcUnderlineColor);
                     mPs.addPreference(pr);
                 }
+                {
+                    // Preview
+                    final Preference pr = new Preference(this);
+                    pr.setTitle(R.string.label_preview_theme);
+                    pr.setOnPreferenceClickListener(mProcPreviewTheme);
+                    mPs.addPreference(pr);
+                }
             }
 
             if ( CAT_MISC.equals(categ) ){
@@ -1452,6 +1459,15 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 
             startActivityForResult( intent,REQUEST_CODE_PICK_WALLPAPER_LANDSCAPE);
 
+            return true;
+        }
+
+    };
+
+    private OnPreferenceClickListener mProcPreviewTheme = new OnPreferenceClickListener(){
+        public boolean onPreferenceClick(Preference preference) {
+            Intent intent = new Intent(SettingsActivity.this, PreviewThemeActivity.class );
+            startActivity( intent);
             return true;
         }
 
