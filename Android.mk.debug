@@ -8,7 +8,7 @@ LOCAL_SRC_FILES := $(call all-subdir-java-files)\
 	src/com/android/vending/billing/IMarketBillingService.aidl
 
 LOCAL_PACKAGE_NAME := jota-text-editor
-
+LOCAL_DEX_PREOPT := false
 LOCAL_JNI_SHARED_LIBRARIES := libuniversalchardet
 
 #LOCAL_PROGUARD_ENABLED:= full

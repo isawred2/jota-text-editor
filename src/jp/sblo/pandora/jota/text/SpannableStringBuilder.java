@@ -1120,6 +1120,102 @@ implements CharSequence, GetChars, Spannable, Editable, Appendable,
         return ret;
     }
 
+    @Override
+    public void drawTextRun(Canvas c, int start, int end,
+            int contextStart, int contextEnd,
+            float x, float y, int flags, Paint p) {
+        checkRange("drawTextRun", start, end);
+/*
+        int contextLen = contextEnd - contextStart;
+        int len = end - start;
+        if (contextEnd <= mGapStart) {
+            c.drawTextRun(mText, start, len, contextStart, contextLen, x, y, flags, p);
+        } else if (contextStart >= mGapStart) {
+            c.drawTextRun(mText, start + mGapLength, len, contextStart + mGapLength,
+                    contextLen, x, y, flags, p);
+        } else {
+            char[] buf = TextUtils.obtain(contextLen);
+            getChars(contextStart, contextEnd, buf, 0);
+            c.drawTextRun(buf, start - contextStart, len, 0, contextLen, x, y, flags, p);
+            TextUtils.recycle(buf);
+        }
+        */
+    }
+    @Override
+    public float getTextRunAdvances(int start, int end, int contextStart, int contextEnd, int flags,
+            float[] advances, int advancesPos, Paint p) {
+
+        float ret=0;
+/*
+        int contextLen = contextEnd - contextStart;
+        int len = end - start;
+
+        if (end <= mGapStart) {
+            ret = p.getTextRunAdvances(mText, start, len, contextStart, contextLen,
+                    flags, advances, advancesPos);
+        } else if (start >= mGapStart) {
+            ret = p.getTextRunAdvances(mText, start + mGapLength, len,
+                    contextStart + mGapLength, contextLen, flags, advances, advancesPos);
+        } else {
+            char[] buf = TextUtils.obtain(contextLen);
+            getChars(contextStart, contextEnd, buf, 0);
+            ret = p.getTextRunAdvances(buf, start - contextStart, len,
+                    0, contextLen, flags, advances, advancesPos);
+            TextUtils.recycle(buf);
+        }
+*/
+        return ret;
+    }
+
+    @Override
+    public float getTextRunAdvances(int start, int end, int contextStart, int contextEnd, int flags,
+            float[] advances, int advancesPos, Paint p, int reserved) {
+
+        float ret=0;
+/*
+        int contextLen = contextEnd - contextStart;
+        int len = end - start;
+
+        if (end <= mGapStart) {
+            ret = p.getTextRunAdvances(mText, start, len, contextStart, contextLen,
+                    flags, advances, advancesPos, reserved);
+        } else if (start >= mGapStart) {
+            ret = p.getTextRunAdvances(mText, start + mGapLength, len,
+                    contextStart + mGapLength, contextLen, flags, advances, advancesPos, reserved);
+        } else {
+            char[] buf = TextUtils.obtain(contextLen);
+            getChars(contextStart, contextEnd, buf, 0);
+            ret = p.getTextRunAdvances(buf, start - contextStart, len,
+                    0, contextLen, flags, advances, advancesPos, reserved);
+            TextUtils.recycle(buf);
+        }
+*/
+        return ret;
+    }
+    @Override
+    public int getTextRunCursor(int contextStart, int contextEnd, int flags, int offset,
+            int cursorOpt, Paint p) {
+
+        int ret=0;
+/*
+        int contextLen = contextEnd - contextStart;
+        if (contextEnd <= mGapStart) {
+            ret = p.getTextRunCursor(mText, contextStart, contextLen,
+                    flags, offset, cursorOpt);
+        } else if (contextStart >= mGapStart) {
+            ret = p.getTextRunCursor(mText, contextStart + mGapLength, contextLen,
+                    flags, offset + mGapLength, cursorOpt) - mGapLength;
+        } else {
+            char[] buf = TextUtils.obtain(contextLen);
+            getChars(contextStart, contextEnd, buf, 0);
+            ret = p.getTextRunCursor(buf, 0, contextLen,
+                    flags, offset - contextStart, cursorOpt) + contextStart;
+            TextUtils.recycle(buf);
+        }
+*/
+        return ret;
+    }
+
     // Documentation from interface
     public void setFilters(InputFilter[] filters) {
         if (filters == null) {

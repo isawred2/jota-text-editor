@@ -995,6 +995,11 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
 //        menuitem = menu.findItem(R.id.menu_help_donate);
 //        menuitem.setVisible( mSettings.donateCounter == 0 );
 
+        if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ){
+	        menuitem = menu.findItem(R.id.menu_edit);
+			new IcsWrapper().setShowAsActionIfRoomWithText(menuitem);
+        }
+
         return super.onPrepareOptionsMenu(menu);
     }
 

@@ -104,10 +104,10 @@ public class BoringLayout extends Layout implements TextUtils.EllipsizeCallback 
             mEllipsizedCount = 0;
             trust = true;
         } else {
-            replaceWith(TextUtils.ellipsize(source, paint, ellipsizedWidth,
-                                           ellipsize, true, this),
-                        paint, outerwidth, align, spacingmult,
-                        spacingadd);
+//            replaceWith(TextUtils.ellipsize(source, paint, ellipsizedWidth,
+//                                           ellipsize, true, this),
+//                        paint, outerwidth, align, spacingmult,
+//                        spacingadd);
 
             mEllipsizedWidth = ellipsizedWidth;
             trust = false;
@@ -154,10 +154,10 @@ public class BoringLayout extends Layout implements TextUtils.EllipsizeCallback 
             mEllipsizedCount = 0;
             trust = true;
         } else {
-            replaceWith(TextUtils.ellipsize(source, paint, ellipsizedWidth,
-                                           ellipsize, true, this),
-                        paint, outerwidth, align, spacingmult,
-                        spacingadd);
+//            replaceWith(TextUtils.ellipsize(source, paint, ellipsizedWidth,
+//                                           ellipsize, true, this),
+//                        paint, outerwidth, align, spacingmult,
+//                        spacingadd);
 
 
             mEllipsizedWidth = ellipsizedWidth;
