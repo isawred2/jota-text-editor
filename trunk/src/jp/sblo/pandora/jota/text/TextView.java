@@ -89,7 +89,7 @@ import android.view.ViewConfiguration;
 import android.view.ViewDebug;
 import android.view.ViewGroup;
 import android.view.ViewParent;
-import android.view.ViewRoot;
+import android.view.ViewRootImpl;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.ViewGroup.LayoutParams;
@@ -2957,6 +2957,41 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
         public int getTextWidths(int start, int end, float[] widths, Paint p) {
             return p.getTextWidths(mChars, start + mStart, end - start, widths);
         }
+        
+        public void drawTextRun(Canvas c, int start, int end,
+                int contextStart, int contextEnd, float x, float y, int flags, Paint p) {
+            int count = end - start;
+            int contextCount = contextEnd - contextStart;
+            c.drawTextRun(mChars, start + mStart, count, contextStart + mStart,
+                    contextCount, x, y, flags, p);
+        }
+        public float getTextRunAdvances(int start, int end, int contextStart,
+                int contextEnd, int flags, float[] advances, int advancesIndex,
+                Paint p) {
+            int count = end - start;
+            int contextCount = contextEnd - contextStart;
+            return p.getTextRunAdvances(mChars, start + mStart, count,
+                    contextStart + mStart, contextCount, flags, advances,
+                    advancesIndex);
+        }
+
+        public float getTextRunAdvances(int start, int end, int contextStart,
+                int contextEnd, int flags, float[] advances, int advancesIndex,
+                Paint p, int reserved) {
+            int count = end - start;
+            int contextCount = contextEnd - contextStart;
+            return p.getTextRunAdvances(mChars, start + mStart, count,
+                    contextStart + mStart, contextCount, flags, advances,
+                    advancesIndex, reserved);
+        }
+
+        public int getTextRunCursor(int contextStart, int contextEnd, int flags,
+                int offset, int cursorOpt, Paint p) {
+            int contextCount = contextEnd - contextStart;
+            return p.getTextRunCursor(mChars, contextStart + mStart,
+                    contextCount, flags, offset + mStart, cursorOpt);
+        }
+        
     }
 
     /**
@@ -3303,12 +3338,12 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
         Handler h = getHandler();
         if (h != null) {
             long eventTime = SystemClock.uptimeMillis();
-            h.sendMessage(h.obtainMessage(ViewRoot.DISPATCH_KEY_FROM_IME,
+            h.sendMessage(h.obtainMessage(ViewRootImpl.DISPATCH_KEY_FROM_IME,
                     new KeyEvent(eventTime, eventTime,
                     KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER, 0, 0, 0, 0,
                     KeyEvent.FLAG_SOFT_KEYBOARD | KeyEvent.FLAG_KEEP_TOUCH_MODE
                     | KeyEvent.FLAG_EDITOR_ACTION)));
-            h.sendMessage(h.obtainMessage(ViewRoot.DISPATCH_KEY_FROM_IME,
+            h.sendMessage(h.obtainMessage(ViewRootImpl.DISPATCH_KEY_FROM_IME,
                     new KeyEvent(SystemClock.uptimeMillis(), eventTime,
                     KeyEvent.ACTION_UP, KeyEvent.KEYCODE_ENTER, 0, 0, 0, 0,
                     KeyEvent.FLAG_SOFT_KEYBOARD | KeyEvent.FLAG_KEEP_TOUCH_MODE
@@ -4630,7 +4665,8 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
                  * call performClick(), but that won't do anything in
                  * this case.)
                  */
-                if (mOnClickListener == null) {
+// Jota Text Editor
+//                if (mOnClickListener == null) {
                     if (mMovement != null && mText instanceof Editable
                             && mLayout != null && onCheckIsTextEditor()) {
 
@@ -4642,7 +4678,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
                             imm.showSoftInput(this, 0);
                         }
                     }
-                }
+//                }
 // Jota Text Editor
                 return false;
 //                return super.onKeyUp(keyCode, event);
@@ -4671,7 +4707,8 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
                      * call performClick(), but that won't do anything in
                      * this case.)
                      */
-                    if (mOnClickListener == null) {
+// Jota Text Editor
+//                    if (mOnClickListener == null) {
                         View v = focusSearch(FOCUS_DOWN);
 
                         if (v != null) {
@@ -4697,7 +4734,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
                                 imm.hideSoftInputFromWindow(getWindowToken(), 0);
                             }
                         }
-                    }
+                    //}
 
 // Jota Text Editor
 //                    return super.onKeyUp(keyCode, event);
@@ -9164,7 +9201,9 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
         int newStart = layout.getLineStart(line);
         int newEnd = layout.getLineEnd(line);
         Selection.setSelection( (Spannable)mText , newStart, newEnd);
-        getSelectionController().show();
+        if ( getSelectionStart() != getSelectionEnd() ){
+            getSelectionController().show();
+        }
     }
 
     // Jota Text Editor
@@ -9172,7 +9211,9 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
     {
         int start = getSelectionStart();
         ArrowKeyMovementMethod.selectBlock((Spannable)mText, start);
-        getSelectionController().show();
+        if ( getSelectionStart() != getSelectionEnd() ){
+            getSelectionController().show();
+        }
     }
 
     // Jota Text Editor

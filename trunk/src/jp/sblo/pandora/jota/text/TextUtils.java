@@ -49,7 +49,6 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.SpannedString;
-import android.text.Styled;
 import android.text.TextPaint;
 import android.text.style.CharacterStyle;
 import android.util.Printer;
@@ -982,12 +981,12 @@ public class TextUtils {
      * or, if it does not fit, a truncated
      * copy with ellipsis character added at the specified edge or center.
      */
-    public static CharSequence ellipsize(CharSequence text,
-                                         TextPaint p,
-                                         float avail, TruncateAt where) {
-        return ellipsize(text, p, avail, where, false, null);
-    }
-
+//    public static CharSequence ellipsize(CharSequence text,
+//                                         TextPaint p,
+//                                         float avail, TruncateAt where) {
+//        return ellipsize(text, p, avail, where, false, null);
+//    }
+//
     /**
      * Returns the original text if it fits in the specified width
      * given the properties of the specified Paint,
@@ -999,252 +998,252 @@ public class TextUtils {
      * If <code>callback</code> is non-null, it will be called to
      * report the start and end of the ellipsized range.
      */
-    public static CharSequence ellipsize(CharSequence text,
-                                         TextPaint p,
-                                         float avail, TruncateAt where,
-                                         boolean preserveLength,
-                                         EllipsizeCallback callback) {
-        if (sEllipsis == null) {
-            Resources r = Resources.getSystem();
-            sEllipsis = r.getString(R.string.ellipsis);
-        }
-
-        int len = text.length();
-
-        // Use Paint.breakText() for the non-Spanned case to avoid having
-        // to allocate memory and accumulate the character widths ourselves.
-
-        if (!(text instanceof Spanned)) {
-            float wid = p.measureText(text, 0, len);
-
-            if (wid <= avail) {
-                if (callback != null) {
-                    callback.ellipsized(0, 0);
-                }
-
-                return text;
-            }
-
-            float ellipsiswid = p.measureText(sEllipsis);
-
-            if (ellipsiswid > avail) {
-                if (callback != null) {
-                    callback.ellipsized(0, len);
-                }
-
-                if (preserveLength) {
-                    char[] buf = obtain(len);
-                    for (int i = 0; i < len; i++) {
-                        buf[i] = '\uFEFF';
-                    }
-                    String ret = new String(buf, 0, len);
-                    recycle(buf);
-                    return ret;
-                } else {
-                    return "";
-                }
-            }
-
-            if (where == TruncateAt.START) {
-                int fit = p.breakText(text, 0, len, false,
-                                      avail - ellipsiswid, null);
-
-                if (callback != null) {
-                    callback.ellipsized(0, len - fit);
-                }
-
-                if (preserveLength) {
-                    return blank(text, 0, len - fit);
-                } else {
-                    return sEllipsis + text.toString().substring(len - fit, len);
-                }
-            } else if (where == TruncateAt.END) {
-                int fit = p.breakText(text, 0, len, true,
-                                      avail - ellipsiswid, null);
-
-                if (callback != null) {
-                    callback.ellipsized(fit, len);
-                }
-
-                if (preserveLength) {
-                    return blank(text, fit, len);
-                } else {
-                    return text.toString().substring(0, fit) + sEllipsis;
-                } 
-            } else /* where == TruncateAt.MIDDLE */ {
-                int right = p.breakText(text, 0, len, false,
-                                        (avail - ellipsiswid) / 2, null);
-                float used = p.measureText(text, len - right, len);
-                int left = p.breakText(text, 0, len - right, true,
-                                       avail - ellipsiswid - used, null);
-
-                if (callback != null) {
-                    callback.ellipsized(left, len - right);
-                }
-
-                if (preserveLength) {
-                    return blank(text, left, len - right);
-                } else {
-                    String s = text.toString();
-                    return s.substring(0, left) + sEllipsis +
-                           s.substring(len - right, len);
-                }
-            }
-        }
-
-        // But do the Spanned cases by hand, because it's such a pain
-        // to iterate the span transitions backwards and getTextWidths()
-        // will give us the information we need.
-
-        // getTextWidths() always writes into the start of the array,
-        // so measure each span into the first half and then copy the
-        // results into the second half to use later.
-
-        float[] wid = new float[len * 2];
-        TextPaint temppaint = new TextPaint();
-        Spanned sp = (Spanned) text;
-
-        int next;
-        for (int i = 0; i < len; i = next) {
-            next = sp.nextSpanTransition(i, len, MetricAffectingSpan.class);
-
-            Styled.getTextWidths(p, temppaint, sp, i, next, wid, null);
-            System.arraycopy(wid, 0, wid, len + i, next - i);
-        }
-
-        float sum = 0;
-        for (int i = 0; i < len; i++) {
-            sum += wid[len + i];
-        }
-
-        if (sum <= avail) {
-            if (callback != null) {
-                callback.ellipsized(0, 0);
-            }
-
-            return text;
-        }
-
-        float ellipsiswid = p.measureText(sEllipsis);
-
-        if (ellipsiswid > avail) {
-            if (callback != null) {
-                callback.ellipsized(0, len);
-            }
-
-            if (preserveLength) {
-                char[] buf = obtain(len);
-                for (int i = 0; i < len; i++) {
-                    buf[i] = '\uFEFF';
-                }
-                SpannableString ss = new SpannableString(new String(buf, 0, len));
-                recycle(buf);
-                copySpansFrom(sp, 0, len, Object.class, ss, 0);
-                return ss;
-            } else {
-                return "";
-            }
-        }
-
-        if (where == TruncateAt.START) {
-            sum = 0;
-            int i;
-
-            for (i = len; i >= 0; i--) {
-                float w = wid[len + i - 1];
-
-                if (w + sum + ellipsiswid > avail) {
-                    break;
-                }
-
-                sum += w;
-            }
-
-            if (callback != null) {
-                callback.ellipsized(0, i);
-            }
-
-            if (preserveLength) {
-                SpannableString ss = new SpannableString(blank(text, 0, i));
-                copySpansFrom(sp, 0, len, Object.class, ss, 0);
-                return ss;
-            } else {
-                SpannableStringBuilder out = new SpannableStringBuilder(sEllipsis);
-                out.insert(1, text, i, len);
-
-                return out;
-            }
-        } else if (where == TruncateAt.END) {
-            sum = 0;
-            int i;
-
-            for (i = 0; i < len; i++) {
-                float w = wid[len + i];
-
-                if (w + sum + ellipsiswid > avail) {
-                    break;
-                }
-
-                sum += w;
-            }
-
-            if (callback != null) {
-                callback.ellipsized(i, len);
-            }
-
-            if (preserveLength) {
-                SpannableString ss = new SpannableString(blank(text, i, len));
-                copySpansFrom(sp, 0, len, Object.class, ss, 0);
-                return ss;
-            } else {
-                SpannableStringBuilder out = new SpannableStringBuilder(sEllipsis);
-                out.insert(0, text, 0, i);
-
-                return out;
-            }
-        } else /* where = TruncateAt.MIDDLE */ {
-            float lsum = 0, rsum = 0;
-            int left = 0, right = len;
-
-            float ravail = (avail - ellipsiswid) / 2;
-            for (right = len; right >= 0; right--) {
-                float w = wid[len + right - 1];
-
-                if (w + rsum > ravail) {
-                    break;
-                }
-
-                rsum += w;
-            }
-
-            float lavail = avail - ellipsiswid - rsum;
-            for (left = 0; left < right; left++) {
-                float w = wid[len + left];
-
-                if (w + lsum > lavail) {
-                    break;
-                }
-
-                lsum += w;
-            }
-
-            if (callback != null) {
-                callback.ellipsized(left, right);
-            }
-
-            if (preserveLength) {
-                SpannableString ss = new SpannableString(blank(text, left, right));
-                copySpansFrom(sp, 0, len, Object.class, ss, 0);
-                return ss;
-            } else {
-                SpannableStringBuilder out = new SpannableStringBuilder(sEllipsis);
-                out.insert(0, text, 0, left);
-                out.insert(out.length(), text, right, len);
-
-                return out;
-            }
-        }
-    }
+//    public static CharSequence ellipsize(CharSequence text,
+//                                         TextPaint p,
+//                                         float avail, TruncateAt where,
+//                                         boolean preserveLength,
+//                                         EllipsizeCallback callback) {
+//        if (sEllipsis == null) {
+//            Resources r = Resources.getSystem();
+//            sEllipsis = r.getString(R.string.ellipsis);
+//        }
+//
+//        int len = text.length();
+//
+//        // Use Paint.breakText() for the non-Spanned case to avoid having
+//        // to allocate memory and accumulate the character widths ourselves.
+//
+//        if (!(text instanceof Spanned)) {
+//            float wid = p.measureText(text, 0, len);
+//
+//            if (wid <= avail) {
+//                if (callback != null) {
+//                    callback.ellipsized(0, 0);
+//                }
+//
+//                return text;
+//            }
+//
+//            float ellipsiswid = p.measureText(sEllipsis);
+//
+//            if (ellipsiswid > avail) {
+//                if (callback != null) {
+//                    callback.ellipsized(0, len);
+//                }
+//
+//                if (preserveLength) {
+//                    char[] buf = obtain(len);
+//                    for (int i = 0; i < len; i++) {
+//                        buf[i] = '\uFEFF';
+//                    }
+//                    String ret = new String(buf, 0, len);
+//                    recycle(buf);
+//                    return ret;
+//                } else {
+//                    return "";
+//                }
+//            }
+//
+//            if (where == TruncateAt.START) {
+//                int fit = p.breakText(text, 0, len, false,
+//                                      avail - ellipsiswid, null);
+//
+//                if (callback != null) {
+//                    callback.ellipsized(0, len - fit);
+//                }
+//
+//                if (preserveLength) {
+//                    return blank(text, 0, len - fit);
+//                } else {
+//                    return sEllipsis + text.toString().substring(len - fit, len);
+//                }
+//            } else if (where == TruncateAt.END) {
+//                int fit = p.breakText(text, 0, len, true,
+//                                      avail - ellipsiswid, null);
+//
+//                if (callback != null) {
+//                    callback.ellipsized(fit, len);
+//                }
+//
+//                if (preserveLength) {
+//                    return blank(text, fit, len);
+//                } else {
+//                    return text.toString().substring(0, fit) + sEllipsis;
+//                } 
+//            } else /* where == TruncateAt.MIDDLE */ {
+//                int right = p.breakText(text, 0, len, false,
+//                                        (avail - ellipsiswid) / 2, null);
+//                float used = p.measureText(text, len - right, len);
+//                int left = p.breakText(text, 0, len - right, true,
+//                                       avail - ellipsiswid - used, null);
+//
+//                if (callback != null) {
+//                    callback.ellipsized(left, len - right);
+//                }
+//
+//                if (preserveLength) {
+//                    return blank(text, left, len - right);
+//                } else {
+//                    String s = text.toString();
+//                    return s.substring(0, left) + sEllipsis +
+//                           s.substring(len - right, len);
+//                }
+//            }
+//        }
+//
+//        // But do the Spanned cases by hand, because it's such a pain
+//        // to iterate the span transitions backwards and getTextWidths()
+//        // will give us the information we need.
+//
+//        // getTextWidths() always writes into the start of the array,
+//        // so measure each span into the first half and then copy the
+//        // results into the second half to use later.
+//
+//        float[] wid = new float[len * 2];
+//        TextPaint temppaint = new TextPaint();
+//        Spanned sp = (Spanned) text;
+//
+//        int next;
+//        for (int i = 0; i < len; i = next) {
+//            next = sp.nextSpanTransition(i, len, MetricAffectingSpan.class);
+//
+//            Styled.getTextWidths(p, temppaint, sp, i, next, wid, null);
+//            System.arraycopy(wid, 0, wid, len + i, next - i);
+//        }
+//
+//        float sum = 0;
+//        for (int i = 0; i < len; i++) {
+//            sum += wid[len + i];
+//        }
+//
+//        if (sum <= avail) {
+//            if (callback != null) {
+//                callback.ellipsized(0, 0);
+//            }
+//
+//            return text;
+//        }
+//
+//        float ellipsiswid = p.measureText(sEllipsis);
+//
+//        if (ellipsiswid > avail) {
+//            if (callback != null) {
+//                callback.ellipsized(0, len);
+//            }
+//
+//            if (preserveLength) {
+//                char[] buf = obtain(len);
+//                for (int i = 0; i < len; i++) {
+//                    buf[i] = '\uFEFF';
+//                }
+//                SpannableString ss = new SpannableString(new String(buf, 0, len));
+//                recycle(buf);
+//                copySpansFrom(sp, 0, len, Object.class, ss, 0);
+//                return ss;
+//            } else {
+//                return "";
+//            }
+//        }
+//
+//        if (where == TruncateAt.START) {
+//            sum = 0;
+//            int i;
+//
+//            for (i = len; i >= 0; i--) {
+//                float w = wid[len + i - 1];
+//
+//                if (w + sum + ellipsiswid > avail) {
+//                    break;
+//                }
+//
+//                sum += w;
+//            }
+//
+//            if (callback != null) {
+//                callback.ellipsized(0, i);
+//            }
+//
+//            if (preserveLength) {
+//                SpannableString ss = new SpannableString(blank(text, 0, i));
+//                copySpansFrom(sp, 0, len, Object.class, ss, 0);
+//                return ss;
+//            } else {
+//                SpannableStringBuilder out = new SpannableStringBuilder(sEllipsis);
+//                out.insert(1, text, i, len);
+//
+//                return out;
+//            }
+//        } else if (where == TruncateAt.END) {
+//            sum = 0;
+//            int i;
+//
+//            for (i = 0; i < len; i++) {
+//                float w = wid[len + i];
+//
+//                if (w + sum + ellipsiswid > avail) {
+//                    break;
+//                }
+//
+//                sum += w;
+//            }
+//
+//            if (callback != null) {
+//                callback.ellipsized(i, len);
+//            }
+//
+//            if (preserveLength) {
+//                SpannableString ss = new SpannableString(blank(text, i, len));
+//                copySpansFrom(sp, 0, len, Object.class, ss, 0);
+//                return ss;
+//            } else {
+//                SpannableStringBuilder out = new SpannableStringBuilder(sEllipsis);
+//                out.insert(0, text, 0, i);
+//
+//                return out;
+//            }
+//        } else /* where = TruncateAt.MIDDLE */ {
+//            float lsum = 0, rsum = 0;
+//            int left = 0, right = len;
+//
+//            float ravail = (avail - ellipsiswid) / 2;
+//            for (right = len; right >= 0; right--) {
+//                float w = wid[len + right - 1];
+//
+//                if (w + rsum > ravail) {
+//                    break;
+//                }
+//
+//                rsum += w;
+//            }
+//
+//            float lavail = avail - ellipsiswid - rsum;
+//            for (left = 0; left < right; left++) {
+//                float w = wid[len + left];
+//
+//                if (w + lsum > lavail) {
+//                    break;
+//                }
+//
+//                lsum += w;
+//            }
+//
+//            if (callback != null) {
+//                callback.ellipsized(left, right);
+//            }
+//
+//            if (preserveLength) {
+//                SpannableString ss = new SpannableString(blank(text, left, right));
+//                copySpansFrom(sp, 0, len, Object.class, ss, 0);
+//                return ss;
+//            } else {
+//                SpannableStringBuilder out = new SpannableStringBuilder(sEllipsis);
+//                out.insert(0, text, 0, left);
+//                out.insert(out.length(), text, right, len);
+//
+//                return out;
+//            }
+//        }
+//    }
 
     private static String blank(CharSequence source, int start, int end) {
         int len = source.length();
@@ -1282,6 +1281,7 @@ public class TextUtils {
      * @param oneMore the string for "1 more" in the current locale
      * @param more the string for "%d more" in the current locale
      */
+/*
     public static CharSequence commaEllipsize(CharSequence text,
                                               TextPaint p, float avail,
                                               String oneMore,
@@ -1359,7 +1359,7 @@ public class TextUtils {
             return out;
         }
     }
-
+*/
     /* package */ static char[] obtain(int len) {
         char[] buf;
 
