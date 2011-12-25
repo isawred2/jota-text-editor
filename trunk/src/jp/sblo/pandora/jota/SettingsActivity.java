@@ -1004,10 +1004,25 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
     private OnPreferenceClickListener mProcClearHisotry = new OnPreferenceClickListener(){
         public boolean onPreferenceClick(Preference preference) {
 
-            SharedPreferences sp = getSharedPreferences(SettingsActivity.PREF_HISTORY , MODE_PRIVATE);
-            sp.edit().clear().commit();
+            new AlertDialog.Builder(SettingsActivity.this)
+            .setMessage( getString( R.string.msg_clear_history) )
+            .setTitle( R.string.label_init )
+            .setPositiveButton(R.string.label_ok, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    SharedPreferences sp = getSharedPreferences(SettingsActivity.PREF_HISTORY , MODE_PRIVATE);
+                    sp.edit().clear().commit();
 
-            Toast.makeText( SettingsActivity.this, R.string.toast_clear_history, Toast.LENGTH_LONG).show();
+                    Toast.makeText( SettingsActivity.this, R.string.toast_clear_history, Toast.LENGTH_LONG).show();
+               }
+            })
+            .setNegativeButton(R.string.label_cancel, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            })
+            .show();
+
             return false;
         }
 
