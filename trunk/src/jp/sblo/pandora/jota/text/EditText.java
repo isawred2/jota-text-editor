@@ -225,6 +225,15 @@ public class EditText extends TextView{
             case FUNCTION_END:
             case FUNCTION_TOP:
             case FUNCTION_BOTTOM:
+            case FUNCTION_PARENTHESIS:
+            case FUNCTION_CURLY:
+            case FUNCTION_BRACKETS:
+            case FUNCTION_XMLBRACE:
+            case FUNCTION_CCOMMENT:
+            case FUNCTION_DOUBLEQUOTE:
+            case FUNCTION_SINGLEQUOTE:
+            case FUNCTION_KAGIKAKKO:
+            case FUNCTION_NIJUKAGI:
                 return doCommand(function);
 
             case FUNCTION_ENTER:

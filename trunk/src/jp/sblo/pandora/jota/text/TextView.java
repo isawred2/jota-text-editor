@@ -7534,6 +7534,19 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
                 }
                 return true;
             }
+            case FUNCTION_PARENTHESIS:
+            case FUNCTION_CURLY:
+            case FUNCTION_BRACKETS:
+            case FUNCTION_XMLBRACE:
+            case FUNCTION_CCOMMENT:
+            case FUNCTION_DOUBLEQUOTE:
+            case FUNCTION_SINGLEQUOTE:
+            case FUNCTION_KAGIKAKKO:
+            case FUNCTION_NIJUKAGI:
+            {
+                insertBraces(function);
+                return true;
+            }
 
         }
         return false;
@@ -9217,6 +9230,73 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
     }
 
     // Jota Text Editor
+    private void insertBraces(int function)
+    {
+        String f = "(";
+        String b = ")";
+        switch ( function ){
+            case FUNCTION_PARENTHESIS:
+                f = "(";
+                b = ")";
+                break;
+            case FUNCTION_CURLY:
+                f = "{";
+                b = "}";
+                break;
+            case FUNCTION_BRACKETS:
+                f = "[";
+                b = "]";
+                break;
+            case FUNCTION_XMLBRACE:
+                f = "< ";
+                b = " />";
+                break;
+            case FUNCTION_CCOMMENT:
+                f = "/* ";
+                b = " */";
+                break;
+            case FUNCTION_DOUBLEQUOTE:
+                f = "\"";
+                b = "\"";
+                break;
+            case FUNCTION_SINGLEQUOTE:
+                f = "'";
+                b = "'";
+                break;
+            case FUNCTION_KAGIKAKKO:
+                f = "\u300c";
+                b = "\u300d";
+                break;
+            case FUNCTION_NIJUKAGI:
+                f = "\u300e";
+                b = "\u300f";
+                break;
+        }
+        int min = 0;
+        int max = mText.length();
+
+        if (isFocused()) {
+            final int selStart = getSelectionStart();
+            final int selEnd = getSelectionEnd();
+
+            min = Math.max(0, Math.min(selStart, selEnd));
+            max = Math.max(0, Math.max(selStart, selEnd));
+        }
+
+        if ( min == max ){
+            ((Editable) mText).replace(min, max, f+b );
+            int bpos = max + f.length();
+            Selection.setSelection((Spannable)mText, bpos);
+        }else{
+            ((Editable) mText).replace(min, min, f );
+            int bpos = max + f.length();
+            ((Editable) mText).replace(bpos, bpos, b );
+            Selection.setSelection((Spannable)mText, bpos);
+        }
+    }
+
+
+    // Jota Text Editor
     public final static int FUNCTION_NONE=0;
     public final static int FUNCTION_SELECT_ALL=1;
     public final static int FUNCTION_UNDO=2;
@@ -9261,6 +9341,15 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
     public final static int FUNCTION_FONTDOWN=40;
     public final static int FUNCTION_SELECT_LINE=41;
     public final static int FUNCTION_SELECT_BLOCK=42;
+    public final static int FUNCTION_PARENTHESIS=43;
+    public final static int FUNCTION_CURLY=44;
+    public final static int FUNCTION_BRACKETS=45;
+    public final static int FUNCTION_XMLBRACE=46;
+    public final static int FUNCTION_CCOMMENT=47;
+    public final static int FUNCTION_DOUBLEQUOTE=48;
+    public final static int FUNCTION_SINGLEQUOTE=49;
+    public final static int FUNCTION_KAGIKAKKO=50;
+    public final static int FUNCTION_NIJUKAGI=51;
 
 
     @ViewDebug.ExportedProperty
