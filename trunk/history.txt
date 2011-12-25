@@ -728,3 +728,27 @@ Android Market経由で作者に寄付が出来ます。
 
 You can donate to the developer via Android Market.
 Please donate if you continue to use Jota.
+
+
+[2011/12/25 v.0.1.25]
+- ツールバーにフォント拡縮、行選択、段落選択、各種括弧入力の機能を追加
+  (ツールバー設定で必要な機能を追加できます)
+- Honeycomb以降でメニューをアクションバーに表示するように変更
+- Honeycomb以降でタイトルバーを隠す機能を無効化
+- テーマプレビュー画面を追加
+- 検索後、挿入してから再検索するとマッチする場所がずれる問題を修正
+- Viewer mode でダブルタップ時に選択マーカーが出ないバグを修正
+- Honeycomb向けに色の調整
+- 韓国語リソースを更新（Thanks to Noah!)
+
+
+[2011/12/25 v.0.1.25]
+- Added toolbar functions.
+  Font+/- , Select Line/Block , Braces((){}[]etc)
+  (see Toolbar Settings)
+- Menu will be shown on ActionBar on Honeycomb/ICS.
+- "Hide TitleBar" option is no longer available on Honeycomb/ICS.
+- Added Preview Theme screen.
+- Fixed minor bugs.
+- Updated Korean Resource. (Thanks to Noah!)
+

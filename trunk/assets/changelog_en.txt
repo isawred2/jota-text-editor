@@ -1,8 +1,18 @@
+[2011/12/25 v.0.1.25]
+- Added toolbar functions.
+  Font+/- , Select Line/Block , Braces((){}[]etc)
+  (see Toolbar Settings)
+- Menu will be shown on ActionBar on Honeycomb/ICS.
+- "Hide TitleBar" option is no longer available on Honeycomb/ICS.
+- Added Preview Theme screen.
+- Fixed minor bugs.
+- Updated Korean Resource. (Thanks to Noah!)
+
 [2011/12/17 v.0.1.24]
 - Added the option to enlarge toolbar buttons.
   (for Tablet users.)
 - Added the option to hide toolbar in landscape mode.
-- added the function to captcher screen shot.
+- added the function to capture screen shot.
   (Menu -> Edit -> Share screenshot)
   ★Please use this for bug report or to appeal your wallpaper!
   ★You can capture only Jota's screen.
