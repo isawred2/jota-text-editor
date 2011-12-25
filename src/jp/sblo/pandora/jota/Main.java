@@ -37,6 +37,7 @@ import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -120,6 +121,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
     private View mToolbarBase;
     private Handler mHandler = new Handler();
     protected boolean mRotationControl=false;
+	public static boolean sHoneycomb = ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB );
 
     class InstanceState {
         String filename;
@@ -995,9 +997,10 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
 //        menuitem = menu.findItem(R.id.menu_help_donate);
 //        menuitem.setVisible( mSettings.donateCounter == 0 );
 
-        if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ){
+        if ( sHoneycomb ){
 	        menuitem = menu.findItem(R.id.menu_edit);
 			new IcsWrapper().setShowAsActionIfRoomWithText(menuitem);
+	        menuitem.setIcon(R.drawable.ic_menu_edit_ab);
         }
 
         return super.onPrepareOptionsMenu(menu);
@@ -2350,7 +2353,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
     void applyBootSetting() {
         mBootSettings = SettingsActivity.readBootSettings(this);
 
-        if (mBootSettings.hideTitleBar) {
+        if ( !sHoneycomb && mBootSettings.hideTitleBar) {
             setTheme(R.style.Theme_NoTitleBar);
         }
 
@@ -2435,14 +2438,14 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
     }
 
 
-    @SuppressWarnings("deprecation")
     private void initToolbar( ArrayList<Integer> toolbars , boolean bigButton)
     {
         mToolbar.removeAllViews();
         for( Integer function : toolbars ){
             Button button = new Button(this);
-            LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.FILL_PARENT);
+            LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
             button.setText(getToolbarLabel(function));
+            button.setTextColor(Color.BLACK);
             button.setTag(function);
             button.setOnClickListener(mOnClickToolbar);
             button.setFocusable(false);

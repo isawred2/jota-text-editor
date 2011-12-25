@@ -3,8 +3,8 @@
 
       package="jp.sblo.pandora.jota"
 
-      android:versionCode="44"
-      android:versionName="0.1.24"
+      android:versionCode="45"
+      android:versionName="0.1.25"
       android:installLocation="auto"
 >
     <application android:icon="@drawable/icon"
@@ -56,7 +56,7 @@
 
         <activity android:name="jp.sblo.pandora.jota.ActivityPicker"
                 android:label="@string/activity_picker_label"
-                android:theme="@*android:style/Theme.Dialog.Alert"
+                android:theme="@*android:style/Theme.Dialog"
                 android:finishOnCloseSystemDialogs="true">
         </activity>
 

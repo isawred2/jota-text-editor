@@ -77,7 +77,15 @@ public class SettingsShortcutActivity extends PreferenceActivity implements OnSh
         R.string.menu_font_size_down,
         R.string.menu_select_line,
         R.string.menu_select_block,
-
+        R.string.menu_parenthesis,
+        R.string.menu_curly,
+        R.string.menu_brackets,
+        R.string.menu_xmlbrace,
+        R.string.menu_ccomment,
+        R.string.menu_doublequote,
+        R.string.menu_singlequote,
+        R.string.menu_kagikakko,
+        R.string.menu_nijukagi,
     };
 
     public final static int[] TBL_FUNCTION = {
@@ -124,6 +132,16 @@ public class SettingsShortcutActivity extends PreferenceActivity implements OnSh
         TextView.FUNCTION_FONTDOWN,
         TextView.FUNCTION_SELECT_LINE,
         TextView.FUNCTION_SELECT_BLOCK,
+        TextView.FUNCTION_PARENTHESIS,
+        TextView.FUNCTION_CURLY,
+        TextView.FUNCTION_BRACKETS,
+        TextView.FUNCTION_XMLBRACE,
+        TextView.FUNCTION_CCOMMENT,
+        TextView.FUNCTION_DOUBLEQUOTE,
+        TextView.FUNCTION_SINGLEQUOTE,
+        TextView.FUNCTION_KAGIKAKKO,
+        TextView.FUNCTION_NIJUKAGI,
+
     };
 
     public final static String[] TBL_TOOLNAME = {
@@ -170,6 +188,15 @@ public class SettingsShortcutActivity extends PreferenceActivity implements OnSh
         "Font-",
         "Sel Line",
         "Sel Block",
+        " ( ) ",
+        " { } ",
+        " [ ] ",
+        " < /> ",
+        " /* */ ",
+        " \" \" ",
+        " ' ' ",
+        " \u300c \u300d ",
+        " \u300e \u300f ",
     };
 
     public String getFunctionName(int func)

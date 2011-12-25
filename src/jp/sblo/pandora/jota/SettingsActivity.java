@@ -376,7 +376,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                     pr.setTitle(R.string.label_blink_cursor);
                     cat.addPreference(pr);
                 }
-                {
+                if ( !Main.sHoneycomb ){
                     // hide titlebar
                     final CheckBoxPreference pr = new CheckBoxPreference(this);
                     pr.setKey(KEY_HIDETITLEBAR );
