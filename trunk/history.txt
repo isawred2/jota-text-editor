@@ -755,7 +755,7 @@ Please donate if you continue to use Jota.
 
 [2011/12/26 v.0.1.26]
 - Fixed the bug that crashes when opening a file.
- ( I appologize to all of force-crashed user! )
+ ( I apologize to all of force-crashed user! )
 - Added confirmation dialog when clearing history.
 
 [2011/12/26 v.0.1.26]
