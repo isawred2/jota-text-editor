@@ -1,3 +1,8 @@
+[2011/12/26 v.0.1.26]
+- Fixed the bug that crashes when opening a file.
+ ( I appologize to all of force-crashed user! )
+- Added confirmation dialog when clearing history.
+
 [2011/12/25 v.0.1.25]
 - Added toolbar functions.
   Font+/- , Select Line/Block , Braces((){}[]etc)
