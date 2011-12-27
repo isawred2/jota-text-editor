@@ -56,7 +56,7 @@ public class EditText extends TextView{
         setEditableFactory( JotaEditableFactory.getInstance() );
 
         // set IME options
-        setImeOptions(EditorInfo.IME_ACTION_DONE|EditorInfo.IME_FLAG_NO_FULLSCREEN|EditorInfo.IME_FLAG_NO_EXTRACT_UI);
+        setImeOptions(EditorInfo.IME_ACTION_DONE|EditorInfo.IME_FLAG_NO_FULLSCREEN|EditorInfo.IME_FLAG_NO_EXTRACT_UI|0x80000000);
     }
 
 
