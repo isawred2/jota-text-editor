@@ -7473,41 +7473,44 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
             case FUNCTION_SELECT_ALL:
                 if (canSelectText()) {
                     return onTextContextMenuItem(ID_SELECT_ALL);
+                }else{
+                    return true;
                 }
-                break;
 
             case FUNCTION_CUT:
                 if (canCut()) {
                     return onTextContextMenuItem(ID_CUT);
+                }else{
+                    return true;
                 }
-
-                break;
 
             case FUNCTION_COPY:
                 if (canCopy()) {
                     return onTextContextMenuItem(ID_COPY);
+                }else{
+                    return true;
                 }
-
-                break;
 
             case FUNCTION_PASTE:
                 if (canPaste()) {
                     return onTextContextMenuItem(ID_PASTE);
+                }else{
+                    return true;
                 }
-
-                break;
 
             case FUNCTION_UNDO:
                 if (canUndo()) {
                     return onTextContextMenuItem(ID_UNDO);
+                }else{
+                    return true;
                 }
-                break;
 
             case FUNCTION_REDO:
                 if (canRedo()) {
                     return onTextContextMenuItem(ID_REDO);
+                }else{
+                    return true;
                 }
-                break;
 
             case FUNCTION_WORDWRAP:
                 setHorizontallyScrolling(!mHorizontallyScrolling);
