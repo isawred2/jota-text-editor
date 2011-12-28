@@ -4886,7 +4886,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
                 outText.text = "";
             }
             outText.flags = 0;
-            if (MetaKeyKeyListener.getMetaState(mText, MetaKeyKeyListener.META_SELECTING) != 0) {
+            if (JotaTextKeyListener.getMetaStateSelecting(mText) != 0) {
                 outText.flags |= ExtractedText.FLAG_SELECTING;
             }
             if (mSingleLine) {
@@ -6768,8 +6768,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
             if (DEBUG_EXTRACT) Log.v(TAG, "afterTextChanged: " + buffer);
             TextView.this.sendAfterTextChanged(buffer);
 
-            if (MetaKeyKeyListener.getMetaState(buffer,
-                                 MetaKeyKeyListener.META_SELECTING) != 0) {
+            if (JotaTextKeyListener.getMetaStateSelecting(buffer) != 0) {
                 MetaKeyKeyListener.stopSelecting(TextView.this, buffer);
             }
         }
@@ -7864,7 +7863,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
         }
 
         if (canSelectText()) {
-            if (MetaKeyKeyListener.getMetaState(mText, MetaKeyKeyListener.META_SELECTING) != 0) {
+            if (JotaTextKeyListener.getMetaStateSelecting(mText) != 0) {
                 menu.add(0, ID_STOP_SELECTING_TEXT, 0,
                         R.string.stopSelectingText).// Jota Text Editor
                     setOnMenuItemClickListener(handler);

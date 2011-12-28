@@ -4,6 +4,7 @@ import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 
+import jp.sblo.pandora.jota.JotaTextEditor;
 import jp.sblo.pandora.jota.R;
 import android.content.Context;
 import android.text.Editable;
@@ -56,7 +57,11 @@ public class EditText extends TextView{
         setEditableFactory( JotaEditableFactory.getInstance() );
 
         // set IME options
-        setImeOptions(EditorInfo.IME_ACTION_DONE|EditorInfo.IME_FLAG_NO_FULLSCREEN|EditorInfo.IME_FLAG_NO_EXTRACT_UI|0x80000000);
+        if ( JotaTextEditor.sHoneycomb ){
+            setImeOptions(EditorInfo.IME_ACTION_DONE|EditorInfo.IME_FLAG_NO_FULLSCREEN|EditorInfo.IME_FLAG_NO_EXTRACT_UI);
+        }else{
+            setImeOptions(EditorInfo.IME_ACTION_DONE|0x80000000|EditorInfo.IME_FLAG_NO_EXTRACT_UI);
+        }
     }
 
 

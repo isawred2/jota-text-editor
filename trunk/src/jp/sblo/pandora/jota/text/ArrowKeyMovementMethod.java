@@ -143,8 +143,7 @@ implements MovementMethod
     {
         boolean cap = (MetaKeyKeyListener.getMetaState(buffer,
                 KeyEvent.META_SHIFT_ON) == 1) ||
-              (MetaKeyKeyListener.getMetaState(buffer,
-                MetaKeyKeyListener.META_SELECTING) != 0);
+              (JotaTextKeyListener.getMetaStateSelecting(buffer) != 0);
 
         Log.d("=========================>","cap="+cap);
 
@@ -178,8 +177,7 @@ implements MovementMethod
     private boolean up(TextView widget, Spannable buffer) {
         boolean cap = (MetaKeyKeyListener.getMetaState(buffer,
                         KeyEvent.META_SHIFT_ON) == 1) ||
-                      (MetaKeyKeyListener.getMetaState(buffer,
-                        MetaKeyKeyListener.META_SELECTING) != 0);
+                      (JotaTextKeyListener.getMetaStateSelecting(buffer) != 0);
         boolean alt = MetaKeyKeyListener.getMetaState(buffer,
                         KeyEvent.META_ALT_ON) == 1;
         Layout layout = widget.getLayout();
@@ -206,8 +204,7 @@ implements MovementMethod
     private boolean down(TextView widget, Spannable buffer) {
         boolean cap = (MetaKeyKeyListener.getMetaState(buffer,
                         KeyEvent.META_SHIFT_ON) == 1) ||
-                      (MetaKeyKeyListener.getMetaState(buffer,
-                        MetaKeyKeyListener.META_SELECTING) != 0);
+                      (JotaTextKeyListener.getMetaStateSelecting(buffer) != 0);
         boolean alt = MetaKeyKeyListener.getMetaState(buffer,
                         KeyEvent.META_ALT_ON) == 1;
         Layout layout = widget.getLayout();
@@ -234,8 +231,7 @@ implements MovementMethod
     private boolean left(TextView widget, Spannable buffer) {
         boolean cap = (MetaKeyKeyListener.getMetaState(buffer,
                         KeyEvent.META_SHIFT_ON) == 1) ||
-                      (MetaKeyKeyListener.getMetaState(buffer,
-                        MetaKeyKeyListener.META_SELECTING) != 0);
+                      (JotaTextKeyListener.getMetaStateSelecting(buffer) != 0);
         boolean alt = MetaKeyKeyListener.getMetaState(buffer,
                         KeyEvent.META_ALT_ON) == 1;
         Layout layout = widget.getLayout();
@@ -258,8 +254,7 @@ implements MovementMethod
     private boolean right(TextView widget, Spannable buffer) {
         boolean cap = (MetaKeyKeyListener.getMetaState(buffer,
                         KeyEvent.META_SHIFT_ON) == 1) ||
-                      (MetaKeyKeyListener.getMetaState(buffer,
-                        MetaKeyKeyListener.META_SELECTING) != 0);
+                      (JotaTextKeyListener.getMetaStateSelecting(buffer) != 0);
         boolean alt = MetaKeyKeyListener.getMetaState(buffer,
                         KeyEvent.META_ALT_ON) == 1;
         Layout layout = widget.getLayout();
@@ -282,8 +277,7 @@ implements MovementMethod
     private boolean movehome(TextView widget, Spannable buffer, KeyEvent event) {
         boolean cap = (MetaKeyKeyListener.getMetaState(buffer,
                         KeyEvent.META_SHIFT_ON) == 1) ||
-                      (MetaKeyKeyListener.getMetaState(buffer,
-                        MetaKeyKeyListener.META_SELECTING) != 0);
+                      (JotaTextKeyListener.getMetaStateSelecting(buffer) != 0);
         Layout layout = widget.getLayout();
 
         boolean ctrl = (event.getMetaState() & mShortcutCtrlKey)!=0;
@@ -308,8 +302,7 @@ implements MovementMethod
     private boolean moveend(TextView widget, Spannable buffer, KeyEvent event) {
         boolean cap = (MetaKeyKeyListener.getMetaState(buffer,
                         KeyEvent.META_SHIFT_ON) == 1) ||
-                      (MetaKeyKeyListener.getMetaState(buffer,
-                        MetaKeyKeyListener.META_SELECTING) != 0);
+                      (JotaTextKeyListener.getMetaStateSelecting(buffer) != 0);
         Layout layout = widget.getLayout();
 
         boolean ctrl = (event.getMetaState() & mShortcutCtrlKey)!=0;
@@ -334,8 +327,7 @@ implements MovementMethod
     private boolean volup(TextView widget, Spannable buffer) {
         boolean cap = (MetaKeyKeyListener.getMetaState(buffer,
                         KeyEvent.META_SHIFT_ON) == 1) ||
-                      (MetaKeyKeyListener.getMetaState(buffer,
-                        MetaKeyKeyListener.META_SELECTING) != 0);
+                      (JotaTextKeyListener.getMetaStateSelecting(buffer) != 0);
         if (cap) {
             widget.movePage(true,true);
             return true;
@@ -348,8 +340,7 @@ implements MovementMethod
     private boolean voldown(TextView widget, Spannable buffer) {
         boolean cap = (MetaKeyKeyListener.getMetaState(buffer,
                         KeyEvent.META_SHIFT_ON) == 1) ||
-                      (MetaKeyKeyListener.getMetaState(buffer,
-                        MetaKeyKeyListener.META_SELECTING) != 0);
+                      (JotaTextKeyListener.getMetaStateSelecting(buffer) != 0);
         if (cap) {
             widget.movePage(false,true);
             return true;
@@ -428,7 +419,7 @@ implements MovementMethod
                 break;
 
             case KeyEvent.KEYCODE_DPAD_CENTER:
-                if (MetaKeyKeyListener.getMetaState(buffer, MetaKeyKeyListener.META_SELECTING) != 0) {
+                if (JotaTextKeyListener.getMetaStateSelecting(buffer) != 0) {
                     if (widget.showContextMenu()) {
                         handled = true;
                     }
@@ -503,8 +494,7 @@ implements MovementMethod
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
               boolean cap = (MetaKeyKeyListener.getMetaState(buffer,
                               KeyEvent.META_SHIFT_ON) == 1) ||
-                            (MetaKeyKeyListener.getMetaState(buffer,
-                              MetaKeyKeyListener.META_SELECTING) != 0);
+                            (JotaTextKeyListener.getMetaStateSelecting(buffer) != 0);
               int x = (int) event.getX() - sLineNumberWidth;	// Jota Text Editor
               int y = (int) event.getY();
               int offset = getOffset(x, y, widget);
@@ -546,8 +536,7 @@ implements MovementMethod
             } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
                 boolean cap = (MetaKeyKeyListener.getMetaState(buffer,
                                 KeyEvent.META_SHIFT_ON) == 1) ||
-                              (MetaKeyKeyListener.getMetaState(buffer,
-                                MetaKeyKeyListener.META_SELECTING) != 0);
+                              (JotaTextKeyListener.getMetaStateSelecting(buffer) != 0);
 
                 if (cap && handled) {
                     // Before selecting, make sure we've moved out of the "slop".
@@ -628,8 +617,7 @@ implements MovementMethod
                 }
                 boolean cap = (MetaKeyKeyListener.getMetaState(buffer,
                                 KeyEvent.META_SHIFT_ON) == 1) ||
-                              (MetaKeyKeyListener.getMetaState(buffer,
-                                MetaKeyKeyListener.META_SELECTING) != 0);
+                              (JotaTextKeyListener.getMetaStateSelecting(buffer) != 0);
 
                 DoubleTapState[] tap = buffer.getSpans(0, buffer.length(),
                                                        DoubleTapState.class);
