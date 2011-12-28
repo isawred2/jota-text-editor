@@ -1185,8 +1185,7 @@ public abstract class Layout {
 
         int caps = TextKeyListener.getMetaState(editingBuffer,
                                                 KeyEvent.META_SHIFT_ON) |
-                   TextKeyListener.getMetaState(editingBuffer,
-                                                TextKeyListener.META_SELECTING);
+                   JotaTextKeyListener.getMetaStateSelecting(editingBuffer);
         int fn = TextKeyListener.getMetaState(editingBuffer,
                                               KeyEvent.META_ALT_ON);
         int dist = 0;

@@ -121,7 +121,6 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
     private View mToolbarBase;
     private Handler mHandler = new Handler();
     protected boolean mRotationControl=false;
-	public static boolean sHoneycomb = ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB );
 
     class InstanceState {
         String filename;
@@ -997,7 +996,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
 //        menuitem = menu.findItem(R.id.menu_help_donate);
 //        menuitem.setVisible( mSettings.donateCounter == 0 );
 
-        if ( sHoneycomb ){
+        if ( JotaTextEditor.sHoneycomb ){
 	        menuitem = menu.findItem(R.id.menu_edit);
 			new IcsWrapper().setShowAsActionIfRoomWithText(menuitem);
 	        menuitem.setIcon(R.drawable.ic_menu_edit_ab);
@@ -2353,7 +2352,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
     void applyBootSetting() {
         mBootSettings = SettingsActivity.readBootSettings(this);
 
-        if ( !sHoneycomb && mBootSettings.hideTitleBar) {
+        if ( !JotaTextEditor.sHoneycomb && mBootSettings.hideTitleBar) {
             setTheme(R.style.Theme_NoTitleBar);
         }
 

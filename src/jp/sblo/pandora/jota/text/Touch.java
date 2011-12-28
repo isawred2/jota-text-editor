@@ -138,8 +138,7 @@ public class Touch {
 //            }
             boolean cap = (MetaKeyKeyListener.getMetaState(buffer,
                     KeyEvent.META_SHIFT_ON) == 1) ||
-                    (MetaKeyKeyListener.getMetaState(buffer,
-                     MetaKeyKeyListener.META_SELECTING) != 0);
+                    (JotaTextKeyListener.getMetaStateSelecting(buffer) != 0);
 
             if (ds.length > 0 && ds[0].mUsed) {
                 result = true;
