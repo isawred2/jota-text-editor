@@ -763,3 +763,14 @@ Please donate if you continue to use Jota.
  ( ご迷惑をおかけしました。 )
 - 履歴消去の時に確認ダイアログを表示する処理を追加
 
+
+[2011/12/29 v.0.1.27]
+- ショートカットキーが無処理の時に誤動作する問題を修正
+- Desireでコンテクストメニューの「テキストを選択」からカーソルキーで選択できない問題を修正
+- Xperia ArcのPOBOXでランドスケープ時に予測変換候補が出ない問題を修正
+
+[2011/12/29 v.0.1.27]
+- Fixed the bug of ContextMenu-SelectText. 
+- Fixed the bug that IME don't show correcly in Landscape Mode.
+- Fixed minor bugs.
+
