@@ -1,3 +1,8 @@
+[2011/12/29 v.0.1.27]
+- Fixed the bug of ContextMenu-SelectText. 
+- Fixed the bug that IME don't show correcly in Landscape Mode.
+- Fixed minor bugs.
+
 [2011/12/26 v.0.1.26]
 - Fixed the bug that crashes when opening a file.
  ( I apologize to all of force-crashed user! )
