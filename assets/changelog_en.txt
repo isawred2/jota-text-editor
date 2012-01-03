@@ -1,3 +1,15 @@
+[2012/01/04 v.0.2.00]
+- Added Syntax Highlight (Beta Testing)
+ ★Supported only Java.
+ ★See Help Page to customize definition file.
+ ★Please post definition files!
+
+- Added the option to process ctrl-key before IME.
+  (Menu-Input Settings-Dispatch CTRL-key before IME.)
+  This is for Honeycomb w/BT-KBD which CTRL does't work.
+- Fixed minor bugs.
+- Updated Korean resources. (Thanks to Noah!)
+
 [2011/12/29 v.0.1.27]
 - Fixed the bug of ContextMenu-SelectText. 
 - Fixed the bug that IME don't show correcly in Landscape Mode.
