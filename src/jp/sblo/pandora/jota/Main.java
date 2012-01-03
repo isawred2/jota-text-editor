@@ -511,6 +511,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
             if (mBootSettings.viewerMode) {
                 mEditor.showIme(false);
             }
+            KeywordHighlght.loadHighlight(filename);
         }
     }
 
@@ -2346,6 +2347,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
         editor.enableBlinkCursor(mSettings.blinkCursor);
         mToolbarBase.setVisibility(mSettings.showToolbar&&(!landscape || !mSettings.toolbarHideLandscape)?View.VISIBLE:View.GONE);
         editor.setForceScroll(mSettings.forceScroll);
+        editor.setCtrlPreIme(mSettings.ctrlPreIme);
         initToolbar(mSettings.toolbars,mSettings.toolbarBigButton);
     }
 

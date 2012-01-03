@@ -88,16 +88,16 @@ public class Styled
             CharSequence tmp;
             int tmpstart, tmpend;
 
-            if (runIsRtl) {
-                tmp = TextUtils.getReverse(text, start, end);
-                tmpstart = 0;
-                // XXX: assumes getReverse doesn't change the length of the text
-                tmpend = end - start;
-            } else {
+//            if (runIsRtl) {
+//                tmp = TextUtils.getReverse(text, start, end);
+//                tmpstart = 0;
+//                // XXX: assumes getReverse doesn't change the length of the text
+//                tmpend = end - start;
+//            } else {
                 tmp = text;
                 tmpstart = start;
                 tmpend = end;
-            }
+//            }
 
             if (fmi != null) {
                 workPaint.getFontMetricsInt(fmi);
@@ -115,24 +115,24 @@ public class Styled
                         haveWidth = true;
                     }
 
-                    if (dir == Layout.DIR_RIGHT_TO_LEFT)
-                        canvas.drawRect(x - ret, top, x, bottom, workPaint);
-                    else
+//                    if (dir == Layout.DIR_RIGHT_TO_LEFT)
+//                        canvas.drawRect(x - ret, top, x, bottom, workPaint);
+//                    else
                         canvas.drawRect(x, top, x + ret, bottom, workPaint);
 
                     workPaint.setStyle(s);
                     workPaint.setColor(c);
                 }
 
-                if (dir == Layout.DIR_RIGHT_TO_LEFT) {
-                    if (!haveWidth) {
-                        ret = workPaint.measureText(tmp, tmpstart, tmpend);
-                        haveWidth = true;
-                    }
-
-                    canvas.drawText(tmp, tmpstart, tmpend,
-                                    x - ret, y + workPaint.baselineShift, workPaint);
-                } else {
+//                if (dir == Layout.DIR_RIGHT_TO_LEFT) {
+//                    if (!haveWidth) {
+//                        ret = workPaint.measureText(tmp, tmpstart, tmpend);
+//                        haveWidth = true;
+//                    }
+//
+//                    canvas.drawText(tmp, tmpstart, tmpend,
+//                                    x - ret, y + workPaint.baselineShift, workPaint);
+//                } else {
                     if (needWidth) {
                         if (!haveWidth) {
                             ret = workPaint.measureText(tmp, tmpstart, tmpend);
@@ -142,7 +142,7 @@ public class Styled
 
                     canvas.drawText(tmp, tmpstart, tmpend,
                                     x, y + workPaint.baselineShift, workPaint);
-                }
+//                }
             } else {
                 if (needWidth && !haveWidth) {
                     ret = workPaint.measureText(tmp, tmpstart, tmpend);
@@ -153,18 +153,18 @@ public class Styled
             ret = replacement.getSize(workPaint, text, start, end, fmi);
 
             if (canvas != null) {
-                if (dir == Layout.DIR_RIGHT_TO_LEFT)
-                    replacement.draw(canvas, text, start, end,
-                                     x - ret, top, y, bottom, workPaint);
-                else
+//                if (dir == Layout.DIR_RIGHT_TO_LEFT)
+//                    replacement.draw(canvas, text, start, end,
+//                                     x - ret, top, y, bottom, workPaint);
+//                else
                     replacement.draw(canvas, text, start, end,
                                      x, top, y, bottom, workPaint);
             }
         }
 
-        if (dir == Layout.DIR_RIGHT_TO_LEFT)
-            return -ret;
-        else
+//        if (dir == Layout.DIR_RIGHT_TO_LEFT)
+//            return -ret;
+//        else
             return ret;
     }
 
@@ -252,27 +252,27 @@ public class Styled
         // fast path for unstyled text
         if (!(text instanceof Spanned)) {
             float ret = 0;
-
-            if (runIsRtl) {
-                CharSequence tmp = TextUtils.getReverse(text, start, end);
-                // XXX: this assumes getReverse doesn't tweak the length of
-                // the text
-                int tmpend = end - start;
-
-                if (canvas != null || needWidth)
-                    ret = paint.measureText(tmp, 0, tmpend);
-
-                if (canvas != null)
-                    canvas.drawText(tmp, 0, tmpend,
-                                    x - ret, y, paint);
-            } else {
+//
+//            if (runIsRtl) {
+//                CharSequence tmp = TextUtils.getReverse(text, start, end);
+//                // XXX: this assumes getReverse doesn't tweak the length of
+//                // the text
+//                int tmpend = end - start;
+//
+//                if (canvas != null || needWidth)
+//                    ret = paint.measureText(tmp, 0, tmpend);
+//
+//                if (canvas != null)
+//                    canvas.drawText(tmp, 0, tmpend,
+//                                    x - ret, y, paint);
+//            } else {
                 if (needWidth)
                     ret = paint.measureText(text, start, end);
 
                 if (canvas != null)
                     canvas.drawText(text, start, end, x, y, paint);
-            }
-
+//            }
+//
             if (fmi != null) {
                 paint.getFontMetricsInt(fmi);
             }
@@ -341,21 +341,21 @@ public class Styled
                                        TextPaint paint,
                                        TextPaint workPaint,
                                        boolean needWidth) {
-        // XXX this logic is (dir == DIR_LEFT_TO_RIGHT) == runIsRtl
-        if ((dir == Layout.DIR_RIGHT_TO_LEFT && !runIsRtl) ||
-            (runIsRtl && dir == Layout.DIR_LEFT_TO_RIGHT)) {
-            // TODO: this needs the real direction
-            float ch = drawDirectionalRun(null, text, start, end,
-                    Layout.DIR_LEFT_TO_RIGHT, false, 0, 0, 0, 0, null, paint,
-                    workPaint, true);
-
-            ch *= dir;  // DIR_RIGHT_TO_LEFT == -1
-            drawDirectionalRun(canvas, text, start, end, -dir,
-                    runIsRtl, x + ch, top, y, bottom, null, paint,
-                    workPaint, true);
-
-            return ch;
-        }
+//        // XXX this logic is (dir == DIR_LEFT_TO_RIGHT) == runIsRtl
+//        if ((dir == Layout.DIR_RIGHT_TO_LEFT && !runIsRtl) ||
+//            (runIsRtl && dir == Layout.DIR_LEFT_TO_RIGHT)) {
+//            // TODO: this needs the real direction
+//            float ch = drawDirectionalRun(null, text, start, end,
+//                    Layout.DIR_LEFT_TO_RIGHT, false, 0, 0, 0, 0, null, paint,
+//                    workPaint, true);
+//
+//            ch *= dir;  // DIR_RIGHT_TO_LEFT == -1
+//            drawDirectionalRun(canvas, text, start, end, -dir,
+//                    runIsRtl, x + ch, top, y, bottom, null, paint,
+//                    workPaint, true);
+//
+//            return ch;
+//        }
 
         return drawDirectionalRun(canvas, text, start, end, dir, runIsRtl,
                        x, top, y, bottom, null, paint, workPaint,

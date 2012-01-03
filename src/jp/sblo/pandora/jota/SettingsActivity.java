@@ -96,6 +96,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
     public static final String KEY_TOOLBAR_BIGBUTTON        = "KEY_TOOLBAR_BIGBUTTON";
     public static final String KEY_TOOLBAR_HIDE_LANDSCAPE   = "KEY_TOOLBAR_HIDE_LANDSCAPE";
     private static final String KEY_FORCE_SCROLL            = "KEY_FORCE_SCROLL";
+    private static final String KEY_CTRL_PRE_IME            = "KEY_CTRL_PRE_IME";
 
 	public static final String KEY_LASTVERSION = "LastVersion";
 
@@ -642,6 +643,14 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                     final CheckBoxPreference pr = new CheckBoxPreference(this);
                     pr.setKey(KEY_AUTO_INDENT);
                     pr.setTitle(R.string.label_auto_indent);
+                    category.addPreference(pr);
+                }
+                {
+                    // Ctrl pre ime
+                    final CheckBoxPreference pr = new CheckBoxPreference(this);
+                    pr.setKey(KEY_CTRL_PRE_IME);
+                    pr.setTitle(R.string.label_ctrl_preime);
+                    pr.setSummary(R.string.summary_ctrl_preime);
                     category.addPreference(pr);
                 }
             }
@@ -1569,6 +1578,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         ArrayList<Integer> toolbars;
         boolean toolbarBigButton;
         boolean toolbarHideLandscape;
+        boolean ctrlPreIme;
 	}
 
 	public static class BootSettings {
@@ -1693,6 +1703,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         ret.toolbars = SettingsToolbarActivity.readToolbarSettings(ctx);
         ret.toolbarBigButton = sp.getBoolean(KEY_TOOLBAR_BIGBUTTON, false);
         ret.toolbarHideLandscape = sp.getBoolean(KEY_TOOLBAR_HIDE_LANDSCAPE, false);
+        ret.ctrlPreIme = sp.getBoolean(KEY_CTRL_PRE_IME, false);
         sSettings = ret;
         return ret;
 	}
@@ -1825,6 +1836,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                 editor.commit();
                 SettingsShortcutActivity.writeDefaultShortcuts(ctx);
                 SettingsToolbarActivity.writeDefaultToolbarSettings(ctx);
+                KeywordHighlght.extractFromAssets(ctx);
 			}
 
 		} catch (NameNotFoundException e) {
