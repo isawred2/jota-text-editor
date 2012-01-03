@@ -11,6 +11,7 @@ import android.text.Editable;
 import android.text.Spannable;
 import android.text.method.TextKeyListener;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -25,6 +26,7 @@ public class EditText extends TextView{
     private int mShortcutAltKey = 0;
     private HashMap<Integer,Integer> mShortcuts;
     private int mDpadCenterFunction = FUNCTION_CENTERING;
+    private boolean mCtrlPreIme = false;
 
     private static Boolean sIWnnFlag = null;
 
@@ -142,7 +144,17 @@ public class EditText extends TextView{
         // ALT + KEYDOWN
         int meta = (int)event.getMetaState();
         boolean alt = (meta & mShortcutAltKey)!=0 ; // || (altstate!=0);      // one of meta keies is pressed , or , Alt key is locked
+        boolean ctrl = (meta & mShortcutCtrlKey)!=0 ; // one of meta keies is pressed
 
+        if ( mCtrlPreIme && ctrl ){
+            if (event.getAction() == KeyEvent.ACTION_DOWN ){
+                if (doShortcut(keycode)){
+                    return true;
+                }
+            }else if (event.getAction() == KeyEvent.ACTION_UP){
+                return true;
+            }
+        }
         if ( alt && event.getAction() == KeyEvent.ACTION_DOWN ){
             if (doShortcut(keycode)){
                 if ( sIWnnFlag == null ){
@@ -185,18 +197,21 @@ public class EditText extends TextView{
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
 
-        int keycode = event.getKeyCode();
-        // CTRL + KEYDOWN
-        int meta = (int)event.getMetaState();
-        boolean alt = (meta & mShortcutCtrlKey)!=0 ; // one of meta keies is pressed
+        if ( !mCtrlPreIme ){
+            int keycode = event.getKeyCode();
+            // CTRL + KEYDOWN
+            int meta = (int)event.getMetaState();
+            boolean ctrl = (meta & mShortcutCtrlKey)!=0 ; // one of meta keies is pressed
 
-        if ( alt ){
-            if (event.getAction() == KeyEvent.ACTION_DOWN ){
-                if (doShortcut(keycode)){
+            if ( ctrl ){
+                if (event.getAction() == KeyEvent.ACTION_DOWN ){
+                    Log.d("=================>", ""+keycode);
+                    if (doShortcut(keycode)){
+                        return true;
+                    }
+                }else if (event.getAction() == KeyEvent.ACTION_UP){
                     return true;
                 }
-            }else if (event.getAction() == KeyEvent.ACTION_UP){
-                return true;
             }
         }
         return super.dispatchKeyEvent(event);
@@ -370,4 +385,8 @@ public class EditText extends TextView{
         ArrowKeyMovementMethod.setHomeEndKeycode(home, end);
     }
 
+    public void setCtrlPreIme(boolean val)
+    {
+        mCtrlPreIme = val;
+    }
 }

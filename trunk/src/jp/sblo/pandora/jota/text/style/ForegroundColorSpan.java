@@ -16,6 +16,8 @@
 
 package jp.sblo.pandora.jota.text.style;
 
+import java.util.ArrayList;
+
 import jp.sblo.pandora.jota.text.TextUtils;
 import android.os.Parcel;
 import android.text.ParcelableSpan;
@@ -25,7 +27,11 @@ import android.text.style.CharacterStyle;
 public class ForegroundColorSpan extends CharacterStyle
         implements UpdateAppearance, ParcelableSpan {
 
-    private final int mColor;
+    private int mColor;
+    private int mStart;
+    private int mEnd;
+
+    static private ArrayList<ForegroundColorSpan> sPool = new ArrayList<ForegroundColorSpan>();
 
 	public ForegroundColorSpan(int color) {
 		mColor = color;
@@ -51,8 +57,32 @@ public class ForegroundColorSpan extends CharacterStyle
 		return mColor;
 	}
 
-	@Override
+    @Override
 	public void updateDrawState(TextPaint ds) {
 		ds.setColor(mColor);
 	}
+
+    public boolean isLapped(int s, int e)
+    {
+        return  ( mStart < e && s < mEnd );
+    }
+
+    static public ForegroundColorSpan obtain(int color,int start,int end)
+    {
+        if ( sPool.size() == 0 ){
+            return new ForegroundColorSpan(color);
+        }else{
+            ForegroundColorSpan fcs = sPool.get(0);
+            sPool.remove(fcs);
+            fcs.mColor = color;
+            fcs.mStart = start;
+            fcs.mEnd = end;
+            return fcs;
+        }
+    }
+
+    public void recycle()
+    {
+        sPool.add(this);
+    }
 }

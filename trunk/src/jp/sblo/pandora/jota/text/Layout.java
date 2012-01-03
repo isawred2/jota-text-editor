@@ -16,7 +16,13 @@
 
 package jp.sblo.pandora.jota.text;
 
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import jp.sblo.pandora.jota.KeywordHighlght;
 import jp.sblo.pandora.jota.text.style.AlignmentSpan;
+import jp.sblo.pandora.jota.text.style.ForegroundColorSpan;
 import jp.sblo.pandora.jota.text.style.LeadingMarginSpan;
 import jp.sblo.pandora.jota.text.style.ParagraphStyle;
 import jp.sblo.pandora.jota.text.style.ReplacementSpan;
@@ -25,11 +31,13 @@ import junit.framework.Assert;
 import android.emoji.EmojiFactory;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.text.GetChars;
+import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
@@ -282,6 +290,14 @@ public abstract class Layout {
 
         Alignment align = mAlignment;
 
+
+        if ( buf instanceof SpannableStringBuilder ){
+            int start = previousLineEnd;
+            int end = getLineVisibleEnd(last, start, getLineStart(last+1));
+            KeywordHighlght.setHighlight((SpannableStringBuilder)buf, start, end);
+        }
+
+
         // Next draw the lines, one at a time.
         // the baseline is the top of the following line minus the current
         // line's descent.
@@ -355,34 +371,36 @@ public abstract class Layout {
 //                }
 //            }
 
-            // Adjust the point at which to start rendering depending on the
-            // alignment of the paragraph.
-            int x;
-            if (align == Alignment.ALIGN_NORMAL) {
-                if (dir == DIR_LEFT_TO_RIGHT) {
-                    x = left;
-                } else {
-                    x = right;
-                }
-            } else {
-                int max = (int)getLineMax(i, spans, false);
-                if (align == Alignment.ALIGN_OPPOSITE) {
-                    if (dir == DIR_RIGHT_TO_LEFT) {
-                        x = left + max;
-                    } else {
-                        x = right - max;
-                    }
-                } else {
-                    // Alignment.ALIGN_CENTER
-                    max = max & ~1;
-                    int half = (right - left - max) >> 1;
-                    if (dir == DIR_RIGHT_TO_LEFT) {
-                        x = right - half;
-                    } else {
-                        x = left + half;
-                    }
-                }
-            }
+            // Jota Text Editor
+//            // Adjust the point at which to start rendering depending on the
+//            // alignment of the paragraph.
+//            int x;
+//            if (align == Alignment.ALIGN_NORMAL) {
+//                if (dir == DIR_LEFT_TO_RIGHT) {
+//                    x = left;
+//                } else {
+//                    x = right;
+//                }
+//            } else {
+//                int max = (int)getLineMax(i, spans, false);
+//                if (align == Alignment.ALIGN_OPPOSITE) {
+//                    if (dir == DIR_RIGHT_TO_LEFT) {
+//                        x = left + max;
+//                    } else {
+//                        x = right - max;
+//                    }
+//                } else {
+//                    // Alignment.ALIGN_CENTER
+//                    max = max & ~1;
+//                    int half = (right - left - max) >> 1;
+//                    if (dir == DIR_RIGHT_TO_LEFT) {
+//                        x = right - half;
+//                    } else {
+//                        x = left + half;
+//                    }
+//                }
+//            }
+            int x = left;
 
             /**
              * underline
@@ -408,6 +426,9 @@ public abstract class Layout {
 
             Directions directions = getLineDirections(i);
             boolean hasTab = getLineContainsTab(i);
+            if ( KeywordHighlght.needHighlight() ){
+                hasTab = true;
+            }
             if (directions == DIRS_ALL_LEFT_TO_RIGHT &&
                     !spannedText && !hasTab) {
                 if (DEBUG) {
@@ -426,6 +447,10 @@ public abstract class Layout {
                 c.translate(-lineNumWidth, 0);
             }
         }
+        if ( buf instanceof SpannableStringBuilder ){
+            KeywordHighlght.removeHighlight((SpannableStringBuilder)buf);
+        }
+
     }
 
     /**
@@ -1434,14 +1459,14 @@ public abstract class Layout {
                                  Paint spacePaint , Path[] spacePaths ) {// Jota Text Editor
         char[] buf;
         if (!hasTabs) {
-            if (directions == DIRS_ALL_LEFT_TO_RIGHT) {
+//            if (directions == DIRS_ALL_LEFT_TO_RIGHT) {
                 if (DEBUG) {
                     Assert.assertTrue(DIR_LEFT_TO_RIGHT == dir);
                 }
                 Styled.drawText(canvas, text, start, end, dir, false, x, top, y, bottom, paint, workPaint, false);
                 return;
-            }
-            buf = null;
+//            }
+//            buf = null;
         } else {
             buf = TextUtils.obtain(end - start);
             TextUtils.getChars(text, start, end, buf, 0);
