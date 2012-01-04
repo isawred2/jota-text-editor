@@ -9277,13 +9277,11 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
         int min = 0;
         int max = mText.length();
 
-        if (isFocused()) {
-            final int selStart = getSelectionStart();
-            final int selEnd = getSelectionEnd();
+        final int selStart = getSelectionStart();
+        final int selEnd = getSelectionEnd();
 
-            min = Math.max(0, Math.min(selStart, selEnd));
-            max = Math.max(0, Math.max(selStart, selEnd));
-        }
+        min = Math.max(0, Math.min(selStart, selEnd));
+        max = Math.max(0, Math.max(selStart, selEnd));
 
         if ( min == max ){
             ((Editable) mText).replace(min, max, f+b );
