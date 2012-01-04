@@ -13,7 +13,6 @@
 // note:
 // Highlighting is now Beta version.
 // so file format will be changed without notice.
-// Highlighting can't get across the line.
 
 author=Aquamarine Networks.
 version=0.01

@@ -13,7 +13,6 @@
 // note:
 // Highlighting is now Beta version.
 // so file format will be changed without notice.
-// Highlighting can't get across the line.
 
 comment=008000
 weakcomment=008000
