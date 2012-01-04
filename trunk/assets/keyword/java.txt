@@ -16,7 +16,7 @@
 
 author=Aquamarine Networks.
 version=0.01
-comment=/\*.*\*/
+comment=/\*.*?\*/
 weakcomment=^.*\*/|/\*.*$
 linecomment=//[^\n]*\n
 type=@[A-Za-z0-9_\.]*|\b(void|boolean|byte|short|short|int|long|float|double|char|new)\b

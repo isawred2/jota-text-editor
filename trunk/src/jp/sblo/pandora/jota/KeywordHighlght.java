@@ -13,8 +13,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-import com.android.i18n.phonenumbers.RegexCache;
-
 import jp.sblo.pandora.jota.text.SpannableStringBuilder;
 import jp.sblo.pandora.jota.text.style.ForegroundColorSpan;
 import android.content.Context;
@@ -27,9 +25,9 @@ public class KeywordHighlght {
 
     private static final String PATH     = Environment.getExternalStorageDirectory() + "/.jota/keyword/";
     private static final String USERPATH     = Environment.getExternalStorageDirectory() + "/.jota/keyword/user/";
-    private static final String EXT      = ".txt";
+    private static final String EXT      = "txt";
     private static final String ASSET_PATH     = "keyword";
-    private static final String COLOR_PATH     = "colorsetteing.txt";
+    private static final String COLOR_PATH     = "colorsetting.txt";
 
     public Pattern pattern;
     public int color;
@@ -158,6 +156,28 @@ public class KeywordHighlght {
         }
     }
 
+    static File getKeywordFile(String path,String ext)
+    {
+        File dir = new File(path);
+        File[] files = dir.listFiles();
+        for( File f : files ){
+            if ( f.isFile() ){
+                String name = f.getName();
+                String exts[] = name.split("\\.");
+                int len = exts.length-1;
+                if ( len>0 && EXT.equals(exts[len])){
+                    for( int i=0;i<len;i++){
+                        if ( ext.equals(exts[i])){
+                            return f;
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+
     static public boolean loadHighlight( String filename )
     {
         clearKeyword();
@@ -171,13 +191,10 @@ public class KeywordHighlght {
         String ext = filename.substring(point + 1);
 
 
-        String path = USERPATH + ext + EXT;
-
-        File f = new File(path);
-        if (!f.exists() ){
-            path = PATH + ext + EXT;
-            f = new File(path);
-            if (!f.exists() ){
+        File f = getKeywordFile(USERPATH,ext);
+        if ( f==null ){
+            f = getKeywordFile(PATH,ext);
+            if ( f==null ){
                 return false;
             }
         }
@@ -226,8 +243,17 @@ public class KeywordHighlght {
         byte[] buf = new byte[4096];
 
         try {
-            String[] list = am.list(ASSET_PATH);
+            // remove all files except directory..
+            File dir = new File(PATH);
+            File[] files = dir.listFiles();
+            for( File f : files ){
+                if ( f.isFile() ){
+                    f.delete();
+                }
+            }
 
+            // extarct files from assets.
+            String[] list = am.list(ASSET_PATH);
             for( String filename : list ){
                 File ofile = new File(PATH  + filename);
                 ofile.getParentFile().mkdirs();
