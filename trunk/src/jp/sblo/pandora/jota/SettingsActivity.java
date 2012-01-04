@@ -1015,7 +1015,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 
             new AlertDialog.Builder(SettingsActivity.this)
             .setMessage( getString( R.string.msg_clear_history) )
-            .setTitle( R.string.label_init )
+            .setTitle( R.string.label_clear_history )
             .setPositiveButton(R.string.label_ok, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
