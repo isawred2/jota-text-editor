@@ -800,3 +800,9 @@ Please donate if you continue to use Jota.
 - Fixed minor bugs.
 - Updated Korean resources. (Thanks to Noah!)
 
+[2012/01/04 v.0.2.01]
+- Fixed the bug about IME. (Swype/Swiftkey X etc)
+
+[2012/01/04 v.0.2.01]
+- ATOKのBSキー関連の修正を差し戻し。
+
