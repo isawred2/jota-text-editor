@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 import com.android.i18n.phonenumbers.RegexCache;
 
@@ -46,7 +47,12 @@ public class KeywordHighlght {
     static private void addKeyword( String regexp , int color )
     {
         if ( color != 0 && !TextUtils.isEmpty(regexp) ){
-            sList.add( new KeywordHighlght(regexp , color|0xFF000000) );
+            try{
+                sList.add( new KeywordHighlght(regexp , color|0xFF000000) );
+            }
+            catch( PatternSyntaxException e) {
+                e.printStackTrace();
+            }
         }
     }
 
