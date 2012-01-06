@@ -13,6 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
+import jp.sblo.pandora.jota.text.ArrowKeyMovementMethod;
 import jp.sblo.pandora.jota.text.SpannableStringBuilder;
 import jp.sblo.pandora.jota.text.style.ForegroundColorSpan;
 import android.content.Context;
@@ -25,9 +26,9 @@ public class KeywordHighlght {
 
     private static final String PATH     = Environment.getExternalStorageDirectory() + "/.jota/keyword/";
     private static final String USERPATH     = Environment.getExternalStorageDirectory() + "/.jota/keyword/user/";
-    private static final String EXT      = "txt";
+    private static final String EXT      = "ini";
     private static final String ASSET_PATH     = "keyword";
-    private static final String COLOR_PATH     = "colorsetting.txt";
+    private static final String COLOR_PATH     = "colorsetting."+EXT;
 
     public Pattern pattern;
     public int color;
@@ -35,6 +36,9 @@ public class KeywordHighlght {
     static ArrayList<KeywordHighlght> sList = new ArrayList<KeywordHighlght>();
     static ArrayList<ForegroundColorSpan> sFcsList = new ArrayList<ForegroundColorSpan>();
     static HashMap<String,Integer> sColorMap = new HashMap<String,Integer>();
+    static int mLastStart = 0;
+    static int mLastEnd = 0;
+
 
     private KeywordHighlght( String regexp , int _color )
     {
@@ -64,8 +68,29 @@ public class KeywordHighlght {
         return sList.size()!=0;
     }
 
+    static public void refresh()
+    {
+        mLastStart = mLastEnd = -1;
+    }
+
     static public void setHighlight( SpannableStringBuilder buf, int start , int end )
     {
+        if ( mLastStart == start && mLastEnd == end ){
+            return;
+        }
+        mLastStart = start;
+        mLastEnd = end;
+
+        for( ForegroundColorSpan o: sFcsList )
+        {
+            buf.removeSpan(o);
+            o.recycle();
+        }
+        sFcsList.clear();
+
+        start = ArrowKeyMovementMethod.findBlockStart(buf, start);
+        end = ArrowKeyMovementMethod.findBlockEnd(buf, end);
+
         CharSequence target = buf.subSequence(start, end);
         for( KeywordHighlght syn : sList ){
             try{
@@ -94,16 +119,6 @@ public class KeywordHighlght {
                 e.printStackTrace();
             }
         }
-    }
-
-    static public void removeHighlight( SpannableStringBuilder buf )
-    {
-        for( ForegroundColorSpan o: sFcsList )
-        {
-            buf.removeSpan(o);
-            o.recycle();
-        }
-        sFcsList.clear();
     }
 
     static private void loadColorSettings()
@@ -243,6 +258,9 @@ public class KeywordHighlght {
         byte[] buf = new byte[4096];
 
         try {
+            // create direcotry
+            new File(USERPATH).mkdirs();
+
             // remove all files except directory..
             File dir = new File(PATH);
             File[] files = dir.listFiles();
@@ -256,7 +274,6 @@ public class KeywordHighlght {
             String[] list = am.list(ASSET_PATH);
             for( String filename : list ){
                 File ofile = new File(PATH  + filename);
-                ofile.getParentFile().mkdirs();
                 InputStream in = am.open(ASSET_PATH + "/"+ filename);
                 OutputStream out = new FileOutputStream(ofile);
                 try{
@@ -269,7 +286,6 @@ public class KeywordHighlght {
                 in.close();
                 out.close();
             }
-            new File(USERPATH).mkdirs();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -20,9 +20,11 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
+import jp.sblo.pandora.jota.KeywordHighlght;
 import jp.sblo.pandora.jota.R;
 import jp.sblo.pandora.jota.SettingsActivity;
 import jp.sblo.pandora.jota.text.UndoBuffer.TextChange;
+import jp.sblo.pandora.jota.text.style.ForegroundColorSpan;
 import jp.sblo.pandora.jota.text.style.ParagraphStyle;
 import jp.sblo.pandora.jota.text.style.URLSpan;
 import jp.sblo.pandora.jota.text.style.UpdateAppearance;
@@ -967,6 +969,18 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
 		// Jota Text Editor
         enableUndo(true);
         mUnderLinePaint.setColor(0);
+        addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                KeywordHighlght.refresh();
+            }
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
 
     }
 
@@ -6783,12 +6797,20 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
         public void onSpanAdded(Spannable buf, Object what, int s, int e) {
             if (DEBUG_EXTRACT) Log.v(TAG, "onSpanAdded s=" + s + " e=" + e
                     + " what=" + what + ": " + buf);
+            // Jota Text Editor
+            if ( what instanceof ForegroundColorSpan ){
+                return;
+            }
             TextView.this.spanChange(buf, what, -1, s, -1, e);
         }
 
         public void onSpanRemoved(Spannable buf, Object what, int s, int e) {
             if (DEBUG_EXTRACT) Log.v(TAG, "onSpanRemoved s=" + s + " e=" + e
                     + " what=" + what + ": " + buf);
+            // Jota Text Editor
+            if ( what instanceof ForegroundColorSpan ){
+                return;
+            }
             TextView.this.spanChange(buf, what, s, -1, e, -1);
         }
     }

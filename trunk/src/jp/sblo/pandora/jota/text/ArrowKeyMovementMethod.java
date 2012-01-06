@@ -769,7 +769,7 @@ implements MovementMethod
         return end;
     }
 
-    private static int findBlockStart(CharSequence text, int start) {
+    public static int findBlockStart(CharSequence text, int start) {
         if ( text.length() <= start ){
             return start;
         }
@@ -784,7 +784,7 @@ implements MovementMethod
     }
 
     // TODO: Unify with TextView.getWordForDictionary()
-    private static int findBlockEnd(CharSequence text, int end) {
+    public  static int findBlockEnd(CharSequence text, int end) {
         int len = text.length();
 
         if ( len <= end ){
