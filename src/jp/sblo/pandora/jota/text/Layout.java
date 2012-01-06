@@ -16,13 +16,8 @@
 
 package jp.sblo.pandora.jota.text;
 
-import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import jp.sblo.pandora.jota.KeywordHighlght;
 import jp.sblo.pandora.jota.text.style.AlignmentSpan;
-import jp.sblo.pandora.jota.text.style.ForegroundColorSpan;
 import jp.sblo.pandora.jota.text.style.LeadingMarginSpan;
 import jp.sblo.pandora.jota.text.style.ParagraphStyle;
 import jp.sblo.pandora.jota.text.style.ReplacementSpan;
@@ -31,13 +26,11 @@ import junit.framework.Assert;
 import android.emoji.EmojiFactory;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.text.GetChars;
-import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
@@ -446,9 +439,6 @@ public abstract class Layout {
             if ( lineNumWidth != 0 ){
                 c.translate(-lineNumWidth, 0);
             }
-        }
-        if ( buf instanceof SpannableStringBuilder ){
-            KeywordHighlght.removeHighlight((SpannableStringBuilder)buf);
         }
 
     }
