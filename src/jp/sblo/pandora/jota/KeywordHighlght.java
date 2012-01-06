@@ -89,7 +89,7 @@ public class KeywordHighlght {
         sFcsList.clear();
 
         start = ArrowKeyMovementMethod.findBlockStart(buf, start);
-        end = ArrowKeyMovementMethod.findBlockEnd(buf, end);
+        end = ArrowKeyMovementMethod.findBlockEnd(buf, end) + 1;
 
         CharSequence target = buf.subSequence(start, end);
         for( KeywordHighlght syn : sList ){
