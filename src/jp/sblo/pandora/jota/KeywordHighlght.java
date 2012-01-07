@@ -26,7 +26,7 @@ public class KeywordHighlght {
 
     private static final String PATH     = Environment.getExternalStorageDirectory() + "/.jota/keyword/";
     private static final String USERPATH     = Environment.getExternalStorageDirectory() + "/.jota/keyword/user/";
-    private static final String EXT      = "ini";
+    private static final String EXT      = "conf";
     private static final String ASSET_PATH     = "keyword";
     private static final String COLOR_PATH     = "colorsetting."+EXT;
 
@@ -144,7 +144,7 @@ public class KeywordHighlght {
             br = new BufferedReader(new FileReader(f));
             String line;
             while( (line = br.readLine()) != null ){
-                line = line.replaceAll( "^//.*$" , "" );
+                line = line.replaceAll( "^#.*$" , "" );
                 line = line.replaceAll( "[ \\t]+$", "" );
 
                 int separator = line.indexOf('=');
