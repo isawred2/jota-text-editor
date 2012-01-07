@@ -2,9 +2,16 @@ package jp.sblo.pandora.jota;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.URISyntaxException;
+import java.security.MessageDigest;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import android.app.AlertDialog;
@@ -153,6 +160,8 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
     public static final String ORI_AUTO="auto";
     public static final String ORI_PORTRAIT="portrait";
     public static final String ORI_LANDSCAPE="landscape";
+
+    private static final String BACKUP_FILE     = Environment.getExternalStorageDirectory() + "/.jota/prefs/";
 
     private static int sLastVersion=0;
 
@@ -683,6 +692,22 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                     pr.setOnPreferenceClickListener(mProcInit);
                     category.addPreference(pr);
                 }
+                {
+                    final Preference pr = new Preference(this);
+                    pr.setTitle(R.string.label_backup_preferences);
+                    pr.setOnPreferenceClickListener(mProcBackup);
+                    pr.setSummary(R.string.summary_backup_preferences);
+                    if ( sSettings == null || sSettings.donateCounter == 0 ){      // donate
+                        pr.setEnabled(false);
+                    }
+                    category.addPreference(pr);
+                }
+                {
+                    final Preference pr = new Preference(this);
+                    pr.setTitle(R.string.label_restore_preferences);
+                    pr.setOnPreferenceClickListener(mProcRestore);
+                    category.addPreference(pr);
+                }
             }
             if ( CAT_WALLPAPER.equals(categ) ){
                 // View Category
@@ -1008,7 +1033,155 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
             .show();
             return false;
         }
+    };
 
+    private OnPreferenceClickListener mProcBackup = new OnPreferenceClickListener(){
+        public boolean onPreferenceClick(Preference preference) {
+            new AlertDialog.Builder(SettingsActivity.this)
+            .setMessage( getString( R.string.msg_backup_preferences) )
+            .setTitle( R.string.label_backup_preferences )
+            .setPositiveButton(R.string.label_ok, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    ObjectOutputStream oos;
+                    try{
+                        new File(BACKUP_FILE).getParentFile().mkdirs();
+                        oos = new ObjectOutputStream(new FileOutputStream(new File(BACKUP_FILE)));
+                        File defaultFile = getSharedPrefsFile(getPackageName()+"_preferences");
+                        File historyFile = getSharedPrefsFile(PREF_HISTORY);
+
+                        FileInputStream fis;
+                        try{
+                            fis = new FileInputStream(defaultFile);
+                            byte[] defBytes = new byte[ (int)defaultFile.length() ];
+                            fis.read(defBytes);
+                            fis.close();
+                            oos.writeObject(defBytes);
+
+                            fis = new FileInputStream(historyFile);
+                            byte[] histBytes = new byte[ (int)historyFile.length() ];
+                            fis.read(histBytes);
+                            fis.close();
+                            oos.writeObject(histBytes);
+
+                            MessageDigest md = MessageDigest.getInstance("SHA1");
+                            md.reset();
+                            md.update(defBytes);
+                            md.update(histBytes);
+                            md.update( "SALT Jota Text Editor".getBytes() );
+                            byte[] digest = md.digest();
+                            oos.writeObject(digest);
+
+                        }
+                        catch( Exception e){}
+                        oos.close();
+                        Toast.makeText(SettingsActivity.this, R.string.toast_backup_preferences , Toast.LENGTH_LONG).show();
+                    }
+                    catch( Exception e){
+                        Toast.makeText(SettingsActivity.this, R.string.toast_backup_error , Toast.LENGTH_LONG).show();
+                        e.printStackTrace();
+                    }
+                }
+            })
+            .setNegativeButton(R.string.label_cancel, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            })
+            .show();
+            return false;
+        }
+    };
+    private OnPreferenceClickListener mProcRestore = new OnPreferenceClickListener(){
+        public boolean onPreferenceClick(Preference preference) {
+            new AlertDialog.Builder(SettingsActivity.this)
+            .setMessage( getString( R.string.msg_restore_preferences) )
+            .setTitle( R.string.label_restore_preferences )
+            .setPositiveButton(R.string.label_ok, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    ObjectInputStream ois;
+                    try{
+                        new File(BACKUP_FILE).getParentFile().mkdirs();
+                        ois = new ObjectInputStream(new FileInputStream(new File(BACKUP_FILE)));
+                        File defaultFile = getSharedPrefsFile(getPackageName()+"_preferences");
+                        File historyFile = getSharedPrefsFile(PREF_HISTORY);
+
+                        try{
+                            byte[] defBytes = (byte[])ois.readObject();
+                            byte[] histBytes = (byte[])ois.readObject();
+                            byte[] digestRead = (byte[])ois.readObject();
+
+                            MessageDigest md = MessageDigest.getInstance("SHA1");
+                            md.reset();
+                            md.update(defBytes);
+                            md.update(histBytes);
+                            md.update( "SALT Jota Text Editor".getBytes() );
+                            byte[] digest = md.digest();
+
+                            if ( Arrays.equals(digest, digestRead)){
+
+                                FileOutputStream fos = null;
+
+                                try{
+                                    fos = new FileOutputStream(new File( defaultFile.getPath() ));
+                                    fos.write(defBytes);
+                                    fos.close();
+                                    fos = null;
+
+                                    fos = new FileOutputStream(new File( historyFile.getPath() ));
+                                    fos.write(histBytes);
+                                    fos.close();
+                                    fos = null;
+                                }
+                                catch(Exception e)
+                                {
+                                    if (fos != null ){
+                                        fos.close();
+                                    }
+                                    Toast.makeText(SettingsActivity.this, R.string.toast_restore_error , Toast.LENGTH_LONG).show();
+                                    e.printStackTrace();
+                                }
+
+                                new AlertDialog.Builder(SettingsActivity.this)
+                                .setMessage( getString( R.string.toast_restore_successed) )
+                                .setTitle( R.string.label_restore_preferences )
+                                .setCancelable(false)
+                                .setPositiveButton(R.string.label_ok, new DialogInterface.OnClickListener() {
+
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        android.os.Process.killProcess(android.os.Process.myPid());
+                                    }
+                                })
+                                .show();
+                            }else{
+                                Toast.makeText(SettingsActivity.this, R.string.toast_restore_error , Toast.LENGTH_LONG).show();
+                            }
+                        }
+                        catch( Exception e){
+                            Toast.makeText(SettingsActivity.this, R.string.toast_restore_error , Toast.LENGTH_LONG).show();
+                            e.printStackTrace();
+                        }
+                        ois.close();
+                    }
+                    catch( FileNotFoundException e){
+                        Toast.makeText(SettingsActivity.this, R.string.toast_restore_notfound , Toast.LENGTH_LONG).show();
+                    }
+                    catch( Exception e){
+                        Toast.makeText(SettingsActivity.this, R.string.toast_restore_error , Toast.LENGTH_LONG).show();
+                        e.printStackTrace();
+                    }
+                }
+            })
+            .setNegativeButton(R.string.label_cancel, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            })
+            .show();
+            return false;
+        }
     };
     private OnPreferenceClickListener mProcClearHisotry = new OnPreferenceClickListener(){
         public boolean onPreferenceClick(Preference preference) {
