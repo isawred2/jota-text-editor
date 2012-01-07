@@ -89,7 +89,10 @@ public class KeywordHighlght {
         sFcsList.clear();
 
         start = ArrowKeyMovementMethod.findBlockStart(buf, start);
-        end = ArrowKeyMovementMethod.findBlockEnd(buf, end) + 1;
+        end = ArrowKeyMovementMethod.findBlockEnd(buf, end);
+        if ( end+1 < buf.length() ){
+            end++;
+        }
 
         CharSequence target = buf.subSequence(start, end);
         for( KeywordHighlght syn : sList ){
@@ -193,7 +196,7 @@ public class KeywordHighlght {
     }
 
 
-    static public boolean loadHighlight( String filename )
+    static public boolean loadHighlight(Context context, String filename )
     {
         clearKeyword();
         if (filename == null){
@@ -205,6 +208,11 @@ public class KeywordHighlght {
         }
         String ext = filename.substring(point + 1);
 
+        // create direcotry
+        new File(USERPATH).mkdirs();
+        if ( !new File(PATH + COLOR_PATH).exists() ){
+            extractFromAssets( context );
+        }
 
         File f = getKeywordFile(USERPATH,ext);
         if ( f==null ){

@@ -511,7 +511,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
             if (mBootSettings.viewerMode) {
                 mEditor.showIme(false);
             }
-            KeywordHighlght.loadHighlight(filename);
+            KeywordHighlght.loadHighlight(this,filename);
         }
     }
 
