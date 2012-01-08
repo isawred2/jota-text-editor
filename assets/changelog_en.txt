@@ -1,3 +1,15 @@
+[2012/01/08 v.0.2.02]
+- Improved Syntax Highlight.(Beta Testing)
+  changed extension of def-file (*.conf)
+  added def-files for c/cpp/pas/php/sh/html.
+  (Thanks to Frank Wunderlich!)
+ ★filename and extension were changed, so if you made def-file at last version, be careful.
+
+- Added backup/restore preferences. (Beta test for Donator)
+- Fixed minor bugs.
+- Updated German resources.(Thanks to Frank Wunderlich!)
+- Updated Dutch resources.(Thanks to Tim 'BNL' Beringen!)
+
 [2012/01/04 v.0.2.01]
 - Fixed the bug about IME. (Swype/Swiftkey X etc)
 

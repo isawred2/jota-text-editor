@@ -806,3 +806,30 @@ Please donate if you continue to use Jota.
 [2012/01/04 v.0.2.01]
 - ATOKのBSキー関連の修正を差し戻し。
 
+
+[2012/01/08 v.0.2.02]
+- シンタックスハイライトの改善
+  定義ファイルの拡張子を変更(*.conf)
+  c/cpp/pas/php/sh/html用の設定ファイルを追加
+  (Thanks to Frank Wunderlich!)
+ ★ファイル名や拡張子が変更になっているので、前バージョンで設定ファイルを作成されていた方はご注意ください。
+- 設定バックアップ/リストア機能を追加(寄付した方向けのβテスト)
+- ツールバーの括弧入力が検索欄にも入力されるように修正
+- 細かいバグの修正
+- ドイツ語リソースを更新(Thanks to Frank Wunderlich!)
+- オランダ語リソースを更新(Thanks to Tim 'BNL' Beringen!)
+
+
+[2012/01/08 v.0.2.02]
+- Improved Syntax Highlight.
+  changed extension of def-file (*.conf)
+  added def-files for c/cpp/pas/php/sh/html.
+  (Thanks to Frank Wunderlich!)
+ ★filename and extensions were changed, so if you made def-file at last version, be careful.
+
+- Added backup/restore preferences. (Beta test for Donator)
+- Fixed minor bugs.
+- Updated German resources.(Thanks to Frank Wunderlich!)
+- Updated Dutch resources.(Thanks to Tim 'BNL' Beringen!)
+
+
