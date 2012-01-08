@@ -30,6 +30,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -1142,7 +1143,6 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                                     Toast.makeText(SettingsActivity.this, R.string.toast_restore_error , Toast.LENGTH_LONG).show();
                                     e.printStackTrace();
                                 }
-
                                 new AlertDialog.Builder(SettingsActivity.this)
                                 .setMessage( getString( R.string.toast_restore_successed) )
                                 .setTitle( R.string.label_restore_preferences )
@@ -1151,7 +1151,13 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        android.os.Process.killProcess(android.os.Process.myPid());
+                                        finish();
+                                        new Handler().postDelayed( new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                android.os.Process.killProcess(android.os.Process.myPid());
+                                            }
+                                        },500);
                                     }
                                 })
                                 .show();
