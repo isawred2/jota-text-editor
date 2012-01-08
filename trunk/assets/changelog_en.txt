@@ -6,6 +6,7 @@
  ★filename and extension were changed, so if you made def-file at last version, be careful.
 
 - Added backup/restore preferences. (Beta test for Donator)
+  (menu - Preferences - Misc. - Backup/Restore preferences)
 - Fixed minor bugs.
 - Updated German resources.(Thanks to Frank Wunderlich!)
 - Updated Dutch resources.(Thanks to Tim 'BNL' Beringen!)
