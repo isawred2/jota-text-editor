@@ -145,6 +145,7 @@ public class KeywordHighlght {
             String line;
             while( (line = br.readLine()) != null ){
                 line = line.replaceAll( "^#.*$" , "" );
+                line = line.replaceAll( "^//.*$" , "" );
                 line = line.replaceAll( "[ \\t]+$", "" );
 
                 int separator = line.indexOf('=');
