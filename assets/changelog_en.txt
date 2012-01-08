@@ -4,6 +4,7 @@
   added def-files for c/cpp/pas/php/sh/html.
   (Thanks to Frank Wunderlich!)
  ★filename and extension were changed, so if you made def-file at last version, be careful.
+ ★See Help Page for more detail.
 
 - Added backup/restore preferences. (Beta test for Donator)
   (menu - Preferences - Misc. - Backup/Restore preferences)
