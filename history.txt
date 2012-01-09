@@ -835,3 +835,9 @@ Please donate if you continue to use Jota.
 - Updated Dutch resources.(Thanks to Tim 'BNL' Beringen!)
 
 
+----------------------------------
+[2012/01/09]
+history.txt is no longer available.
+History will be wrote in only assets/changelog_en.txt and assets/changelog_ja.txt.
+
+
