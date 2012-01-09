@@ -74,6 +74,10 @@ Functions
 - Show Tab/Linebreak.
 - Auto capitalize.
 - you can used as SL4A editor.
+- Customizable Toolbar.
+- Customizable Syntax highlght.
+- Capture Screen shot.
+- Wallpaper customize.
 
 - Support Android OS 1.6 or later.
 - Support both touch-screen device and qwerty-keyboard device.
@@ -167,6 +171,10 @@ Jotaは、長文テキストの編集向けに設計されたテキストエデ�
 - タブ／改行／全角スペース表示
 - 文頭の大文字化
 - SL4Aのエディタとして使用可能.
+- カスタマイズ可能なツールバー
+- カスタマイズ可能なシンタックスハイライト
+- スクリーンショットキャプチャ機能
+- 壁紙設定機能
 
 - 対応OS Android 1.6/2.1/2.2/2.3
   (IS01,HTC Desire,005SH,Nexus One で動作確認）
@@ -261,6 +269,10 @@ Korrekte Unterstüzung des Quermodus.
 - Zeige Tab/Zeilenumbrüche
 - Automatisches Großschreiben
 - Als SL4A Editor nutzbar
+- Customizable Toolbar.
+- Customizable Syntax highlght.
+- Capture Screen shot.
+- Wallpaper customize.
 
 Unterstützt Android OS 1.6 oder neuer.
 - Unterstützt beides, sowohl TouchScreen als auch QWERTZ-Tastatur.
@@ -355,6 +367,10 @@ Ouvrir (ACTION_VIEW)
 + Show Tab/Linebreak.
 + Auto capitalize.
 + you can used as SL4A editor.
+- Customizable Toolbar.
+- Customizable Syntax highlght.
+- Capture Screen shot.
+- Wallpaper customize.
 
 - Support d'Android OS 1.6 ou ultérieur.
 - Support de l'écran tactile et du clavier.
@@ -448,6 +464,10 @@ Open(ACTION_VIEW)
 - Показ символов табуляции/новой строки.
 - Автоматическое начало предложений с большой буквы.
 - Может использоваться как редактор SL4A.
+- Customizable Toolbar.
+- Customizable Syntax highlght.
+- Capture Screen shot.
+- Wallpaper customize.
 
 - Поддержка Android 1.6 и выше.
 - Поддержка сенсорных устройств и устройств с qwerty-клавиатурой.
@@ -542,6 +562,10 @@ Funkcje
 + Show Tab/Linebreak.
 + Auto capitalize.
 + you can used as SL4A editor.
+- Customizable Toolbar.
+- Customizable Syntax highlght.
+- Capture Screen shot.
+- Wallpaper customize.
 
 - Działa na Androidzie 1.6 albo nowszym
 - Obsługiwane urządzenia z klawiaturą ekranową oraz sprzętową QWERTY.
@@ -643,6 +667,10 @@ Jota 是一个为超长文本文件设计的文本编辑器。
 - 显示制表符/换行符。
 - 首字母自动大写。
 - 您也可当作 SL4A 编辑器使用。
+- Customizable Toolbar.
+- Customizable Syntax highlght.
+- Capture Screen shot.
+- Wallpaper customize.
 
 - 支持 Android OS 1.6 及以上版本。
 - 同时支持触摸屏设备与标准全键盘设备。
@@ -742,6 +770,10 @@ Jota 是一個為超長文本文件設計的文本編輯器。
 - 顯示製表符/換行符。
 - 首字母自動大寫。
 - 您也可當作 SL4A 編輯器使用。
+- Customizable Toolbar.
+- Customizable Syntax highlght.
+- Capture Screen shot.
+- Wallpaper customize.
 
 - 支援 Android OS 1.6 以及更新版本。
 - 同時支援觸摸屏設備及標準全鍵盤設備。
@@ -841,6 +873,10 @@ Functies
 - Toon Tab/Linebreak.
 - Automatisch in hoofdletters omzetten.
 - Te gebruiken als SL4A-editor.
+- Customizable Toolbar.
+- Customizable Syntax highlght.
+- Capture Screen shot.
+- Wallpaper customize.
 
 - Ondersteunt Android OS 1.6 of later.
 - Ondersteunt touch-screen-toestel en qwerty-toetsenbord.
@@ -938,6 +974,10 @@ Funzioni:
 - Mostra Tab/Interruzione di linea.
 - Maiuscole automatiche.
 - Puoi usarlo come editor SL4A.
+- Customizable Toolbar.
+- Customizable Syntax highlght.
+- Capture Screen shot.
+- Wallpaper customize.
 
 - Supporta Android OS 1.6 e successivi.
 - Supporta sia i dispositivi touch-screen che i dispositivi con keyboard qwerty.
