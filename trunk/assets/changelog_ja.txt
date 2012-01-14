@@ -1,3 +1,10 @@
+[2012/01/14 v.0.2.03]
+- シンタックスハイライト定義ファイル追加
+	Perl by Max Lyons.
+	JavaScript by Ruben Maes.
+	avr assembler by Kurt Schuster.
+- 細かいバグの修正
+
 [2012/01/08 v.0.2.02]
 - シンタックスハイライトの改善(βテスト中)
   定義ファイルの拡張子を変更(*.conf)

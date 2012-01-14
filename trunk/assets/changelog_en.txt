@@ -1,3 +1,11 @@
+[2012/01/14 v.0.2.03]
+- added def-files for Syntax Highlight.
+	Perl by Max Lyons.
+	JavaScript by Ruben Maes.
+	avr assembler by Kurt Schuster.
+     --- Thanks!
+- Fixed minor bugs.
+
 [2012/01/08 v.0.2.02]
 - Improved Syntax Highlight.(Beta Testing)
   changed extension of def-file (*.conf)
