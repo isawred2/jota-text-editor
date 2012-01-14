@@ -2461,9 +2461,9 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
             button.setFocusable(false);
             if ( bigButton ){
                 button.setTextSize(24);
-                button.setBackgroundResource( android.R.drawable.btn_default );
+                button.setBackgroundResource( R.drawable.btn_default );
             }else{
-                button.setBackgroundResource( android.R.drawable.btn_default_small);
+                button.setBackgroundResource( R.drawable.btn_default_small);
             }
             mToolbar.addView(button,lp);
         }
