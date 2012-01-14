@@ -20,4 +20,6 @@
 <resources>
     <color name="textcolor_default">#FF000000</color>
     <color name="textcolor_black">#FFFFFFFF</color>
+    <color name="bgcolor_dark">#FF808080</color>
+    <color name="bgcolor_light">#FFD0D0D0</color>
 </resources>
