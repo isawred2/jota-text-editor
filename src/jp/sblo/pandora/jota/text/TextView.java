@@ -5879,7 +5879,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
         int line = mLayout.getLineForOffset(offset);
 
         // FIXME: Is it okay to truncate this, or should we round?
-        final int x = (int)mLayout.getPrimaryHorizontal(offset);
+        final int x = (int)mLayout.getPrimaryHorizontal(offset)+mLineNumberWidth;
         final int top = mLayout.getLineTop(line);
         final int bottom = mLayout.getLineTop(line + 1);
 
