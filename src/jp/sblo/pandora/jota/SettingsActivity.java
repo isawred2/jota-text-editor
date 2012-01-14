@@ -802,6 +802,13 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                 }
                 {
                     final Preference pr = new Preference(this);
+                    pr.setTitle(R.string.label_support_forum);
+                    pr.setOnPreferenceClickListener(mProcSupportForum);
+                    pr.setSummary(R.string.url_support_forum);
+                    category.addPreference(pr);
+                }
+                {
+                    final Preference pr = new Preference(this);
                     pr.setTitle(R.string.label_mail);
                     pr.setOnPreferenceClickListener(mProcMail);
                     pr.setSummary(R.string.label_mail_summary);
@@ -1228,7 +1235,17 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         }
 
 	};
-
+    private OnPreferenceClickListener mProcSupportForum = new OnPreferenceClickListener(){
+        public boolean onPreferenceClick(Preference preference) {
+            String url = getString(R.string.url_support_forum);
+            Intent it = new Intent(Intent.ACTION_VIEW ,Uri.parse(url) );
+            try{
+                startActivity(it);
+            }catch(Exception e){}
+            finish();
+            return false;
+        }
+    };
     private OnPreferenceClickListener mProcMail = new OnPreferenceClickListener(){
         public boolean onPreferenceClick(Preference preference) {
             Intent it = new Intent();
