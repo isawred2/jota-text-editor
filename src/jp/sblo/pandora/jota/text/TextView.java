@@ -2971,7 +2971,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
         public int getTextWidths(int start, int end, float[] widths, Paint p) {
             return p.getTextWidths(mChars, start + mStart, end - start, widths);
         }
-        
+
         public void drawTextRun(Canvas c, int start, int end,
                 int contextStart, int contextEnd, float x, float y, int flags, Paint p) {
             int count = end - start;
@@ -3005,7 +3005,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
             return p.getTextRunCursor(mChars, contextStart + mStart,
                     contextCount, flags, offset + mStart, cursorOpt);
         }
-        
+
     }
 
     /**
@@ -7571,6 +7571,34 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
                 insertBraces(function);
                 return true;
             }
+            case FUNCTION_SELECT:
+            {
+                if (canSelectText()) {
+                    boolean selection = getSelectionStart() != getSelectionEnd();
+                    if (selection) {
+                        return onTextContextMenuItem(ID_STOP_SELECTING_TEXT);
+                    }else{
+                        MetaKeyKeyListener.startSelecting(this, (Spannable) mText);
+                        return true;
+                    }
+                }
+                return true;
+            }
+            case FUNCTION_SELECT_WORD:
+            {
+                if (canSelectText()) {
+                    boolean selection = getSelectionStart() != getSelectionEnd();
+                    if (selection) {
+                        return onTextContextMenuItem(ID_CANCEL_SELECTION);
+                    }else{
+                        int start = Selection.getSelectionStart((Spannable)mText);
+                        ArrowKeyMovementMethod.selectWord((Spannable)mText, start);
+                        startTextSelectionMode();
+                        return true;
+                    }
+                }
+                return true;
+            }
 
         }
         return false;
@@ -9372,6 +9400,8 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
     public final static int FUNCTION_SINGLEQUOTE=49;
     public final static int FUNCTION_KAGIKAKKO=50;
     public final static int FUNCTION_NIJUKAGI=51;
+    public final static int FUNCTION_SELECT=52;
+    public final static int FUNCTION_SELECT_WORD=53;
 
 
     @ViewDebug.ExportedProperty

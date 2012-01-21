@@ -86,6 +86,8 @@ public class SettingsShortcutActivity extends PreferenceActivity implements OnSh
         R.string.menu_singlequote,
         R.string.menu_kagikakko,
         R.string.menu_nijukagi,
+        R.string.menu_select,
+        R.string.menu_select_word,
     };
 
     public final static int[] TBL_FUNCTION = {
@@ -141,7 +143,8 @@ public class SettingsShortcutActivity extends PreferenceActivity implements OnSh
         TextView.FUNCTION_SINGLEQUOTE,
         TextView.FUNCTION_KAGIKAKKO,
         TextView.FUNCTION_NIJUKAGI,
-
+        TextView.FUNCTION_SELECT,
+        TextView.FUNCTION_SELECT_WORD,
     };
 
     public final static String[] TBL_TOOLNAME = {
@@ -197,6 +200,8 @@ public class SettingsShortcutActivity extends PreferenceActivity implements OnSh
         " ' ' ",
         " \u300c \u300d ",
         " \u300e \u300f ",
+        "Select",
+        "Sel Word",
     };
 
     public String getFunctionName(int func)
