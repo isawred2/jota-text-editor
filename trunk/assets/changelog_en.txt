@@ -1,3 +1,15 @@
+[2012/01/21 v.0.2.04]
+- added toolbar function. [Start/Stop to select text][Select a word]
+  see) preference - toolbar settings
+- added def-files for Syntax Highlight.
+   Lua by tnoguchi and Tarosa
+- Updated French resources.(Thanks to fpp!)
+- Updated polish resources.(Thanks to Mariusz!)
+
+★NEWS: I started support forum.
+　Preference - Misc. - Support forum.
+  https://code.google.com/p/jota-text-editor/issues/list
+
 [2012/01/14 v.0.2.03]
 - added def-files for Syntax Highlight.
 	Perl by Max Lyons.

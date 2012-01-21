@@ -1,3 +1,16 @@
+[2012/01/21 v.0.2.04]
+- ツールバー機能に[テキスト選択開始][単語選択]を追加。
+  設定 - ツールバー設定
+- シンタックスハイライト定義ファイル追加
+   Lua by tnoguchi and Tarosa
+- フランス語リソースを更新(Thanks to fpp!)
+- ポーランド語リソースを更新(Thanks to Mariusz!)
+
+★サポートフォーラムを開設しました。
+　設定 - その他 - サポートフォーラム
+  https://code.google.com/p/jota-text-editor/issues/list
+
+
 [2012/01/14 v.0.2.03]
 - シンタックスハイライト定義ファイル追加
 	Perl by Max Lyons.

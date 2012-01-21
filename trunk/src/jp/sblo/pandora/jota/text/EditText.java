@@ -167,7 +167,8 @@ public class EditText extends TextView{
                             Field f = c.getDeclaredField("mCurId");
                             f.setAccessible(true);
                             String immId = (String)f.get(imm);
-                            if ( "jp.co.omronsoft.iwnnime/.iWnnIME".equals(immId) ){
+                            if ( "jp.co.omronsoft.iwnnime/.iWnnIME".equals(immId)
+                              || "net.gorry.android.input.nicownng/.NicoWnnGJAJP".equals(immId) ){
                                 sIWnnFlag = true;
                             }
                         } catch (Exception e) {
@@ -254,6 +255,8 @@ public class EditText extends TextView{
             case FUNCTION_SINGLEQUOTE:
             case FUNCTION_KAGIKAKKO:
             case FUNCTION_NIJUKAGI:
+            case FUNCTION_SELECT:
+            case FUNCTION_SELECT_WORD:
                 return doCommand(function);
 
             case FUNCTION_ENTER:

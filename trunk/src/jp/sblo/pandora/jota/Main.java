@@ -2407,6 +2407,8 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
                 case jp.sblo.pandora.jota.text.TextView.FUNCTION_PASTE:
                 case jp.sblo.pandora.jota.text.TextView.FUNCTION_REDO:
                 case jp.sblo.pandora.jota.text.TextView.FUNCTION_SELECT_ALL:
+                case jp.sblo.pandora.jota.text.TextView.FUNCTION_SELECT:
+                case jp.sblo.pandora.jota.text.TextView.FUNCTION_SELECT_WORD:
                 case jp.sblo.pandora.jota.text.TextView.FUNCTION_CURSOR_LEFT:
                 case jp.sblo.pandora.jota.text.TextView.FUNCTION_CURSOR_RIGHT:
                 case jp.sblo.pandora.jota.text.TextView.FUNCTION_HOME:
