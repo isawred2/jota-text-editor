@@ -1,3 +1,8 @@
+[2012/01/28 v.0.2.05]
+- added def-files for Syntax Highlight.
+   awk by Iain Tuddenham
+- fixed minor bugs.
+
 [2012/01/21 v.0.2.04]
 - added toolbar function. [Start/Stop to select text][Select a word]
   see) preference - toolbar settings

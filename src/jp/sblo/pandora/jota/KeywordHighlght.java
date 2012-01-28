@@ -273,12 +273,13 @@ public class KeywordHighlght {
             // remove all files except directory..
             File dir = new File(PATH);
             File[] files = dir.listFiles();
-            for( File f : files ){
-                if ( f.isFile() ){
-                    f.delete();
+            if ( files != null ){
+                for( File f : files ){
+                    if ( f.isFile() ){
+                        f.delete();
+                    }
                 }
             }
-
             // extarct files from assets.
             String[] list = am.list(ASSET_PATH);
             for( String filename : list ){
