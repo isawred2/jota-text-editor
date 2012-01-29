@@ -308,8 +308,8 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                     pr.setKey( KEY_FONT_SIZE);
 //                    pr.setSummary(sp.getString(pr.getKey(), ""));
                     pr.setTitle(R.string.label_font_size);
-                    pr.setEntries(new String[]     {"8", "9", "10", "11", "12" ,"14", "16", "18", "20", "24", "30", "36", "48", "64", "72", "96",  });
-                    pr.setEntryValues(new String[] {"8", "9", "10", "11", "12" ,"14", "16", "18", "20", "24", "30", "36", "48", "64", "72", "96",  });
+                    pr.setEntries(new String[]     {"8", "9", "10", "11", "12" ,"14", "16", "18", "20", "24", "30", "36", "48", "64", "72", "96", "108" , "120", "140", "160" ,"180" , "200" });
+                    pr.setEntryValues(new String[] {"8", "9", "10", "11", "12" ,"14", "16", "18", "20", "24", "30", "36", "48", "64", "72", "96", "108" , "120", "140", "160" ,"180" , "200" });
                     catfont.addPreference(pr);
                     mPrefFontSize = pr;
                 }
