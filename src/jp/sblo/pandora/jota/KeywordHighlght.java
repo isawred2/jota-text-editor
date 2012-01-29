@@ -179,15 +179,17 @@ public class KeywordHighlght {
     {
         File dir = new File(path);
         File[] files = dir.listFiles();
-        for( File f : files ){
-            if ( f.isFile() ){
-                String name = f.getName();
-                String exts[] = name.split("\\.");
-                int len = exts.length-1;
-                if ( len>0 && EXT.equals(exts[len])){
-                    for( int i=0;i<len;i++){
-                        if ( ext.equals(exts[i])){
-                            return f;
+        if ( files != null ){
+            for( File f : files ){
+                if ( f.isFile() ){
+                    String name = f.getName();
+                    String exts[] = name.split("\\.");
+                    int len = exts.length-1;
+                    if ( len>0 && EXT.equals(exts[len])){
+                        for( int i=0;i<len;i++){
+                            if ( ext.equals(exts[i])){
+                                return f;
+                            }
                         }
                     }
                 }
