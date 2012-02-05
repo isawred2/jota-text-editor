@@ -1,3 +1,13 @@
+[2012/02/05 v.0.2.06]
+- added def-files for Syntax Highlight.
+   Python by Benjamin Longuet
+- Updated Korean resources. (Thanks to Noah!)
+- Added font size up to 200.
+- fixed minor bugs.
+
+★Released Spell Checker Extension!
+  Search 'Jota' from Android Market.
+
 [2012/01/28 v.0.2.05]
 - added def-files for Syntax Highlight.
    awk by Iain Tuddenham
