@@ -1,3 +1,7 @@
+[2012/02/19 v.0.2.07]
+- updated Russian resource. (Thanks to Anton Sadovnichenko.)
+- fixed minor bug.
+
 [2012/02/05 v.0.2.06]
 - added def-files for Syntax Highlight.
    Python by Benjamin Longuet
