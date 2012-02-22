@@ -1,8 +1,8 @@
 
 package jp.sblo.pandora.jota;
 
-import java.io.File;
 import java.util.ArrayList;
+import java.io.File;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -16,6 +16,7 @@ import jp.sblo.pandora.jota.Search.Record;
 import jp.sblo.pandora.jota.TextLoadTask.OnFileLoadListener;
 import jp.sblo.pandora.jota.text.JotaDocumentWatcher;
 import jp.sblo.pandora.jota.text.Layout;
+import jp.sblo.pandora.jota.text.Selection;
 import jp.sblo.pandora.jota.text.SpannableStringBuilder;
 import jp.sblo.pandora.jota.text.TextUtils;
 import jp.sblo.pandora.jota.text.EditText.ShortcutListener;
@@ -300,6 +301,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
                 mLlSearch.setVisibility(View.GONE);
                 mLlReplace.setVisibility(View.GONE);
                 mChkReplace.setVisibility(View.VISIBLE);
+                Selection.setDisableLostFocus(true);
             }
         });
         // edtReplaceWord
@@ -1293,6 +1295,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
 
             mLlSearch.setVisibility(View.GONE);
             mLlReplace.setVisibility(View.GONE);
+            Selection.setDisableLostFocus(true);
 
             mEdtSearchWord.setText("");
             mBtnForward.setEnabled(false);
@@ -1966,6 +1969,8 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
                 mLlSearch.setVisibility(View.VISIBLE);
                 mChkReplace.setVisibility(View.VISIBLE);
                 mEdtSearchWord.requestFocus();
+                Selection.setDisableLostFocus(false);
+
 
                 int startsel = mEditor.getSelectionStart();
                 int endsel = mEditor.getSelectionEnd();
