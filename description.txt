@@ -998,3 +998,98 @@ Puoi mandarmi un messaggio anche dal menù Preferenze di Jota.
 (translated by Paolo Stivanin a.k.a. Polslinux)
 
 --------------------------------------------------------------------------------
+Jota text editor (Czech)
+
+Jota je textový editor navržený pro dlouhé textové soubory.
+Vyslovuje se "i-o-ta".
+
+Funkce
+- Podpora až do 1 miliónu znaků.
+
+- Automatická detekce různého kódování znaků.
+  UTF-8
+  UTF-16BE
+  UTF-16LE
+  UTF-32BE
+  UTF-32LE
+  WINDOWS-1251
+  WINDOWS-1252
+  WINDOWS-1253
+  WINDOWS-1255
+  SHIFT_JIS
+  ISO-2022-JP
+  ISO-2022-CN
+  ISO-2022-KR
+  ISO-8859-5
+  ISO-8859-7
+  ISO-8859-8
+  BIG5
+  GB18030
+  EUC-JP
+  EUC-KR
+  EUC-TW
+  IBM855
+  IBM866
+  KOI8-R
+  MACCYRILLIC
+  HZ-GB-2312
+  X-ISO-10646-UCS-4-3412
+  X-ISO-10646-UCS-4-2143
+  (Možnost dekódování zavisí na konkrétní implementaci v Androidu)
+
+- Změna kódování znaků.
+- Automatická detekce kódu pro konec řádky.
+- Změna kódu pro konec řádky.
+- Uložení pozice kurzoru se souborem.
+- Uložení historie nedávných souborů.
+
+- Hledání/Nahrazení (Podpora regulérních výrazů)
+
+- Sdílení textu s aplikacemi třetích stran.
+  Mushroom
+  Sdílet (ACTION_SEND)
+  Hledat (ACTION_SEARCH)
+  Otevřít (ACTION_VIEW)
+
+★ Direct Intent: Můžete spustit jakoukoliv aplikaci z menu
+
+- Scrollování pomocí tažení prstu.
+- Scrollování švihnutím.
+- Vpřed/Vzad.
+- Podpora zkratek s CTRL/ALT klávesami.
+- Personalizace barev.
+- Vytvoření zástupce na ploše.
+- Nastavitelné klávesové zkratky.
+- Textový posuvník jako v Gingerbreadu
+(Dvakrát dotknout pro výběr slova, poté dotik na vybrané oblasti pro zviditelnění posuvníku.)
+- ON/OFF zalamování řádků a nastavení šírky.
+- Nastavení výšky záložek.
+- Prohlížecí mód.
+- Korektní podpora režimu na šířku.
+- Automatické ukládání.
+- Automatické odsazení.
+- Zobrazení Tabulátoru/Konce řádky
+- Automaticky přiřazená velká písmena
+- Může být používano jako SL4A editor.
+- Nastavitelný Toolbar (Řádek nástrojů).
+- Nastavitelné zvýraznění syntaxe
+- Pořízení snímku displeje (Screenshot)
+- Perzonalizace tapty
+
+- Podpora Androidu 1.6 a vyšší.
+- Podpora telefonů s klávesnicí (qwerty) a i pouze s dotykovým displejem.
+
+- Navždy zdarma a bez reklam
+- Tento software je Open Source Software pod Apache licencí.
+- Peněžní dary jsou vždy vítány. Mužete darovat z nastavení v aplikaci.
+
+UPOZORNĚNÍ
+  Psaní z leva a dvousměrný text není podporován.
+
+★ Pokud ode mne potřebujete odpověď nepište do komentářů v Android Marketu. Raději mi napište email nebo na twitter(@jiro_aqua).
+Můžete mi také napsat zprávu z obrazovky nastavení v "Jota".
+
+★ Pokud potřebujete grep (vyhledávání v mnoha textových souborech), vyzkoušejte mojí app "aGrep".
+
+
+--------------------------------------------------------------------------------
