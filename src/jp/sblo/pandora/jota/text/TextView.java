@@ -2464,6 +2464,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
         UndoBuffer undoBuffer;// Jota Text Editor
         UndoBuffer redoBuffer;// Jota Text Editor
         boolean imeShown; // Jota Text Editor
+        float textSize; // Jota Text Editor
 
         SavedState(Parcelable superState) {
             super(superState);
@@ -2486,6 +2487,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
             out.writeParcelable(undoBuffer, 0);// Jota Text Editor
             out.writeParcelable(redoBuffer, 0);// Jota Text Editor
             out.writeInt( imeShown?1:0 );// Jota Text Editor
+            out.writeFloat( textSize );
         }
 
         @Override
@@ -2523,6 +2525,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
             undoBuffer = in.readParcelable(UndoBuffer.class.getClassLoader());// Jota Text Editor
             redoBuffer = in.readParcelable(UndoBuffer.class.getClassLoader());// Jota Text Editor
             imeShown = in.readInt() != 0;// Jota Text Editor
+            textSize = in.readFloat();// Jota Text Editor
         }
     }
 
@@ -2579,6 +2582,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
             ss.undoBuffer = mUndoBuffer;// Jota Text Editor
             ss.redoBuffer = mRedoBuffer;// Jota Text Editor
             ss.imeShown = isImeShown();// Jota Text Editor
+            ss.textSize = mTextPaint.getTextSize(); // Jota Text Editor
             return ss;
         }
 
@@ -2644,6 +2648,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
         }
 
         showIme( ss.imeShown );
+        mTextPaint.setTextSize(ss.textSize);
     }
 
     /**
