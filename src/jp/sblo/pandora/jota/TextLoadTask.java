@@ -12,8 +12,9 @@ import java.nio.charset.Charset;
 
 import jp.sblo.pandora.jota.text.SpannableStringBuilder;
 
+import org.mozilla.universalchardet.NativeUniversalDetector;
 import org.mozilla.universalchardet.UniversalDetector;
-import org.mozilla.universalchardet.UniversalDetector.DetectorException;
+import org.mozilla.universalchardet.NativeUniversalDetector.DetectorException;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -23,6 +24,8 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 public     class TextLoadTask extends AsyncTask<String, Integer, SpannableStringBuilder>{
+
+    private static final boolean USE_JUNIVERSALCHARDET=false;
 
     OnFileLoadListener mFileLoadListener=null;
     private int mLineToChar=-1;
@@ -113,18 +116,31 @@ public     class TextLoadTask extends AsyncTask<String, Integer, SpannableString
                 }
                 return new SpannableStringBuilder("");
             }
+            if ( USE_JUNIVERSALCHARDET ){
+                UniversalDetector detector;
+                if ( encode ==null || encode.length() == 0 ){
+                    try {
+                        detector = new UniversalDetector(null);
+                        detector.handleData(buff, 0, nread);
+                        detector.dataEnd();
+                        encode = detector.getDetectedCharset();
+                        detector.reset();
+                    } catch (Exception e1) {
+                    }
+                }
+            }else{
+                // Detect charset
+                NativeUniversalDetector detector;
+                if ( encode ==null || encode.length() == 0 ){
 
-            // Detect charset
-            UniversalDetector detector;
-            if ( encode ==null || encode.length() == 0 ){
-
-                try {
-                    detector = new UniversalDetector();
-                    detector.handleData(buff, 0, nread);
-                    detector.dataEnd();
-                    encode = detector.getCharset();
-                    detector.destroy();
-                } catch (DetectorException e1) {
+                    try {
+                        detector = new NativeUniversalDetector();
+                        detector.handleData(buff, 0, nread);
+                        detector.dataEnd();
+                        encode = detector.getCharset();
+                        detector.destroy();
+                    } catch (DetectorException e1) {
+                    }
                 }
             }
             is.reset();
