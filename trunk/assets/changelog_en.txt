@@ -1,3 +1,9 @@
+[2012/02/25 v.0.2.08]
+- After use Font+/- button, keep font size when rotating screen.
+- fixed the bug that layout fails with large text on ICS.
+- fixed the bug that focus losts at bottom of the text.
+- add candidate of the font size settings.
+
 [2012/02/19 v.0.2.07]
 - updated Russian resource. (Thanks to Anton Sadovnichenko.)
 - fixed minor bug.
