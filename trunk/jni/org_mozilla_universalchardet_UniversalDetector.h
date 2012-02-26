@@ -12,7 +12,7 @@ extern "C" {
  * Method:    chardet_create
  * Signature: ()J
  */
-JNIEXPORT jlong JNICALL Java_org_mozilla_universalchardet_UniversalDetector_chardet_1create
+JNIEXPORT jlong JNICALL Java_org_mozilla_universalchardet_NativeUniversalDetector_chardet_1create
   (JNIEnv *, jclass);
 
 /*
@@ -20,7 +20,7 @@ JNIEXPORT jlong JNICALL Java_org_mozilla_universalchardet_UniversalDetector_char
  * Method:    chardet_destroy
  * Signature: (J)V
  */
-JNIEXPORT void JNICALL Java_org_mozilla_universalchardet_UniversalDetector_chardet_1destroy
+JNIEXPORT void JNICALL Java_org_mozilla_universalchardet_NativeUniversalDetector_chardet_1destroy
   (JNIEnv *, jclass, jlong);
 
 /*
@@ -28,7 +28,7 @@ JNIEXPORT void JNICALL Java_org_mozilla_universalchardet_UniversalDetector_chard
  * Method:    chardet_handle_data
  * Signature: (J[B)I
  */
-JNIEXPORT jint JNICALL Java_org_mozilla_universalchardet_UniversalDetector_chardet_1handle_1data
+JNIEXPORT jint JNICALL Java_org_mozilla_universalchardet_NativeUniversalDetector_chardet_1handle_1data
   (JNIEnv *, jclass, jlong, jbyteArray,jint,jint);
 
 /*
@@ -36,7 +36,7 @@ JNIEXPORT jint JNICALL Java_org_mozilla_universalchardet_UniversalDetector_chard
  * Method:    chardet_data_end
  * Signature: (J)I
  */
-JNIEXPORT jint JNICALL Java_org_mozilla_universalchardet_UniversalDetector_chardet_1data_1end
+JNIEXPORT jint JNICALL Java_org_mozilla_universalchardet_NativeUniversalDetector_chardet_1data_1end
   (JNIEnv *, jclass, jlong);
 
 /*
@@ -44,7 +44,7 @@ JNIEXPORT jint JNICALL Java_org_mozilla_universalchardet_UniversalDetector_chard
  * Method:    chardet_reset
  * Signature: (J)I
  */
-JNIEXPORT jint JNICALL Java_org_mozilla_universalchardet_UniversalDetector_chardet_1reset
+JNIEXPORT jint JNICALL Java_org_mozilla_universalchardet_NativeUniversalDetector_chardet_1reset
   (JNIEnv *, jclass, jlong);
 
 /*
@@ -52,7 +52,7 @@ JNIEXPORT jint JNICALL Java_org_mozilla_universalchardet_UniversalDetector_chard
  * Method:    chardet_get_charset
  * Signature: (J)Ljava/lang/String;
  */
-JNIEXPORT jstring JNICALL Java_org_mozilla_universalchardet_UniversalDetector_chardet_1get_1charset
+JNIEXPORT jstring JNICALL Java_org_mozilla_universalchardet_NativeUniversalDetector_chardet_1get_1charset
   (JNIEnv *, jclass, jlong);
 
 #ifdef __cplusplus
