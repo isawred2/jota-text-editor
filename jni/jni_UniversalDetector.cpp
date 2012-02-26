@@ -6,7 +6,7 @@
  * Method:    chardet_create
  * Signature: ()J
  */
-JNIEXPORT jlong JNICALL Java_org_mozilla_universalchardet_UniversalDetector_chardet_1create
+JNIEXPORT jlong JNICALL Java_org_mozilla_universalchardet_NativeUniversalDetector_chardet_1create
   (JNIEnv *env, jclass jclazz)
 {
 	chardet_t ret = NULL;
@@ -22,7 +22,7 @@ JNIEXPORT jlong JNICALL Java_org_mozilla_universalchardet_UniversalDetector_char
  * Method:    chardet_destroy
  * Signature: (J)V
  */
-JNIEXPORT void JNICALL Java_org_mozilla_universalchardet_UniversalDetector_chardet_1destroy
+JNIEXPORT void JNICALL Java_org_mozilla_universalchardet_NativeUniversalDetector_chardet_1destroy
   (JNIEnv *env, jclass jclazz, jlong det)
 {
 	chardet_destroy((chardet_t) det);
@@ -33,7 +33,7 @@ JNIEXPORT void JNICALL Java_org_mozilla_universalchardet_UniversalDetector_chard
  * Method:    chardet_handle_data
  * Signature: (J[BJ)I
  */
-JNIEXPORT jint JNICALL Java_org_mozilla_universalchardet_UniversalDetector_chardet_1handle_1data
+JNIEXPORT jint JNICALL Java_org_mozilla_universalchardet_NativeUniversalDetector_chardet_1handle_1data
   (JNIEnv *env , jclass jclazz , jlong det, jbyteArray data , jint offset , jint len)
 {
 	jint ret;
@@ -53,7 +53,7 @@ JNIEXPORT jint JNICALL Java_org_mozilla_universalchardet_UniversalDetector_chard
  * Method:    chardet_data_end
  * Signature: (J)I
  */
-JNIEXPORT jint JNICALL Java_org_mozilla_universalchardet_UniversalDetector_chardet_1data_1end
+JNIEXPORT jint JNICALL Java_org_mozilla_universalchardet_NativeUniversalDetector_chardet_1data_1end
   (JNIEnv *env, jclass jclazz, jlong det)
 {
 	return chardet_data_end((chardet_t) det);
@@ -65,7 +65,7 @@ JNIEXPORT jint JNICALL Java_org_mozilla_universalchardet_UniversalDetector_chard
  * Method:    chardet_reset
  * Signature: (J)I
  */
-JNIEXPORT jint JNICALL Java_org_mozilla_universalchardet_UniversalDetector_chardet_1reset
+JNIEXPORT jint JNICALL Java_org_mozilla_universalchardet_NativeUniversalDetector_chardet_1reset
   (JNIEnv *env, jclass jclazz, jlong det)
 {
 	return chardet_reset((chardet_t) det);
@@ -76,7 +76,7 @@ JNIEXPORT jint JNICALL Java_org_mozilla_universalchardet_UniversalDetector_chard
  * Method:    chardet_get_charset
  * Signature: (J)Ljava/lang/String;
  */
-JNIEXPORT jstring JNICALL Java_org_mozilla_universalchardet_UniversalDetector_chardet_1get_1charset
+JNIEXPORT jstring JNICALL Java_org_mozilla_universalchardet_NativeUniversalDetector_chardet_1get_1charset
   (JNIEnv *env, jclass jclazz, jlong det)
 {
 	char	namebuf[256];
