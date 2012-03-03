@@ -974,21 +974,30 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
     public boolean onPrepareOptionsMenu(Menu menu) {
 
         MenuItem menuitem = menu.findItem(R.id.menu_direct);
-        String name = mSettings.intentname;
-        if (name != null && name.length() > 0) {
-            menuitem.setTitle(name);
-            menuitem.setEnabled(true);
-        } else {
+        if ( mSettings != null ){
+            String name = mSettings.intentname;
+            if (name != null && name.length() > 0) {
+                menuitem.setTitle(name);
+                menuitem.setEnabled(true);
+            } else {
+                menuitem.setTitle(R.string.menu_direct);
+                menuitem.setEnabled(false);
+            }
+        }else{
             menuitem.setTitle(R.string.menu_direct);
             menuitem.setEnabled(false);
         }
-
         menuitem = menu.findItem(R.id.menu_insert);
-        name = mSettings.intentname2;
-        if (name != null && !SettingsActivity.DI_INSERT.equals(name)) {
-            menuitem.setTitle(name);
-            menuitem.setIcon(R.drawable.ic_menu_direct);
-        } else {
+        if ( mSettings != null ){
+            String name = mSettings.intentname2;
+            if (name != null && !SettingsActivity.DI_INSERT.equals(name)) {
+                menuitem.setTitle(name);
+                menuitem.setIcon(R.drawable.ic_menu_direct);
+            } else {
+                menuitem.setTitle(R.string.menu_insert);
+                menuitem.setIcon(R.drawable.ic_menu_compose);
+            }
+        }else{
             menuitem.setTitle(R.string.menu_insert);
             menuitem.setIcon(R.drawable.ic_menu_compose);
         }
