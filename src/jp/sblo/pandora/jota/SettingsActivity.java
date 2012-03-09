@@ -105,6 +105,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
     public static final String KEY_TOOLBAR_HIDE_LANDSCAPE   = "KEY_TOOLBAR_HIDE_LANDSCAPE";
     private static final String KEY_FORCE_SCROLL            = "KEY_FORCE_SCROLL";
     private static final String KEY_CTRL_PRE_IME            = "KEY_CTRL_PRE_IME";
+    private static final String KEY_STARTUP_ACTION          = "KEY_STARTUP_ACTION";
 
 	public static final String KEY_LASTVERSION = "LastVersion";
 
@@ -162,12 +163,17 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
     public static final String ORI_PORTRAIT="portrait";
     public static final String ORI_LANDSCAPE="landscape";
 
+    public static final String STARTUP_NEW      ="startup_new";
+    public static final String STARTUP_OPEN     ="startup_open";
+    public static final String STARTUP_HISTORY  ="startup_history";
+    public static final String STARTUP_LASTFILE ="startup_lastfile";
+
     private static final String BACKUP_FILE     = Environment.getExternalStorageDirectory() + "/.jota/prefs/";
 
     private static int sLastVersion=0;
 
     private PreferenceScreen mPs = null;
-	private PreferenceManager mPm = getPreferenceManager();
+	private PreferenceManager mPm;
 
     private ListPreference mPrefFont;
     private ListPreference mPrefFontSize;
@@ -181,6 +187,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
     private ListPreference mPrefOrientation;
     private Preference mPrefWrapWidthP;
     private Preference mPrefWrapWidthL;
+    private ListPreference mPrefStartupAction;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -447,13 +454,23 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                     pr.setOnPreferenceClickListener(mProcDefaultDirectory);
                     cat.addPreference(pr);
                 }
+//                {
+//                    // rememer last file
+//                    final CheckBoxPreference pr = new CheckBoxPreference(this);
+//                    pr.setKey(KEY_REMEMBER_LAST_FILE);
+//                    pr.setTitle(R.string.label_open_last_file);
+//                    pr.setSummary(R.string.label_open_last_file_summary);
+//                    cat.addPreference(pr);
+//                }
                 {
-                    // rememer last file
-                    final CheckBoxPreference pr = new CheckBoxPreference(this);
-                    pr.setKey(KEY_REMEMBER_LAST_FILE);
-                    pr.setTitle(R.string.label_open_last_file);
-                    pr.setSummary(R.string.label_open_last_file_summary);
+                    // Font Typeface
+                    final ListPreference pr = new ListPreference(this);
+                    pr.setKey( KEY_STARTUP_ACTION );
+                    pr.setTitle(R.string.label_startup_action);
+                    pr.setEntries(new String[]{ getString(R.string.label_startup_newfile) , getString(R.string.label_startup_openfile), getString(R.string.label_startup_history), getString(R.string.label_startup_lastfile) } );
+                    pr.setEntryValues( new CharSequence[] { STARTUP_NEW , STARTUP_OPEN  , STARTUP_HISTORY , STARTUP_LASTFILE} );
                     cat.addPreference(pr);
+                    mPrefStartupAction = pr;
                 }
                 {
                     // create backup file
@@ -1734,7 +1751,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         boolean shortcutaltright;
         boolean shortcutctrl;
         boolean shortcutctrlltn;
-        boolean rememberlastfile;
+//        boolean rememberlastfile;
         boolean wordwrap;
         String theme;
         int backgroundcolor;
@@ -1775,6 +1792,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         boolean toolbarBigButton;
         boolean toolbarHideLandscape;
         boolean ctrlPreIme;
+        String startupAction;
 	}
 
 	public static class BootSettings {
@@ -1862,7 +1880,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         ret.shortcutctrl = sp.getBoolean( KEY_SHORTCUT_CTRL, false);
         ret.shortcutctrlltn = sp.getBoolean( KEY_SHORTCUT_CTRL_LTN, false);
         ret.specialkey_desirez = sp.getBoolean( KEY_SPECIAL_KEY_DESIREZ, false);
-        ret.rememberlastfile = sp.getBoolean( KEY_REMEMBER_LAST_FILE, false);
+//        ret.rememberlastfile = sp.getBoolean( KEY_REMEMBER_LAST_FILE, false);
         ret.wordwrap = sp.getBoolean( KEY_WORD_WRAP, true);
         ret.theme = sp.getString(KEY_THEME, THEME_DEFAULT);
         ret.textcolor = sp.getInt(KEY_TEXT_COLOR,0);
@@ -1900,6 +1918,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         ret.toolbarBigButton = sp.getBoolean(KEY_TOOLBAR_BIGBUTTON, false);
         ret.toolbarHideLandscape = sp.getBoolean(KEY_TOOLBAR_HIDE_LANDSCAPE, false);
         ret.ctrlPreIme = sp.getBoolean(KEY_CTRL_PRE_IME, false);
+        ret.startupAction = sp.getString(KEY_STARTUP_ACTION,STARTUP_NEW);
         sSettings = ret;
         return ret;
 	}
@@ -2029,6 +2048,14 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                     editor.putBoolean(KEY_TOOLBAR_BIGBUTTON, false);
                     editor.putBoolean(KEY_TOOLBAR_HIDE_LANDSCAPE, false);
                 }
+                if ( lastversion < 60 ){
+                    boolean rememberlastfile = sp.getBoolean( KEY_REMEMBER_LAST_FILE, false);
+                    if ( rememberlastfile ){
+                        editor.putString(KEY_STARTUP_ACTION, STARTUP_LASTFILE);
+                    }else{
+                        editor.putString(KEY_STARTUP_ACTION, STARTUP_NEW);
+                    }
+                }
                 editor.commit();
                 SettingsShortcutActivity.writeDefaultShortcuts(ctx);
                 SettingsToolbarActivity.writeDefaultToolbarSettings(ctx);
@@ -2146,6 +2173,12 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         }
         if ( mPrefWrapWidthL != null ){
             mPrefWrapWidthL.setEnabled(sSettings.wordwrap);
+        }
+        if ( mPrefStartupAction !=null){
+            entry = mPrefStartupAction.getEntry();
+            if ( entry != null ){
+                mPrefStartupAction.setSummary(entry);
+            }
         }
 	}
 

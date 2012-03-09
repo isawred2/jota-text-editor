@@ -1,6 +1,7 @@
 
 package jp.sblo.pandora.jota;
 
+import java.security.DomainCombiner;
 import java.util.ArrayList;
 import java.io.File;
 import java.util.Collections;
@@ -413,11 +414,19 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
                         mTask.execute(path.toString(), mSettings.CharsetOpen);
                     }
                 }
-            } else if (mSettings.rememberlastfile) {
-                File[] fl = getHistory();
-                if (fl != null) {
-                    mTask = new TextLoadTask(this, this, -1);
-                    mTask.execute(fl[0].getPath(), mSettings.CharsetOpen);
+            } else {
+                if ( SettingsActivity.STARTUP_LASTFILE.equals( mSettings.startupAction) ) {
+                    File[] fl = getHistory();
+                    if (fl != null) {
+                        mTask = new TextLoadTask(this, this, -1);
+                        mTask.execute(fl[0].getPath(), mSettings.CharsetOpen);
+                    }
+                }else if ( SettingsActivity.STARTUP_HISTORY.equals( mSettings.startupAction) ){
+                    mProcHistory.run();
+                }else if ( SettingsActivity.STARTUP_OPEN.equals( mSettings.startupAction) ){
+                    mProcOpen.run();
+                }else{
+                    // New File (Do Nothing)
                 }
             }
 
