@@ -1,3 +1,10 @@
+[2012/03/04 v.0.2.09]
+- ロシア語リソースの更新 (Thanks to Anton Sadovnichenko.)
+- チェコ語リソースの追加 (Thanks to Damián Šulista (@dosdroid)!)
+- シンタックスハイライト定義ファイル更新
+　awk (Thanks to Iain Tuddenham!)
+- 細かいバグの修正
+
 [2012/02/25 v.0.2.08]
 - ツールバーのFONT+/-で変更したフォントサイズを、縦横切替で復元するように修正
 - ICSで長いテキストのレイアウトに失敗する問題を修正
