@@ -1,6 +1,7 @@
 package jp.sblo.pandora.jota.text;
 
 import jp.sblo.pandora.jota.JotaTextEditor;
+import android.os.Build;
 import android.text.Editable;
 import android.text.Selection;
 import android.text.TextUtils;
@@ -61,13 +62,14 @@ public class JotaTextKeyListener extends TextKeyListener {
                 }
             }
         }
-        if (keyCode == KEYCODE_FORWARD_DEL ) {
-            if ( (event.getMetaState() & 512) == 0 ){       // workaround for Galaxy Note
-                forwardDelete(view, content, keyCode, event);
-                return true;
+        if ( Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB ){
+            if (keyCode == KEYCODE_FORWARD_DEL ) {
+                if ( (event.getMetaState() & 512) == 0 ){       // workaround for Galaxy Note
+                    forwardDelete(view, content, keyCode, event);
+                    return true;
+                }
             }
         }
-
         return result;
     }
     static public void setAutoIndent( boolean autoIndent )

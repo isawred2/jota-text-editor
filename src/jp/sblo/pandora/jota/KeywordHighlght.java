@@ -187,7 +187,7 @@ public class KeywordHighlght {
                     int len = exts.length-1;
                     if ( len>0 && EXT.equals(exts[len])){
                         for( int i=0;i<len;i++){
-                            if ( ext.equals(exts[i])){
+                            if ( ext.equalsIgnoreCase(exts[i])){
                                 return f;
                             }
                         }
