@@ -1,3 +1,10 @@
+[2012/03/11 v.0.2.10]
+- Change [Remember last file] option to [Start up action].
+  ★See File Settings -> Start up Action.
+- Updated Chinese resources. (Thanks to EraserKing!)
+- Extensions of syntax highlight are no longer case sensitive.
+- Fixed the bug that delete key removes 2 characters (Honeycomb or later).
+
 [2012/03/04 v.0.2.09]
 - Updated Russian resource. (Thanks to Anton Sadovnichenko.)
 - Added Czech resource. (Thanks to Damián Šulista (@dosdroid)!)

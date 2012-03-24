@@ -1,3 +1,10 @@
+[2012/03/11 v.0.2.10]
+- 「前回のファイルを開く」設定を「起動時の動作」に変更
+  ★設定 - ファイル設定 - 起動時の動作 で、起動時の動作をカスタマイズできるようになりました。
+- 中国語のリソースを更新(Thanks to EraserKing!)
+- シンタックスハイライトの拡張子判定をcase insensitiveに変更
+- Deleteキーで2文字消す問題(Honeycomb以降)を修正
+
 [2012/03/04 v.0.2.09]
 - ロシア語リソースの更新 (Thanks to Anton Sadovnichenko.)
 - チェコ語リソースの追加 (Thanks to Damián Šulista (@dosdroid)!)
