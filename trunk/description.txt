@@ -200,7 +200,7 @@ Der Jota Texteditor wurde für längere Texte entwickelt.
 Es wird "i-o-ta" ausgesprochen.
 
 Funktionen
-Unterstützt bis zu eine Missionen Zeichen..
+Unterstützt bis zu eine Million Zeichen..
 
 Automatische Erkennung mehrerer Zeichenkodierungen.
 UTF-8
