@@ -1,9 +1,8 @@
 
 package jp.sblo.pandora.jota;
 
-import java.security.DomainCombiner;
-import java.util.ArrayList;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -2477,19 +2476,22 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
     {
         mToolbar.removeAllViews();
         for( Integer function : toolbars ){
-            Button button = new Button(this);
+            Button button;
+            if ( bigButton ){
+                button = new Button(this,null,com.android.internal.R.attr.buttonStyle);
+                button.setTextSize(24);
+                button.setBackgroundResource( R.drawable.btn_default );
+            }else{
+                button = new Button(this,null,com.android.internal.R.attr.buttonStyleSmall);
+                button.setTextSize(14);
+                button.setBackgroundResource( R.drawable.btn_default_small);
+            }
             LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
             button.setText(getToolbarLabel(function));
             button.setTextColor(Color.BLACK);
             button.setTag(function);
             button.setOnClickListener(mOnClickToolbar);
             button.setFocusable(false);
-            if ( bigButton ){
-                button.setTextSize(24);
-                button.setBackgroundResource( R.drawable.btn_default );
-            }else{
-                button.setBackgroundResource( R.drawable.btn_default_small);
-            }
             mToolbar.addView(button,lp);
         }
 
