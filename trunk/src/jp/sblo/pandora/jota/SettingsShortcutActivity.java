@@ -88,6 +88,7 @@ public class SettingsShortcutActivity extends PreferenceActivity implements OnSh
         R.string.menu_nijukagi,
         R.string.menu_select,
         R.string.menu_select_word,
+        R.string.label_launch_by_sl4a,
     };
 
     public final static int[] TBL_FUNCTION = {
@@ -145,6 +146,7 @@ public class SettingsShortcutActivity extends PreferenceActivity implements OnSh
         TextView.FUNCTION_NIJUKAGI,
         TextView.FUNCTION_SELECT,
         TextView.FUNCTION_SELECT_WORD,
+        TextView.FUNCTION_LAUNCH_BY_SL4A,
     };
 
     public final static String[] TBL_TOOLNAME = {
@@ -202,6 +204,7 @@ public class SettingsShortcutActivity extends PreferenceActivity implements OnSh
         " \u300e \u300f ",
         "Select",
         "Sel Word",
+        "SL4A",
     };
 
     public String getFunctionName(int func)

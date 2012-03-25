@@ -9407,6 +9407,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
     public final static int FUNCTION_NIJUKAGI=51;
     public final static int FUNCTION_SELECT=52;
     public final static int FUNCTION_SELECT_WORD=53;
+    public final static int FUNCTION_LAUNCH_BY_SL4A=54;
 
 
     @ViewDebug.ExportedProperty

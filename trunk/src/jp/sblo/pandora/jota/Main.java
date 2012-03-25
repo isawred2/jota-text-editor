@@ -1261,7 +1261,9 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
             case jp.sblo.pandora.jota.text.TextView.FUNCTION_SELECT_BLOCK:
                 mProcSelectBlock.run();
                 return true;
-
+            case jp.sblo.pandora.jota.text.TextView.FUNCTION_LAUNCH_BY_SL4A:
+                confirmSave(mProcSL4AByIntent);
+                return true;
 
         }
         return false;
@@ -1877,6 +1879,21 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
             mIntent = i;
         }
 
+    };
+
+    private Runnable mProcSL4AByIntent = new Runnable() {
+
+        @Override
+        public void run() {
+            Intent intent = new Intent();
+            intent.setAction("com.googlecode.android_scripting.action.LAUNCH_FOREGROUND_SCRIPT");
+            intent.putExtra("com.googlecode.android_scripting.extra.SCRIPT_PATH",  mInstanceState.filename );
+            intent.setClassName("com.googlecode.android_scripting", "com.googlecode.android_scripting.activity.ScriptingLayerServiceLauncher");
+            try {
+                startActivity(intent);
+            } catch (ActivityNotFoundException e) {
+            }
+        }
     };
 
     private ViewByIntent mProcShareFile = new ViewByIntent() {
