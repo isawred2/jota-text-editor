@@ -1,3 +1,11 @@
+[2012/03/25 v.0.2.11]
+- Add 'Launch by SL4A' Button on Toolbar.
+  ★see Toolbar settings.
+- Adjusted the size of toolbar button on Galaxy Nexus.
+- added syntax file for R language.(Thanks to Masashi Nakanishi!)
+- Updated Chinese resource(Thanks to EraserKing!)
+- Updated German resource(Thanks to Michael Wiedmann!)
+
 [2012/03/11 v.0.2.10]
 - Change [Remember last file] option to [Start up action].
   ★See File Settings -> Start up Action.
