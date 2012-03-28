@@ -122,6 +122,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
     private View mToolbarBase;
     private Handler mHandler = new Handler();
     protected boolean mRotationControl=false;
+    private Button mMenuButton;
 
     class InstanceState {
         String filename;
@@ -199,6 +200,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
         mToolbar = (LinearLayout)findViewById(R.id.toolbar);
         mToolbarBase = findViewById(R.id.toolbarbase);
         mTransparency = findViewById(R.id.trasparencylayer);
+        mMenuButton = (Button)findViewById(R.id.menubutton);
         applySetting();
 
         mEditor.addTextChangedListener(new TextWatcher() {
@@ -328,6 +330,12 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
                     mReplaceWord = mReplaceWord.replace("\\t", "\t");
                 }
                 doReplaceAll(searchword);
+            }
+        });
+        mMenuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openOptionsMenu();
             }
         });
 
@@ -2388,12 +2396,18 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
         editor.setForceScroll(mSettings.forceScroll);
         editor.setCtrlPreIme(mSettings.ctrlPreIme);
         initToolbar(mSettings.toolbars,mSettings.toolbarBigButton);
+
+        if ( JotaTextEditor.sHoneycomb && mBootSettings.hideTitleBar) {
+            mMenuButton.setVisibility(View.VISIBLE);
+        }else{
+            mMenuButton.setVisibility(View.GONE);
+        }
     }
 
     void applyBootSetting() {
         mBootSettings = SettingsActivity.readBootSettings(this);
 
-        if ( !JotaTextEditor.sHoneycomb && mBootSettings.hideTitleBar) {
+        if ( mBootSettings.hideTitleBar) {
             setTheme(R.style.Theme_NoTitleBar);
         }
 
@@ -2499,7 +2513,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
                 button.setTextSize(24);
                 button.setBackgroundResource( R.drawable.btn_default );
             }else{
-                button = new Button(this,null,com.android.internal.R.attr.buttonStyleSmall);
+                button = new Button(this,null,R.style.Widget_Button_Small);
                 button.setTextSize(14);
                 button.setBackgroundResource( R.drawable.btn_default_small);
             }
