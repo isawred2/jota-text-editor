@@ -41,20 +41,33 @@
 	    />
 
 	    <include layout="@layout/searchbar" />
-	    <HorizontalScrollView
+	    <LinearLayout
+	    	android:orientation="horizontal"
 	    	android:layout_width="fill_parent"
 	    	android:layout_height="wrap_content"
-			android:scrollbars="none"
-			android:id="@+id/toolbarbase"
-		>
-		    <LinearLayout
-				android:id="@+id/toolbar"
-		    	android:orientation="horizontal"
-		    	android:layout_width="wrap_content"
+				android:id="@+id/toolbarbase"
+	    >
+		    <HorizontalScrollView
+		    	android:layout_width="100dip"
 		    	android:layout_height="wrap_content"
-		    >
-		    </LinearLayout>
-		</HorizontalScrollView>
+		    	android:layout_weight="1"
+				android:scrollbars="none"
+			>
+			    <LinearLayout
+					android:id="@+id/toolbar"
+			    	android:orientation="horizontal"
+			    	android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    >
+			    </LinearLayout>
+			</HorizontalScrollView>
+			<Button
+					android:id="@+id/menubutton"
+			    	android:layout_width="32dip"
+			    	android:layout_height="32dip"
+					android:background="@drawable/btn_menu"
+			/>
+	    </LinearLayout>
 	</LinearLayout>
 
 </FrameLayout>
