@@ -63,8 +63,8 @@
 			</HorizontalScrollView>
 			<Button
 					android:id="@+id/menubutton"
-			    	android:layout_width="32dip"
-			    	android:layout_height="32dip"
+			    	android:layout_width="28dip"
+			    	android:layout_height="28dip"
 					android:background="@drawable/btn_menu"
 			/>
 	    </LinearLayout>
