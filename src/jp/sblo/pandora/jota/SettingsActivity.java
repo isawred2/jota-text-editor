@@ -2056,6 +2056,11 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                         editor.putString(KEY_STARTUP_ACTION, STARTUP_NEW);
                     }
                 }
+                if ( lastversion < 62 ){
+                    if ( JotaTextEditor.sHoneycomb ) {
+                        editor.putBoolean(KEY_HIDETITLEBAR, false);
+                    }
+                }
                 editor.commit();
                 SettingsShortcutActivity.writeDefaultShortcuts(ctx);
                 SettingsToolbarActivity.writeDefaultToolbarSettings(ctx);
