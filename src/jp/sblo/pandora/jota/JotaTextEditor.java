@@ -6,6 +6,7 @@ import android.os.Build;
 
 public class JotaTextEditor extends Application {
     public static boolean sHoneycomb = ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB );
+    public static boolean sIceCreamSandwich = ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH );
 
     @Override
     public void onCreate() {

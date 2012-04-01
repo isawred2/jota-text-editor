@@ -1,5 +1,5 @@
-[2012/03/31 v.0.2.12]
-- Re-activated "Hide Title-bar" Option on Honeycomb/ICS.
+[2012/03/31 v.0.2.13]
+- Re-activated "Hide Title-bar" Option on ICS.
   (Menu button shows up on right-end of the Toolbar.)
 - Updated Korean resources. (Thanks to Noah!)
 
