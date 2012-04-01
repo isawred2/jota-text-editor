@@ -394,7 +394,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                     pr.setTitle(R.string.label_blink_cursor);
                     cat.addPreference(pr);
                 }
-                {
+                if( !JotaTextEditor.sHoneycomb || JotaTextEditor.sIceCreamSandwich ){
                     // hide titlebar
                     final CheckBoxPreference pr = new CheckBoxPreference(this);
                     pr.setKey(KEY_HIDETITLEBAR );
@@ -2056,7 +2056,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                         editor.putString(KEY_STARTUP_ACTION, STARTUP_NEW);
                     }
                 }
-                if ( lastversion < 62 ){
+                if ( lastversion < 63 ){
                     if ( JotaTextEditor.sHoneycomb ) {
                         editor.putBoolean(KEY_HIDETITLEBAR, false);
                     }
