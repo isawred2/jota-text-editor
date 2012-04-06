@@ -29,12 +29,14 @@ public     class TextSaveTask extends AsyncTask<CharSequence, Integer, String>{
     public static final String RECOVERY_FILENAME = "lost.found";
     public static final String PREF_NAME = "recoverey_pref";
     public static final String PREF_KEY_FILENAME = "filename";
+    private boolean mSuppressMessage;
 
-    public TextSaveTask( Activity activity ,Runnable preProc , Runnable postProc)
+    public TextSaveTask( Activity activity ,Runnable preProc , Runnable postProc, boolean suppressMessage)
     {
         mActivity = activity;
         mPreProc = preProc;
         mPostProc = postProc;
+        mSuppressMessage = suppressMessage;
     }
 
     @Override
@@ -210,10 +212,11 @@ public     class TextSaveTask extends AsyncTask<CharSequence, Integer, String>{
         }
         if ( result != null ){
             if ( mPostProc!= null ){
-                String name = new File(result).getName();
-                String message = mActivity.getString(R.string.toast_saved_message ,name );
-                Toast.makeText(mActivity, message , Toast.LENGTH_LONG).show();
-
+                if ( !mSuppressMessage  ){
+                    String name = new File(result).getName();
+                    String message = mActivity.getString(R.string.toast_saved_message ,name );
+                    Toast.makeText(mActivity, message , Toast.LENGTH_LONG).show();
+                }
                 mPostProc.run();
             }
         }else{
