@@ -252,6 +252,12 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                 }
                 {
                     final Preference pr = new Preference(this);
+                    pr.setTitle(R.string.label_customize_shortcut);
+                    pr.setOnPreferenceClickListener(mProcShortcutSettings);
+                    mPs.addPreference(pr);
+                }
+                {
+                    final Preference pr = new Preference(this);
                     pr.setTitle(R.string.menu_pref_toolbar);
                     pr.setOnPreferenceClickListener(mProcPrefToolbar);
                     mPs.addPreference(pr);
@@ -657,12 +663,6 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                     pr.setKey(KEY_SPECIAL_KEY_DESIREZ);
                     pr.setTitle(R.string.label_shortcut_ctrl);
                     pr.setSummary(R.string.summary_desirez);
-                    category.addPreference(pr);
-                }
-                {
-                    final Preference pr = new Preference(this);
-                    pr.setTitle(R.string.label_customize_shortcut);
-                    pr.setOnPreferenceClickListener(mProcShortcutSettings);
                     category.addPreference(pr);
                 }
                 {
