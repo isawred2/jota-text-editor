@@ -8058,6 +8058,12 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
 //
 //        }
 
+        // Jota Text Editor
+        if (mNeedMenu) {
+            menu.add(0, ID_MENU, 0, R.string.menu_menu).setOnMenuItemClickListener(handler);
+            added = true;
+        }
+
         if (added) {
             hideControllers();
             menu.setHeaderTitle(R.string.editTextMenuTitle);
@@ -8088,6 +8094,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
 //    private static final int ID_ADD_TO_DICTIONARY = android.R.id.addToDictionary;// Jota Text Editor
     private static final int ID_CANCEL_SELECTION = R.id.cancelselection;// Jota Text Editor
     private static final int ID_SHOW_IME = R.id.showime;// Jota Text Editor
+    private static final int ID_MENU = R.id.menu;// Jota Text Editor
 
 
     private class MenuHandler implements MenuItem.OnMenuItemClickListener {
@@ -8252,9 +8259,13 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
                 MetaKeyKeyListener.stopSelecting(this, (Spannable) mText);
 
                 if (min != max) {
-                    ((EditText)this).doShortcut(KeyEvent.KEYCODE_D);
+                    ((EditText)this).doFunction(TextView.FUNCTION_DIRECTINTENT);
                 }
 
+                return true;
+
+            case ID_MENU:
+                ((EditText)this).doFunction(TextView.FUNCTION_MENU);
                 return true;
         }
 
@@ -9353,6 +9364,11 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
         }
     }
 
+    // Jota Text Editor
+    public void setNeedMenu(boolean value)
+    {
+        mNeedMenu = value;
+    }
 
     // Jota Text Editor
     public final static int FUNCTION_NONE=0;
@@ -9411,6 +9427,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
     public final static int FUNCTION_SELECT=52;
     public final static int FUNCTION_SELECT_WORD=53;
     public final static int FUNCTION_LAUNCH_BY_SL4A=54;
+    public final static int FUNCTION_MENU=55;
 
 
     @ViewDebug.ExportedProperty
@@ -9541,4 +9558,5 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
     private boolean mDontUseSoftkeyWithHardkey=false;
     private boolean mBlinkCursorEnabled;
     private boolean mForceScroll=true;
+    private boolean mNeedMenu=false;
 }

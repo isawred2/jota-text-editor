@@ -293,6 +293,7 @@ public class EditText extends TextView{
             case FUNCTION_SELECT_BLOCK:
             case FUNCTION_SELECT_LINE:
             case FUNCTION_LAUNCH_BY_SL4A:
+            case FUNCTION_MENU:
                 if (sl != null) {
                     return sl.onCommand(function);
                 }
