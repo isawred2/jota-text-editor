@@ -29,6 +29,7 @@
 		android:singleLine="false"
 		android:focusable="false"
 		android:textSize="14sp"
+		android:textColor="#FDDD"
 		android:background="#F444"
 	/>
 	<EditText

@@ -22,11 +22,13 @@
           android:layout_height="wrap_content"
           android:id="@+id/title"
       	  android:textSize="20sp"
+		  android:textColor="@android:color/secondary_text_light"
          />
         <TextView
       	  android:layout_width="fill_parent"
           android:layout_height="wrap_content"
           android:id="@+id/summary"
+		  android:textColor="@android:color/secondary_text_light"
          />
 	  </LinearLayout>
 

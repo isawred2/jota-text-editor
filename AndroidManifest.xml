@@ -14,7 +14,7 @@
         >
         <activity android:name="jp.sblo.pandora.jota.Main"
                   android:label="@string/app_name_debug"
-		  android:launchMode="singleTask">
+		          android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -51,8 +51,9 @@
                 <data android:mimeType="text/*" />
             </intent-filter>
         </activity>
-        <activity android:name="jp.sblo.pandora.jota.FileSelectorActivity">
-        </activity>
+        <activity android:name="jp.sblo.pandora.jota.FileSelectorActivity"
+			android:theme="@android:style/Theme.Light"
+		/>
 
         <activity android:name="jp.sblo.pandora.jota.ActivityPicker"
                 android:label="@string/activity_picker_label"
@@ -61,9 +62,15 @@
         </activity>
 
         <activity android:name="jp.sblo.pandora.jota.AboutActivity" />
-        <activity android:name="jp.sblo.pandora.jota.SettingsActivity"/>
-        <activity android:name="jp.sblo.pandora.jota.SettingsShortcutActivity"/>
-        <activity android:name="jp.sblo.pandora.jota.SettingsToolbarActivity"/>
+        <activity android:name="jp.sblo.pandora.jota.SettingsActivity"
+			android:theme="@android:style/Theme.Light"
+		/>
+        <activity android:name="jp.sblo.pandora.jota.SettingsShortcutActivity"
+			android:theme="@android:style/Theme.Light"
+		/>
+        <activity android:name="jp.sblo.pandora.jota.SettingsToolbarActivity"
+			android:theme="@android:style/Theme.Light"
+		/>
         <activity android:name="jp.sblo.pandora.jota.DonateActivity"/>
         <activity android:name="jp.sblo.pandora.jota.RecoveryActivity" android:theme="@style/Theme.Dialog" />
         <activity android:name="jp.sblo.pandora.jota.PreviewThemeActivity"
@@ -86,7 +93,7 @@
     </application>
 
     <uses-sdk android:minSdkVersion="4"
-			  android:targetSdkVersion="11" />
+			  android:targetSdkVersion="14" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
