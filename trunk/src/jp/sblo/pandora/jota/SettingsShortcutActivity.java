@@ -257,7 +257,6 @@ public class SettingsShortcutActivity extends PreferenceActivity implements OnSh
 
     private PreferenceScreen mPs = null;
     private PreferenceManager mPm = getPreferenceManager();
-    private PreferenceCategory mCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -266,10 +265,7 @@ public class SettingsShortcutActivity extends PreferenceActivity implements OnSh
         mPm = getPreferenceManager();
 
         mPs = mPm.createPreferenceScreen(this);
-        mCategory = new PreferenceCategory(this);
-        mCategory.setTitle(R.string.label_customize_shortcut);
-
-        mPs.addPreference(mCategory);
+        setTitle(R.string.label_customize_shortcut);
 
         int len = TBL_SUMMARY.length;
         String[] tbl_summary =  new String[ len ];
@@ -286,7 +282,7 @@ public class SettingsShortcutActivity extends PreferenceActivity implements OnSh
             pr.setTitle( sd.name );
             pr.setEntries(tbl_summary);
             pr.setEntryValues(tbl_function);
-            mCategory.addPreference(pr);
+            mPs.addPreference(pr);
         }
         setPreferenceScreen(mPs);
         setSummary();
@@ -322,9 +318,9 @@ public class SettingsShortcutActivity extends PreferenceActivity implements OnSh
 
     private void setSummary()
     {
-        int prlen = mCategory.getPreferenceCount();
+        int prlen = mPs.getPreferenceCount();
         for( int i=0;i<prlen ;i++ ){
-            Preference pr = mCategory.getPreference(i);
+            Preference pr = mPs.getPreference(i);
             if ( pr instanceof ListPreference ){
                 ListPreference lpr = (ListPreference)pr;
                 lpr.setSummary(lpr.getEntry());
