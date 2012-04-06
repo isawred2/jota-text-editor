@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
+import jp.sblo.pandora.jota.JotaTextEditor;
 import jp.sblo.pandora.jota.KeywordHighlght;
 import jp.sblo.pandora.jota.R;
 import jp.sblo.pandora.jota.SettingsActivity;
@@ -4822,11 +4823,13 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
                 outAttrs.initialCapsMode = ic.getCursorCapsMode(mInputType);
 
                 // Jota Text Editor
-                // patch by matthias.gruenewald@googlemail.com
-                if ( !mDontUseSoftkeyWithHardkey || getResources().getConfiguration().hardKeyboardHidden==Configuration.HARDKEYBOARDHIDDEN_YES ){
-                    InputMethodManager imm = InputMethodManager.peekInstance();
-                    if (imm != null){
-                        imm.showSoftInput(this, 0);
+                if ( !JotaTextEditor.sHoneycomb ){
+                    // patch by matthias.gruenewald@googlemail.com
+                    if ( !mDontUseSoftkeyWithHardkey || getResources().getConfiguration().hardKeyboardHidden==Configuration.HARDKEYBOARDHIDDEN_YES ){
+                        InputMethodManager imm = InputMethodManager.peekInstance();
+                        if (imm != null){
+                            imm.showSoftInput(this, 0);
+                        }
                     }
                 }
 
