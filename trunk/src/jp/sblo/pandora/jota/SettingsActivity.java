@@ -106,6 +106,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
     private static final String KEY_FORCE_SCROLL            = "KEY_FORCE_SCROLL";
     private static final String KEY_CTRL_PRE_IME            = "KEY_CTRL_PRE_IME";
     private static final String KEY_STARTUP_ACTION          = "KEY_STARTUP_ACTION";
+    private static final String KEY_SUPPRESS_MESSAGE        = "KEY_SUPPRESS_MESSAGE";
 
 	public static final String KEY_LASTVERSION = "LastVersion";
 
@@ -435,6 +436,14 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                     final CheckBoxPreference pr = new CheckBoxPreference(this);
                     pr.setKey(KEY_FORCE_SCROLL);
                     pr.setTitle(R.string.label_force_scroll);
+                    cat.addPreference(pr);
+                }
+                {
+                    // suppress message
+                    final CheckBoxPreference pr = new CheckBoxPreference(this);
+                    pr.setKey(KEY_SUPPRESS_MESSAGE);
+                    pr.setTitle(R.string.label_suppress_message);
+                    pr.setSummary(R.string.summary_suppress_message);
                     cat.addPreference(pr);
                 }
                 if ( IS01FullScreen.isIS01orLynx() ){
@@ -1793,6 +1802,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         boolean toolbarHideLandscape;
         boolean ctrlPreIme;
         String startupAction;
+        boolean suppressMessage;
 	}
 
 	public static class BootSettings {
@@ -1919,6 +1929,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         ret.toolbarHideLandscape = sp.getBoolean(KEY_TOOLBAR_HIDE_LANDSCAPE, false);
         ret.ctrlPreIme = sp.getBoolean(KEY_CTRL_PRE_IME, false);
         ret.startupAction = sp.getString(KEY_STARTUP_ACTION,STARTUP_NEW);
+        ret.suppressMessage = sp.getBoolean(KEY_SUPPRESS_MESSAGE, false);
         sSettings = ret;
         return ret;
 	}

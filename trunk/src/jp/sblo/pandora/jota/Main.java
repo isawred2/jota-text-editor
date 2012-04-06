@@ -397,7 +397,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
                     // mLine = extra.getInt("line");
                     // }
                     if (path != null) {
-                        mTask = new TextLoadTask(this, this, mLine);
+                        mTask = new TextLoadTask(this, this, mLine,mSettings.suppressMessage);
                         mTask.execute(path, mSettings.CharsetOpen);
                     }
                 }
@@ -417,7 +417,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
                     mEditor.setText(contents);
                 } else {
                     if (path != null) {
-                        mTask = new TextLoadTask(this, this, mLine);
+                        mTask = new TextLoadTask(this, this, mLine,mSettings.suppressMessage);
                         mTask.execute(path.toString(), mSettings.CharsetOpen);
                     }
                 }
@@ -425,7 +425,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
                 if ( SettingsActivity.STARTUP_LASTFILE.equals( mSettings.startupAction) ) {
                     File[] fl = getHistory();
                     if (fl != null) {
-                        mTask = new TextLoadTask(this, this, -1);
+                        mTask = new TextLoadTask(this, this, -1,mSettings.suppressMessage);
                         mTask.execute(fl[0].getPath(), mSettings.CharsetOpen);
                     }
                 }else if ( SettingsActivity.STARTUP_HISTORY.equals( mSettings.startupAction) ){
@@ -857,7 +857,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
                     mEditor.setChanged(false);
                     onChanged();
                 }
-            }).execute(filename, charset, lb, text, mSettings.createbackup ? "true" : "false");
+            },mSettings.suppressMessage).execute(filename, charset, lb, text, mSettings.createbackup ? "true" : "false");
         } else {
             saveAs();
         }
@@ -914,7 +914,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
                     Bundle extras = data.getExtras();
                     String path = extras.getString(FileSelectorActivity.INTENT_FILEPATH);
                     String charset = extras.getString(FileSelectorActivity.INTENT_CHARSET);
-                    mTask = new TextLoadTask(this, this, -1);
+                    mTask = new TextLoadTask(this, this, -1,mSettings.suppressMessage);
                     mTask.execute(path, charset);
                 }
                     break;
@@ -1342,7 +1342,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
 
     private Runnable mProcReopen = new Runnable() {
         public void run() {
-            mTask = new TextLoadTask(Main.this, Main.this, mLine);
+            mTask = new TextLoadTask(Main.this, Main.this, mLine,mSettings.suppressMessage);
             mTask.execute(mNewFilename, mSettings.CharsetOpen);
             mNewFilename = null;
         }
@@ -1392,7 +1392,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
 
         public void onClick(DialogInterface dialog, int which) {
             CharSequence path = fl[which].getPath();
-            mTask = new TextLoadTask(Main.this, Main.this, -1);
+            mTask = new TextLoadTask(Main.this, Main.this, -1,mSettings.suppressMessage);
             mTask.execute(path.toString(), mSettings.CharsetOpen);
         }
 
