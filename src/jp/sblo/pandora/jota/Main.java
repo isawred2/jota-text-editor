@@ -1272,6 +1272,9 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
             case jp.sblo.pandora.jota.text.TextView.FUNCTION_LAUNCH_BY_SL4A:
                 confirmSave(mProcSL4AByIntent);
                 return true;
+            case jp.sblo.pandora.jota.text.TextView.FUNCTION_MENU:
+                openOptionsMenu();
+                return true;
 
         }
         return false;
@@ -2392,7 +2395,8 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
         mEdtSearchWord.setDontUseSoftkeyWithHardkey( mSettings.specialkey_desirez );
         mEdtReplaceWord.setDontUseSoftkeyWithHardkey( mSettings.specialkey_desirez );
         editor.enableBlinkCursor(mSettings.blinkCursor);
-        mToolbarBase.setVisibility(mSettings.showToolbar&&(!landscape || !mSettings.toolbarHideLandscape)?View.VISIBLE:View.GONE);
+        boolean toolbarVisible = mSettings.showToolbar&&(!landscape || !mSettings.toolbarHideLandscape);
+        mToolbarBase.setVisibility(toolbarVisible?View.VISIBLE:View.GONE);
         editor.setForceScroll(mSettings.forceScroll);
         editor.setCtrlPreIme(mSettings.ctrlPreIme);
         initToolbar(mSettings.toolbars,mSettings.toolbarBigButton);
@@ -2402,13 +2406,19 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
         }else{
             mMenuButton.setVisibility(View.GONE);
         }
+
+        editor.setNeedMenu( JotaTextEditor.sIceCreamSandwich && mBootSettings.hideTitleBar && !toolbarVisible);
     }
 
     void applyBootSetting() {
         mBootSettings = SettingsActivity.readBootSettings(this);
 
         if ( mBootSettings.hideTitleBar) {
-            setTheme(R.style.Theme_NoTitleBar);
+            if ( JotaTextEditor.sIceCreamSandwich ){
+                setTheme(R.style.Theme_Holo_NoTitleBar);
+            }else{
+                setTheme(R.style.Theme_NoTitleBar);
+            }
         }
 
         if ( SettingsActivity.checkDonate(this) ){

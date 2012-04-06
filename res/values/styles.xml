@@ -39,4 +39,9 @@
         <item name="android:background">@drawable/btn_default_small</item>
     </style>
 
+    <style name="Theme.Holo.NoTitleBar" parent="@android:style/Theme.Holo">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
 </resources>
