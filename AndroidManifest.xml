@@ -8,9 +8,10 @@
       android:installLocation="auto"
 >
     <application android:icon="@drawable/icon"
-		 android:name="jp.sblo.pandora.jota.JotaTextEditor"
-                 android:label="@string/app_name_debug"
-                 android:debuggable="true"
+		android:name="jp.sblo.pandora.jota.JotaTextEditor"
+        android:label="@string/app_name_debug"
+        android:debuggable="true"
+		android:hardwareAccelerated="false"
         >
         <activity android:name="jp.sblo.pandora.jota.Main"
                   android:label="@string/app_name_debug"
