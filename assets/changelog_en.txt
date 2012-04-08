@@ -1,3 +1,8 @@
+[2012/04/08 v.0.2.14]
+Fixed a bug that soft-keyboard keeps to be shown when home button is pushed.
+Added a option to suppress saved/loaded message.
+Adjusted Settings Activties.
+
 [2012/03/31 v.0.2.13]
 - Re-activated "Hide Title-bar" Option on ICS.
   (Menu button shows up on right-end of the Toolbar.)
