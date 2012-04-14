@@ -7607,6 +7607,11 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
                 }
                 return true;
             }
+            case FUNCTION_KILLLINE:
+            {
+                killLine();
+                return true;
+            }
 
         }
         return false;
@@ -9371,6 +9376,34 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
     }
 
     // Jota Text Editor
+    private void killLine()
+    {
+        int start = getSelectionStart();
+        int end = getSelectionEnd();
+        int s = Math.min(start, end);
+        int e = Math.max(start, end);
+        int e0;
+        boolean found = false;
+        for( e0=s;e0<mText.length();e0++ ){
+            if ( mText.charAt(e0) == '\n' ){
+                found = true;
+                break;
+            }
+        }
+        if ( found ){
+            if ( e!=e0 ){
+                Selection.setSelection((Spannable)mText, s , e0);
+                onTextContextMenuItem(ID_CUT);
+            }else{
+                ((Editable) mText).delete(e,e+1);
+            }
+        }else{
+            Selection.setSelection((Spannable)mText, s , e0);
+            onTextContextMenuItem(ID_CUT);
+        }
+    }
+
+    // Jota Text Editor
     public final static int FUNCTION_NONE=0;
     public final static int FUNCTION_SELECT_ALL=1;
     public final static int FUNCTION_UNDO=2;
@@ -9428,6 +9461,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
     public final static int FUNCTION_SELECT_WORD=53;
     public final static int FUNCTION_LAUNCH_BY_SL4A=54;
     public final static int FUNCTION_MENU=55;
+    public final static int FUNCTION_KILLLINE=56;
 
 
     @ViewDebug.ExportedProperty

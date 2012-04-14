@@ -257,6 +257,7 @@ public class EditText extends TextView{
             case FUNCTION_NIJUKAGI:
             case FUNCTION_SELECT:
             case FUNCTION_SELECT_WORD:
+            case FUNCTION_KILLLINE:
                 return doCommand(function);
 
             case FUNCTION_ENTER:
