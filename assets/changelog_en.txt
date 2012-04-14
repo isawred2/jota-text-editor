@@ -1,3 +1,12 @@
+[2012/04/14 v.0.2.15]
+Added Kill-Line command. (Like Ctrl-k on emacs)
+Added Slovak resources. (Thanks to Martin Jurík!)
+Added syntax file for Ocaml. (Thanks to Lilian Besson!)
+
+★From this version, Jota Text Editor is in Maintenance mode.
+  There won't be any new features.
+  Update with major bug fix, localize resources and syntax files only.
+
 [2012/04/08 v.0.2.14]
 Fixed a bug that soft-keyboard keeps to be shown when home button is pushed.
 Added a option to suppress saved/loaded message.
