@@ -1,3 +1,8 @@
+[2012/05/06 v.0.2.16]
+韓国語リソースを更新(Thanks to Noah!)
+ロシア語リソースの更新 (Thanks to Anton Sadovnichenko!)
+その他バグ修正
+
 [2012/04/14 v.0.2.15]
 Kill-Line コマンド追加。 (emacsで言うところのCtrl-k)
 Slovak語リソース追加 (Thanks to Martin Jurík!)

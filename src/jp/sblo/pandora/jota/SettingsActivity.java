@@ -1407,12 +1407,18 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         TextView msgNumber = (TextView)view.findViewById(R.id.numberlabel);
         msgNumber.setText( getString(R.string.label_number ,  min, max ));
 
+        TextView msgIndex = (TextView)view.findViewById(R.id.index);
+
+        view.setBackgroundColor(0xFF202020);
+        msgText.setTextColor(0xFFD0D0D0);
+        msgNumber.setTextColor(0xFFD0D0D0);
+        msgIndex.setTextColor(0xFFD0D0D0);
+
         final EditText numInput = (EditText)view.findViewById(R.id.number);
         numInput.setText( ""+sp.getInt(numkey,0) );
 
         final EditText chrInput = (EditText)view.findViewById(R.id.character);
         chrInput.setText( sp.getString(chrkey,DEFAULT_WRAP_WIDTH_CHAR) );
-
 
         new AlertDialog.Builder(SettingsActivity.this)
         .setTitle(title)
@@ -1455,9 +1461,16 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         TextView msgText = (TextView)view.findViewById(R.id.message);
         msgText.setText( message );
 
+        TextView minText = (TextView)view.findViewById(R.id.min);
+        TextView maxText = (TextView)view.findViewById(R.id.max);
+
+        view.setBackgroundColor(0xFF202020);
+        msgText.setTextColor(0xFFD0D0D0);
+        minText.setTextColor(0xFFD0D0D0);
+        maxText.setTextColor(0xFFD0D0D0);
+
         final SeekBar seekBar = (SeekBar)view.findViewById(R.id.seekbar);
         seekBar.setProgress( sp.getInt(key,0) );
-
 
         new AlertDialog.Builder(SettingsActivity.this)
         .setTitle(title)

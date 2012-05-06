@@ -1,3 +1,8 @@
+[2012/05/06 v.0.2.16]
+Updated Korean resources. (Thanks to Noah!)
+Updated Russian resource. (Thanks to Anton Sadovnichenko!)
+Fixed minor bugs.
+
 [2012/04/14 v.0.2.15]
 Added Kill-Line command. (Like Ctrl-k on emacs)
 Added Slovak resources. (Thanks to Martin Jurík!)
