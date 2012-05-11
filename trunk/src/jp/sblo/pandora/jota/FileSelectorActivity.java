@@ -337,7 +337,8 @@ public class FileSelectorActivity extends ListActivity {
                 setResult(RESULT_OK, intent);
                 finish();
 		    }else if ( MODE_SAVE.equals(mMode)){
-//    			mEdtFileName.setText(strItem);
+    			mEdtFileName.setText(strItem);
+    			mEdtFileName.requestFocus();
 		    }else if ( MODE_DIR.equals(mMode)){
 		        // nop
 		    }
