@@ -123,6 +123,8 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
     private Handler mHandler = new Handler();
     protected boolean mRotationControl=false;
     private Button mMenuButton;
+    private String mTempCandidate=null;
+    private CharSequence mSl4aContents=null;
 
     class InstanceState {
         String filename;
@@ -135,6 +137,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
         // int selstart;
         // int selend;
         boolean changed;
+        String nameCandidate;
     };
 
     /** Called when the activity is first created. */
@@ -414,7 +417,10 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
 
                 CharSequence contents = extras.getCharSequence(EXTRA_SCRIPT_CONTENT);
                 if (contents != null) {
-                    mEditor.setText(contents);
+                    mTempCandidate=path.toString();
+                    mSl4aContents = contents;
+                    mProcOpenSl4a.run();
+//                    mEditor.setText(contents);
                 } else {
                     if (path != null) {
                         mTask = new TextLoadTask(this, this, mLine,mSettings.suppressMessage);
@@ -444,8 +450,9 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
             mInstanceState.linebreak = savedInstanceState.getInt("linebreak");
             // mInstanceState.selstart = savedInstanceState.getInt("selstart" );
             // mInstanceState.selend = savedInstanceState.getInt("selend" );
-            mInstanceState.changed = savedInstanceState.getBoolean("changed");
+            mInstanceState.nameCandidate = savedInstanceState.getString("nameCandidate");
 
+            mInstanceState.changed = savedInstanceState.getBoolean("changed");
             // mEditor.setText(mInstanceState.text);
             // mEditor.setSelection(mInstanceState.selstart,
             // mInstanceState.selend);
@@ -558,6 +565,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
         // outState.putInt("selstart" , mInstanceState.selstart );
         // outState.putInt("selend" , mInstanceState.selend );
         outState.putBoolean("changed", mEditor.isChanged());
+        outState.putString("nameCandidate", mInstanceState.nameCandidate);
 
 //        Log.d("=============>", "onSaveInstanceState" + outState);
         super.onSaveInstanceState(outState);
@@ -575,6 +583,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
         // mInstanceState.selstart = savedInstanceState.getInt("selstart" );
         // mInstanceState.selend = savedInstanceState.getInt("selend" );
         mInstanceState.changed = savedInstanceState.getBoolean("changed");
+        mInstanceState.nameCandidate = savedInstanceState.getString("nameCandidate");
 
         // mEditor.setText(mInstanceState.text);
         // mEditor.setSelection(mInstanceState.selstart, mInstanceState.selend);
@@ -672,7 +681,10 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
 
             CharSequence contents = extras.getCharSequence(EXTRA_SCRIPT_CONTENT);
             if (contents != null) {
-                mEditor.setText(contents);
+                mSl4aContents = contents;
+                mTempCandidate = mNewFilename.toString();
+                confirmSave(mProcOpenSl4a);
+//                mEditor.setText(contents);
             } else {
                 if (mNewFilename != null) {
                     confirmSave(mProcReopen);
@@ -868,6 +880,12 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
         Intent intent = new Intent(this, FileSelectorActivity.class);
         intent.putExtra(FileSelectorActivity.INTENT_MODE, FileSelectorActivity.MODE_SAVE);
         String filename = mInstanceState.filename;
+
+        if (filename == null || filename.length() == 0) {
+            if ( mInstanceState.nameCandidate != null ){
+                filename = mInstanceState.nameCandidate;
+            }
+        }
         if (filename == null || filename.length() == 0) {
             // if file is unnamed. then use 1st line of text as filename.
             Editable text = mEditor.getText();
@@ -1336,7 +1354,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
             mBtnReplaceAll.setEnabled(true);
 
             mSearchResult = null;
-
+            mInstanceState.nameCandidate = null;
         }
     };
 
@@ -2278,6 +2296,17 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
         }
 
     };
+
+    private Runnable mProcOpenSl4a = new Runnable() {
+        public void run() {
+            mEditor.setText(mSl4aContents);
+            mInstanceState.filename = null;
+            mInstanceState.nameCandidate = mTempCandidate;
+            mTempCandidate = null;
+            onChanged();
+        }
+    };
+
 
     private OnSharedPreferenceChangeListener mOnSharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
