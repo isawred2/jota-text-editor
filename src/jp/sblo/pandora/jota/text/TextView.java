@@ -7191,10 +7191,10 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
                           getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 
                     CommitSelectionReceiver csr = null;
-                    if (getSelectionStart() != oldSelStart || getSelectionEnd() != oldSelEnd ||
-                            didTouchFocusSelect()) {
-                        csr = new CommitSelectionReceiver(oldSelStart, oldSelEnd);
-                    }
+//                    if (getSelectionStart() != oldSelStart || getSelectionEnd() != oldSelEnd ||
+//                            didTouchFocusSelect()) {
+//                        csr = new CommitSelectionReceiver(oldSelStart, oldSelEnd);
+//                    }
 
                     // Jota Text Editor
                     // patch by matthias.gruenewald@googlemail.com
