@@ -637,7 +637,7 @@ Jota 是一个为超长文本文件设计的文本编辑器。
 - 保存文件的同时保存光标位置。
 - 保存近期文件的历史记录。
 
-+ Search/Replace (Support Regular Expression)
++ 查找/替换 (支持正则表达式)
 
 - 使用外部应用程序分享。
   Mushroom
@@ -667,10 +667,10 @@ Jota 是一个为超长文本文件设计的文本编辑器。
 - 显示制表符/换行符。
 - 首字母自动大写。
 - 您也可当作 SL4A 编辑器使用。
-- Customizable Toolbar.
-- Customizable Syntax highlght.
-- Capture Screen shot.
-- Wallpaper customize.
+- 可自定义的工具栏。
+- 可自定义的语法高亮。
+- 捕捉屏幕截图。
+- 自定义壁纸。
 
 - 支持 Android OS 1.6 及以上版本。
 - 同时支持触摸屏设备与标准全键盘设备。
@@ -740,7 +740,7 @@ Jota 是一個為超長文本文件設計的文本編輯器。
 - 保存檔案的同時保存光標位置。
 - 保存近期檔案的歷史記錄。
 
-+ Search/Replace (Support Regular Expression)
++ 搜尋/替換 (支援正則表達式)
 
 - 使用外部應用程式分享。
   Mushroom
@@ -770,10 +770,10 @@ Jota 是一個為超長文本文件設計的文本編輯器。
 - 顯示製表符/換行符。
 - 首字母自動大寫。
 - 您也可當作 SL4A 編輯器使用。
-- Customizable Toolbar.
-- Customizable Syntax highlght.
-- Capture Screen shot.
-- Wallpaper customize.
+- 可自定義的工具列。
+- 可自定義的語法高亮。
+- 捕捉螢幕截圖。
+- 自定義壁紙。
 
 - 支援 Android OS 1.6 以及更新版本。
 - 同時支援觸摸屏設備及標準全鍵盤設備。
