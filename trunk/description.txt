@@ -1194,3 +1194,103 @@ Jota는 장문의 텍스트 편집을 위해 설계된 텍스트 편집기입니
 - 한글 번역 : 노아 -
 
 --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Jota Text Editor (Spanish)
+
+Jota es un editor de texto diseñado para un archivo de texto largo.
+Se pronuncia como "i-o-ta".
+
+Functions
+- Soporta hasta 1 millón de caracteres.
+
+- Detección automática de múltiples códigos de caracteres.
+  UTF-8
+  UTF-16BE
+  UTF-16LE
+  UTF-32BE
+  UTF-32LE
+  WINDOWS-1251
+  WINDOWS-1252
+  WINDOWS-1253
+  WINDOWS-1255
+  SHIFT_JIS
+  ISO-2022-JP
+  ISO-2022-CN
+  ISO-2022-KR
+  ISO-8859-5
+  ISO-8859-7
+  ISO-8859-8
+  BIG5
+  GB18030
+  EUC-JP
+  EUC-KR
+  EUC-TW
+  IBM855
+  IBM866
+  KOI8-R
+  MACCYRILLIC
+  HZ-GB-2312
+  X-ISO-10646-UCS-4-3412
+  X-ISO-10646-UCS-4-2143
+  (Ya sea que usted puede decodificar o no, depende de la aplicación del Android.)
+
+- Cambiar los códigos de caracteres.
+- Detección automática de código de salto de línea.
+- Cambio de código de salto de línea.
+- Mantenga el código de salto de línea hasta la grabación del archivo.
+- Guardar la posición del cursor con los archivos.
+- Guardar el historial de los archivos recientes.
+
+- Buscar / Reemplazar (soporte para expresiones regulares)
+
+- Texto para compartir con la aplicación externa.
+Mushroom
+Compartir (ACTION_SEND)
+Buscar (ACTION_SEARCH)
+Abrir (ACTION_VIEW)
+
+  ?Direct Intent : Usted puede lanzar cualquier aplicación en un elemento de menú.
+
+- Desplácese con arrastre del pulgar.
+- Desplácese con Flick.
+- Deshacer / Rehacer.
+- Soporta Tecla de método abreviado con ALT / CTRL Key.
+- Personalizar los colores.
+- Crear un icono de acceso directo en la aplicación HOME.
+- Unir las teclas de acceso directo personalizables.
+- Selecctor de texto como el pan de Gingerbread.
+
+(Pulse dos veces para seleccionar la palabra, a continuación, pulse el área seleccionada para mostrar los marcadores.)
+- Ajuste de línea ON / OFF y establecer el ancho de ajuste de línea.
+- Establecer el ancho de la pestaña.
+- Modo de Visor.
+- Mostrar números de línea.
+- Contador de palabras.
+- Compatibilidad con el modo Horizontal correcto.
+- Auto guardar.
+- Sangría automática.
+- Mostrar tabulado / salto de línea.
+- Auto capitalizar.
+- Puede utilizarse como editor de SL4A.
+- Barra de herramientas personalizable.
+- Resaltado de sintaxis personalizable.
+- Ejecutar captura de pantalla.
+- Fondo de pantalla personalizable.
+
+- Soporte para Android OS 1.6 o posterior.
+- Soporta ambos dispositivos, tanto la pantalla táctil como el teclado qwerty.
+
+- Siempre GRATIS y NO AD-.
+- Este software es un software de código abierto bajo la licencia Apache.
+- La donación es siempre bien recibida. Usted puede donar desde la pantalla de preferencias.
+
+PRECAUCIÓN
+   RTL-lenguaje y el texto bidireccional no está soportado.
+
+
+? Si usted necesita una respuesta de mí, NO LO PONGAS en las opiniones del mercado.
+En su lugar por favor hágamelo saber por e-mail o Twiter (@ jiro_aqua)
+Puede enviarme un mensaje desde la pantalla de Preferencias de Jota.
+
+? Si necesita grep (búsqueda de texto de múltiples archivos), pruebe mi aplicación "agrep".
+--------------------------------------------------------------------------------
