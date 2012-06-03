@@ -5,7 +5,8 @@ include $(CLEAR_VARS)
 LOCAL_MODULE_TAGS := optional
 
 LOCAL_SRC_FILES := $(call all-subdir-java-files)\
-	src/com/android/vending/billing/IMarketBillingService.aidl
+	src/com/android/vending/billing/IMarketBillingService.aidl\
+	src/jp/sblo/pandora/license/ILicense.aidl
 
 LOCAL_PACKAGE_NAME := jota-text-editor
 LOCAL_DEX_PREOPT := false
