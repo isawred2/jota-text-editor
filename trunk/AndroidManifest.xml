@@ -90,6 +90,11 @@
                 <action android:name="com.android.vending.billing.PURCHASE_STATE_CHANGED" />
             </intent-filter>
         </receiver>
+        <service android:name="jp.sblo.pandora.license.CheckDonation">
+            <intent-filter>
+                <action android:name="jp.sblo.pandora.license.CheckDonation"></action>
+            </intent-filter>
+        </service>
 
     </application>
 

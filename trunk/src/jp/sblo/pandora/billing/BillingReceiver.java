@@ -51,6 +51,12 @@ public class BillingReceiver extends BroadcastReceiver {
             String signedData = intent.getStringExtra(Consts.INAPP_SIGNED_DATA);
             String signature = intent.getStringExtra(Consts.INAPP_SIGNATURE);
             purchaseStateChanged(context, signedData, signature);
+
+            Intent newIntent = new Intent( "jp.sblo.pandora.license.CheckDonation" );
+            intent.putExtra(Consts.INAPP_SIGNED_DATA,signedData);
+            intent.putExtra(Consts.INAPP_SIGNATURE,signature);
+            context.sendBroadcast(newIntent);
+
         } else if (Consts.ACTION_NOTIFY.equals(action)) {
             String notifyId = intent.getStringExtra(Consts.NOTIFICATION_ID);
             if (Consts.DEBUG) {
