@@ -1059,17 +1059,17 @@ implements CharSequence, GetChars, Spannable, Editable, Appendable,
                          float x, float y, Paint p) {
         checkRange("drawText", start, end);
 
-        if (end <= mGapStart) {
-            c.drawText(mText, start, end - start, x, y, p);
-        } else if (start >= mGapStart) {
-            c.drawText(mText, start + mGapLength, end - start, x, y, p);
-        } else {
+//        if (end <= mGapStart) {
+//            c.drawText(mText, start, end - start, x, y, p);
+//        } else if (start >= mGapStart) {
+//            c.drawText(mText, start + mGapLength, end - start, x, y, p);
+//        } else {
             char[] buf = TextUtils.obtain(end - start);
 
             getChars(start, end, buf, 0);
             c.drawText(buf, 0, end - start, x, y, p);
             TextUtils.recycle(buf);
-        }
+//        }
     }
 
     /**

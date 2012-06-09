@@ -1,3 +1,7 @@
+[2012/06/09 v.0.2.18]
+Workaround for ICS updated Xperia.
+Added syntax file for TeX. (Thanks to MaQiYuan!)
+
 [2012/06/01 v.0.2.17]
 Keyword file for ActionScript.(Thanks to Alexandr Cojocari!)
 Added Spanish resource. (Thanks to Roberto A. Núñez!)
