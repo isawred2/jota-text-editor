@@ -4,6 +4,7 @@ import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 
+import jp.sblo.pandora.jota.IS01FullScreen;
 import jp.sblo.pandora.jota.JotaTextEditor;
 import jp.sblo.pandora.jota.R;
 import android.content.Context;
@@ -198,8 +199,8 @@ public class EditText extends TextView{
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
 
+        int keycode = event.getKeyCode();
         if ( !mCtrlPreIme ){
-            int keycode = event.getKeyCode();
             // CTRL + KEYDOWN
             int meta = (int)event.getMetaState();
             boolean ctrl = (meta & mShortcutCtrlKey)!=0 ; // one of meta keies is pressed
@@ -213,6 +214,12 @@ public class EditText extends TextView{
                 }else if (event.getAction() == KeyEvent.ACTION_UP){
                     return true;
                 }
+            }
+        }
+        if ( IS01FullScreen.isIS01orLynx() ){
+            if ( keycode == KeyEvent.KEYCODE_PAGE_UP ||
+                 keycode == KeyEvent.KEYCODE_PAGE_DOWN ){
+                return true;
             }
         }
         return super.dispatchKeyEvent(event);

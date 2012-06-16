@@ -1,3 +1,6 @@
+[2012/06/16 v.0.2.19]
+Fixed minor bug about IS01.
+
 [2012/06/09 v.0.2.18]
 Workaround for ICS updated Xperia.
 Added syntax file for TeX. (Thanks to MaQiYuan!)
