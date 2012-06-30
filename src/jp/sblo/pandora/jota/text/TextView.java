@@ -9341,12 +9341,12 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
                 b = "'";
                 break;
             case FUNCTION_KAGIKAKKO:
-                f = "\u300c";
-                b = "\u300d";
+                f = getQuote(true, true);
+                b = getQuote(true, false);
                 break;
             case FUNCTION_NIJUKAGI:
-                f = "\u300e";
-                b = "\u300f";
+                f = getQuote(false, true);
+                b = getQuote(false, false);
                 break;
         }
         int min = 0;
@@ -9368,6 +9368,12 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
             ((Editable) mText).replace(bpos, bpos, b );
             Selection.setSelection((Spannable)mText, bpos);
         }
+    }
+
+    private String getQuote(boolean single, boolean open)
+    {
+        String quote = getContext().getResources().getString(single?R.string.single_quote:R.string.double_quote);
+        return "" + quote.charAt(open?0:2);
     }
 
     // Jota Text Editor
