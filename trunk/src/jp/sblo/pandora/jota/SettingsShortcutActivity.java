@@ -84,8 +84,8 @@ public class SettingsShortcutActivity extends PreferenceActivity implements OnSh
         R.string.menu_ccomment,
         R.string.menu_doublequote,
         R.string.menu_singlequote,
-        R.string.menu_kagikakko,
-        R.string.menu_nijukagi,
+        R.string.single_quote,
+        R.string.double_quote,
         R.string.menu_select,
         R.string.menu_select_word,
         R.string.label_launch_by_sl4a,
@@ -349,4 +349,14 @@ public class SettingsShortcutActivity extends PreferenceActivity implements OnSh
         mPs.getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
     }
 
+    public static String getToolbarLabel(Context context,int i)
+    {
+        if ( i == TextView.FUNCTION_KAGIKAKKO ){
+            return context.getResources().getString(R.string.single_quote);
+        }else if ( i == TextView.FUNCTION_NIJUKAGI ){
+            return context.getResources().getString(R.string.double_quote);
+        }else{
+            return SettingsShortcutActivity.TBL_TOOLNAME[i];
+        }
+    }
 }

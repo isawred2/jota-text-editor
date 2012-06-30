@@ -64,8 +64,8 @@ public class SettingsToolbarActivity extends Activity  {
 
         for( int i = 0;i<mFunctionLen;i++){
             mFunctions[i] = SettingsShortcutActivity.TBL_FUNCTION[i+1];
-            mToolNames[i] = SettingsShortcutActivity.TBL_TOOLNAME[i+1];
-            mToolNamesTrimed[i] = SettingsShortcutActivity.TBL_TOOLNAME[i+1].trim();
+            mToolNames[i] = SettingsShortcutActivity.getToolbarLabel(this, i+1);
+            mToolNamesTrimed[i] = SettingsShortcutActivity.getToolbarLabel(this, i+1).trim();
             mSummarys[i] = getString(SettingsShortcutActivity.TBL_SUMMARY[i+1]);
         }
 
@@ -284,6 +284,5 @@ public class SettingsToolbarActivity extends Activity  {
             }
         }
     }
-
 
 }

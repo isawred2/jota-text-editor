@@ -39,6 +39,7 @@
 		android:singleLine="true"
 		android:focusable="true"
 		android:textSize="14sp"
+		android:maxLength="255"
 	/>
 	<LinearLayout 
 	    android:orientation="horizontal"

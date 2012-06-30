@@ -158,26 +158,6 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
 
         mWallpaper = (ImageView)findViewById(R.id.wallpaper);
 
-        if (mBootSettings.screenOrientation.equals(SettingsActivity.ORI_AUTO) || mRotationControl){
-            // Do nothing
-        }else if (mBootSettings.screenOrientation.equals(SettingsActivity.ORI_PORTRAIT)){
-            setRequestedOrientation( ActivityInfo.SCREEN_ORIENTATION_PORTRAIT );
-            if ( getResources().getConfiguration().orientation != Configuration.ORIENTATION_PORTRAIT ){
-                if ( savedInstanceState == null ){
-                    mRebootingForConfigChange = true;
-                    return;
-                }
-            }
-        }else if (mBootSettings.screenOrientation.equals(SettingsActivity.ORI_LANDSCAPE)){
-            setRequestedOrientation( ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE );
-            if ( getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE ){
-                if ( savedInstanceState == null ){
-                    mRebootingForConfigChange = true;
-                    return;
-                }
-            }
-        }
-
         PreferenceManager.getDefaultSharedPreferences(this)
                 .registerOnSharedPreferenceChangeListener(mOnSharedPreferenceChangeListener);
 
@@ -205,6 +185,26 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
         mTransparency = findViewById(R.id.trasparencylayer);
         mMenuButton = (Button)findViewById(R.id.menubutton);
         applySetting();
+
+        if (mBootSettings.screenOrientation.equals(SettingsActivity.ORI_AUTO) || mRotationControl){
+            // Do nothing
+        }else if (mBootSettings.screenOrientation.equals(SettingsActivity.ORI_PORTRAIT)){
+            setRequestedOrientation( ActivityInfo.SCREEN_ORIENTATION_PORTRAIT );
+            if ( getResources().getConfiguration().orientation != Configuration.ORIENTATION_PORTRAIT ){
+                if ( savedInstanceState == null ){
+                    mRebootingForConfigChange = true;
+                    return;
+                }
+            }
+        }else if (mBootSettings.screenOrientation.equals(SettingsActivity.ORI_LANDSCAPE)){
+            setRequestedOrientation( ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE );
+            if ( getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE ){
+                if ( savedInstanceState == null ){
+                    mRebootingForConfigChange = true;
+                    return;
+                }
+            }
+        }
 
         mEditor.addTextChangedListener(new TextWatcher() {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -2532,10 +2532,10 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
     private String getToolbarLabel(int f) {
 
         int[] tblFunc = SettingsShortcutActivity.TBL_FUNCTION;
-        String[] tblLabel = SettingsShortcutActivity.TBL_TOOLNAME;
+//        String[] tblLabel = SettingsShortcutActivity.TBL_TOOLNAME;
         for (int i = 0; i < tblFunc.length; i++) {
             if (tblFunc[i] == f) {
-                return tblLabel[i];
+                return SettingsShortcutActivity.getToolbarLabel(this, i);
             }
         }
         return "";
