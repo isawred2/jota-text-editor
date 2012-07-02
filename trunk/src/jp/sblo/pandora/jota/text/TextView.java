@@ -3798,7 +3798,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
 
                 mHighlightPath.computeBounds(sTempRect, false);
 
-                int left = getCompoundPaddingLeft();
+                int left = getCompoundPaddingLeft() + mLineNumberWidth;
                 int top = getExtendedPaddingTop() + getVerticalOffset(true);
 
                 invalidate((int) FloatMath.floor(left + sTempRect.left - thick),

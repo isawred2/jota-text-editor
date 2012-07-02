@@ -78,6 +78,8 @@ class FastScroller {
 
     private boolean mChangedBounds;
 
+    private long mLastEventTime = 0;
+
 // Jota Text Editor
     public FastScroller(Context context, TextView listView) {
         mList = listView;
@@ -413,23 +415,29 @@ class FastScroller {
             }
         } else if (action == MotionEvent.ACTION_MOVE) {
             if (mState == STATE_DRAGGING) {
-                final int viewHeight = mList.getHeight();
-                // Jitter
-                int newThumbY = (int) me.getY() - mThumbH / 2;// Jota Text Editor
-                if (newThumbY < 0) {
-                    newThumbY = 0;
-                } else if (newThumbY + mThumbH > viewHeight) {
-                    newThumbY = viewHeight - mThumbH;
+                long now = System.currentTimeMillis();
+                long diff = (now-mLastEventTime);
+                if ( diff > 30 ){
+	                mLastEventTime = now;
+
+	                final int viewHeight = mList.getHeight();
+	                // Jitter
+	                int newThumbY = (int) me.getY() - mThumbH / 2;// Jota Text Editor
+	                if (newThumbY < 0) {
+	                    newThumbY = 0;
+	                } else if (newThumbY + mThumbH > viewHeight) {
+	                    newThumbY = viewHeight - mThumbH;
+	                }
+	                if (Math.abs(mThumbY - newThumbY) < 2) {
+	                    return true;
+	                }
+	                mThumbY = newThumbY;
+	// Jota Text Editor
+	//                // If the previous scrollTo is still pending
+	//                if (mScrollCompleted) {
+	                    scrollTo((float) mThumbY / (viewHeight - mThumbH));
+	//                }
                 }
-                if (Math.abs(mThumbY - newThumbY) < 2) {
-                    return true;
-                }
-                mThumbY = newThumbY;
-// Jota Text Editor
-//                // If the previous scrollTo is still pending
-//                if (mScrollCompleted) {
-                    scrollTo((float) mThumbY / (viewHeight - mThumbH));
-//                }
                 return true;
             }
         }
