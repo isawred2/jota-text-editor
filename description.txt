@@ -1294,3 +1294,102 @@ Puede enviarme un mensaje desde la pantalla de Preferencias de Jota.
 
 ? Si necesita grep (búsqueda de texto de múltiples archivos), pruebe mi aplicación "agrep".
 --------------------------------------------------------------------------------
+Jota text editor (Slovak)
+
+Jota je textový editor navrhnutý pre dlhé textové súbory.
+Vyslovuje sa "i-o-ta".
+
+Funkcie
+- Podpora až do 1 milióna znakov.
+
+- Automatická detekcia rôzneho kódovania znakov.
+  UTF-8
+  UTF-16BE
+  UTF-16-ročné
+  UTF-32BE
+  UTF-32LE
+  WINDOWS-1251
+  WINDOWS-1252
+  WINDOWS-1253
+  WINDOWS-1255
+  SHIFT_JIS
+  ISO-2022-JP
+  ISO-2022-CN
+  ISO-2022-KR
+  ISO-8859-5
+  ISO-8859-7
+  ISO-8859-8
+  BIG5
+  GB18030
+  EUC-JP
+  EUC-KR
+  EUC-TW
+  IBM855
+  IBM866
+  KOI8-R
+  MACCYRILLIC
+  HZ-GB-2312
+  X-ISO-10646-UCS-4-3412
+  X-ISO-10646-UCS-4-2143
+  (Možnosť dekódovania zavisí na konkrétnej implementácii v Androide)
+
+- Zmena kódovania znakov.
+- Automatická detekcia kódu pre koniec riadka.
+- Zmena kódu pre koniec riadka.
+- Zachovanie kódu pre koniec riadka až do uloženia súboru.
+- Uloženie pozície kurzora so súborom.
+- Uloženie histórie nedávnych súborov.
+
+- Hľadanie/Nahradenie (Podpora regulárnych výrazov)
+
+- Zdieľanie textu s aplikáciami tretích strán.
+  Mushroom
+  Zdieľať (ACTION_SEND)
+  Hľadať (ACTION_SEARCH)
+  Otvoriť (ACTION_VIEW)
+
+★ Direct Intent: Môžete spustiť akúkoľvek aplikáciu z menu
+
+- Scrollovanie pomocou ťahu prstom.
+- Scrollovanie švihnutím.
+- Vpred/Späť
+- Podpora skratiek s CTRL/ALT klávesmi.
+- Personalizácia farieb.
+- Vytvorenie zástupcu na ploche.
+- Nastaviteľné klávesové skratky.
+- Textový posuvník ako v Gingerbread
+(Dvakrát dotknúť pre výber slova, potom dotyk na vybrané oblasti pre zviditeľnenie posuvníka.)
+- Zap./Vyp. zalamovania riadkov a nastavenia šírky.
+- Nastavenie výšky záložiek.
+- Prehliadací mód.
+- Zobrazenie čísla riadka.
+- Počítadlo slov.
+- Korektné podpora režimu na šírku.
+- Automatické ukladanie.
+- Automatické odsadenie.
+- Zobrazenie Tabulátora/Ukončenia riadka
+- Automatické priradenie veľkého písmena
+- Môže byť používané ako SL4A editor.
+- Nastaviteľný Toolbar (Lišta nástrojov).
+- Nastaviteľné zvýraznenie syntaxe
+- Získanie snímky z obrazovky (Screenshot)
+- Personalizácia tapety
+
+- Podpora Androidu 1.6 a vyššie.
+- Podpora telefónov s klávesnicou (qwerty) a tiež iba s dotykovým displejom.
+
+- Navždy zadarmo a bez reklám
+- Tento softvér je Open Source Software pod licenciou Apache.
+- Peňažné dary sú vždy vítané. Môžete darovať z nastavení v aplikácii.
+
+UPOZORNENIE
+  Písanie z ľava a obojsmerný text nie sú podporované.
+
+
+★ Ak odo mňa potrebujete odpoveď nepíšte do komentárov v Android Markete.
+Radšej mi napíšte email alebo na twitter (@jiro_aqua).
+Môžete mi tiež napísať správu z obrazovky nastavení v Jota.
+
+★ Ak potrebujete grep (vyhľadávanie v množstve textových súborov), vyskúšajte moju aplikáciu "aGrep".
+
+--------------------------------------------------------------------------------
