@@ -18,7 +18,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaScannerConnection;
 import android.os.AsyncTask;
-import android.provider.MediaStore;
 import android.widget.Toast;
 
 public     class TextSaveTask extends AsyncTask<CharSequence, Integer, String>{
