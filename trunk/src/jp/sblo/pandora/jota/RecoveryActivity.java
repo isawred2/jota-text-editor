@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.media.MediaScannerConnection;
 import android.os.Bundle;
 import android.os.Environment;
 import android.widget.Toast;
@@ -83,6 +84,7 @@ public class RecoveryActivity extends Activity {
             String name = new File(dstname).getName();
             String message = this.getString(R.string.toast_saved_message ,name );
             Toast.makeText(this, message , Toast.LENGTH_LONG).show();
+            MediaScannerConnection.scanFile(this, new String[]{dstname,}, new String[]{"text/plain",}, null);
 
             return true;
         } catch (Exception e) {
