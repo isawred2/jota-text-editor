@@ -1,3 +1,8 @@
+[2012/07/14 v.0.2.22]
+Added that removing non-exists file from recent files entry.
+Fixed the bug that created file won't be shown in MTP host.
+Updated Slovak Resources. (Thanks to Martin Jurík!!)
+
 [2012/07/07 v.0.2.21]
 Optimized Scroll-thumb for Jelly Bean(Android4.1)
 Fixed the bug that caret won't blink when line number is shown.
