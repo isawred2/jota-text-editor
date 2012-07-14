@@ -1479,7 +1479,9 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
                         FileInfo fi = new FileInfo();
                         fi.path = entry.getKey();
                         fi.lastaccess = Long.parseLong(vals[2]);
-                        fl.add(fi);
+                        if ( new File(fi.path).exists() ){
+                            fl.add(fi);
+                        }
                     } catch (Exception e) {
                     }
                 }
