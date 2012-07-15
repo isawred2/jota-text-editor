@@ -1,3 +1,7 @@
+[2012/07/15 v.0.2.23]
+Fixed the bug that crashes when save a file on Andorid1.6/2.1
+(Degraded on 0.2.22 Sorry!) 
+
 [2012/07/14 v.0.2.22]
 Added that removing non-exists file from recent files entry.
 Fixed the bug that created file won't be shown in MTP host.
