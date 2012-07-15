@@ -86,6 +86,9 @@ public class RecoveryActivity extends Activity {
             Toast.makeText(this, message , Toast.LENGTH_LONG).show();
             MediaScannerConnection.scanFile(this, new String[]{dstname,}, new String[]{"text/plain",}, null);
 
+            if ( JotaTextEditor.sFroyo ){
+                MediaScannerWrapper.scanFile(this, new String[]{dstname,}, new String[]{"text/plain",});
+            }
             return true;
         } catch (Exception e) {
             e.printStackTrace();

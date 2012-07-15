@@ -16,8 +16,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.MediaScannerConnection;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.widget.Toast;
 
 public     class TextSaveTask extends AsyncTask<CharSequence, Integer, String>{
@@ -87,7 +87,9 @@ public     class TextSaveTask extends AsyncTask<CharSequence, Integer, String>{
                     }
                     in.close();
                     out.close();
-                    MediaScannerConnection.scanFile(mActivity, new String[]{backup.getPath(),}, new String[]{"text/plain",}, null);
+                    if ( JotaTextEditor.sFroyo ){
+                        MediaScannerWrapper.scanFile(mActivity, new String[]{backup.getPath(),}, new String[]{"text/plain",});
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                     return false;
@@ -158,7 +160,9 @@ public     class TextSaveTask extends AsyncTask<CharSequence, Integer, String>{
         try{
             if ( createBackup( filename , createBackup ) ){
                 if ( saveFile( new FileOutputStream( new File(filename) ), charset , lb , text) ){
-                    MediaScannerConnection.scanFile(mActivity, new String[]{filename,}, new String[]{"text/plain",}, null);
+                    if ( JotaTextEditor.sFroyo ){
+                        MediaScannerWrapper.scanFile(mActivity, new String[]{filename,}, new String[]{"text/plain",});
+                    }
                     return filename;
                 }
             }
