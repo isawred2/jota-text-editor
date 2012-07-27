@@ -8205,7 +8205,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
                 if ( max - min > MAX_PARCELABLE ){
                     Toast.makeText(getContext(), R.string.toast_overflow_of_limit, Toast.LENGTH_LONG).show();
                 }else{
-                    clip.setText(mTransformed.subSequence(min, max));
+                    clip.setText(clearSpan(mTransformed.subSequence(min, max)));
                     ((Editable) mText).delete(min, max);
                     stopTextSelectionMode();
                     MetaKeyKeyListener.stopSelecting(this, (Spannable) mText);
@@ -8216,7 +8216,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
                 if ( max - min > MAX_PARCELABLE ){
                     Toast.makeText(getContext(), R.string.toast_overflow_of_limit, Toast.LENGTH_LONG).show();
                 }else{
-                    clip.setText(mTransformed.subSequence(min, max));
+                    clip.setText(clearSpan(mTransformed.subSequence(min, max)));
                     stopTextSelectionMode();
                     MetaKeyKeyListener.stopSelecting(this, (Spannable) mText);
                 }
@@ -8238,7 +8238,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
             case ID_COPY_URL:
                 URLSpan[] urls = ((Spanned) mText).getSpans(min, max, URLSpan.class);
                 if (urls.length == 1) {
-                    clip.setText(urls[0].getURL());
+                    clip.setText(clearSpan(urls[0].getURL()));
                 }
                 return true;
 
@@ -9409,6 +9409,15 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
             onTextContextMenuItem(ID_CUT);
         }
     }
+    // Jota Text Editor
+	public CharSequence clearSpan(CharSequence cs)
+	{
+		if ( cs instanceof SpannableStringBuilder ){
+			SpannableStringBuilder ssb = (SpannableStringBuilder)cs;
+			ssb.clearSpans();
+		}
+		return cs;
+	}
 
     // Jota Text Editor
     public final static int FUNCTION_NONE=0;
