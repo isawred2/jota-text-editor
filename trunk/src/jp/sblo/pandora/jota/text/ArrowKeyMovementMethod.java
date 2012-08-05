@@ -32,9 +32,7 @@ import android.view.ViewConfiguration;
 // don't match.  Need to figure that out.  Meanwhile the meta keys
 // won't work in fields that don't take input.
 
-public class
-ArrowKeyMovementMethod
-implements MovementMethod
+public class ArrowKeyMovementMethod extends BaseMovementMethod
 {
     private boolean moveUp( TextView widget, Spannable buffer , boolean cap )
     {
