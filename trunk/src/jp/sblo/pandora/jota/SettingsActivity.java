@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -42,6 +43,7 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -2226,7 +2228,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         mPs.getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
     }
 
-    public static void showChangeLog(final Context context,boolean changelog)
+    public static void showChangeLog(final Activity context,boolean changelog)
     {
         int filename;
         int title;
@@ -2252,8 +2254,27 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
             e.printStackTrace();
         }
 
+        View view = context.getLayoutInflater().inflate(R.layout.history_view, null);
+
+        TextView msgText = (TextView)view.findViewById(R.id.message);
+        msgText.setText( text );
+
+        Button banner = (Button)view.findViewById(R.id.banner);
+        banner.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("market://details?id=jp.sblo.pandora.jota.plus"));
+//                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("https://sites.google.com/site/aquamarinepandora/jotaplus"));
+                try{
+                    context.startActivity(intent);
+                }
+                catch(Exception e){}
+            }
+        });
+
         AlertDialog.Builder builder = new AlertDialog.Builder(context)
-        .setMessage( text )
+        .setView( view )
         .setTitle( title )
         .setPositiveButton(R.string.label_ok, null);
 
@@ -2270,7 +2291,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         builder.show();
     }
 
-    public static void showWelcomeMessage(Context context)
+    public static void showWelcomeMessage(Activity context)
     {
         if ( sLastVersion == -1 ){
             // Do nothing
