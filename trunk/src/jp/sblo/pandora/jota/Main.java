@@ -1236,6 +1236,9 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
             case jp.sblo.pandora.jota.text.TextView.FUNCTION_SAVE:
                 save();
                 return true;
+            case jp.sblo.pandora.jota.text.TextView.FUNCTION_SAVEAS:
+                saveAs();
+                return true;
             case jp.sblo.pandora.jota.text.TextView.FUNCTION_DIRECTINTENT:
                 mProcDirect.run();
                 return true;

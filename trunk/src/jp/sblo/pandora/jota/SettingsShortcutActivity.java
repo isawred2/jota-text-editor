@@ -91,6 +91,7 @@ public class SettingsShortcutActivity extends PreferenceActivity implements OnSh
         R.string.label_launch_by_sl4a,
         R.string.menu_menu,
         R.string.label_kill_line,
+        R.string.menu_file_saveas,
     };
 
     public final static int[] TBL_FUNCTION = {
@@ -151,6 +152,7 @@ public class SettingsShortcutActivity extends PreferenceActivity implements OnSh
         TextView.FUNCTION_LAUNCH_BY_SL4A,
         TextView.FUNCTION_MENU,
         TextView.FUNCTION_KILLLINE,
+        TextView.FUNCTION_SAVEAS,
     };
 
     public final static String[] TBL_TOOLNAME = {
@@ -211,6 +213,7 @@ public class SettingsShortcutActivity extends PreferenceActivity implements OnSh
         "SL4A",
         "Menu",
         "Kill-Line",
+        "Save As",
     };
 
     public String getFunctionName(int func)
