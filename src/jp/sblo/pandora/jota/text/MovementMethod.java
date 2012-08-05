@@ -49,4 +49,7 @@ public interface MovementMethod
     public boolean canSelectArbitrarily();
 
     public void cancelFling(TextView widget, Spannable buffer);
+
+    public boolean onGenericMotionEvent(TextView widget, Spannable text, MotionEvent event);
+
 }
