@@ -283,6 +283,7 @@ public class EditText extends TextView{
                 return centerCursor();
 
             case FUNCTION_SAVE:
+            case FUNCTION_SAVEAS:
             case FUNCTION_DIRECTINTENT:
             case FUNCTION_OPEN:
             case FUNCTION_NEWFILE:

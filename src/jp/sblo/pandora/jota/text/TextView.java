@@ -9478,6 +9478,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
     public final static int FUNCTION_LAUNCH_BY_SL4A=54;
     public final static int FUNCTION_MENU=55;
     public final static int FUNCTION_KILLLINE=56;
+    public final static int FUNCTION_SAVEAS=57;
 
 
     @ViewDebug.ExportedProperty
