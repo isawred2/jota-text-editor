@@ -1,3 +1,22 @@
+Jota+ (i-o-ta plus) is released as a MAJOR UPDATE of Jota Text Editor.
+
+★New features of Jota+
+- Support multi-file feature!
+- Support external file systems! ( Dropbox, Box, SkyDrive etc )
+- Support root access!
+- Modern UI based on ICS!
+- Highlight searching words!
+
+Touch the banner and try Jota+!
+
+--------------------
+[2012/08/10 v.0.2.24]
+Updated keyword file for Ocaml.(Lilian Besson!)
+Updated Russian resource.(Thanks to Anton C.!)
+Added support for wheel scroll of mouse.
+Added "save-as" onto Toolbar settings.
+Fixed bugs.
+
 [2012/07/15 v.0.2.23]
 Fixed the bug that crashes when save a file on Andorid1.6/2.1
 (Degraded on 0.2.22 Sorry!) 
