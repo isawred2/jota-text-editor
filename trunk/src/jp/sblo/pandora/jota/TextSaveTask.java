@@ -88,7 +88,7 @@ public     class TextSaveTask extends AsyncTask<CharSequence, Integer, String>{
                     in.close();
                     out.close();
                     if ( JotaTextEditor.sFroyo ){
-                        MediaScannerWrapper.scanFile(mActivity, new String[]{backup.getPath(),}, new String[]{"text/plain",});
+                        ApiWrapper.scanFile(mActivity, new String[]{backup.getPath(),}, new String[]{"text/plain",});
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -161,7 +161,7 @@ public     class TextSaveTask extends AsyncTask<CharSequence, Integer, String>{
             if ( createBackup( filename , createBackup ) ){
                 if ( saveFile( new FileOutputStream( new File(filename) ), charset , lb , text) ){
                     if ( JotaTextEditor.sFroyo ){
-                        MediaScannerWrapper.scanFile(mActivity, new String[]{filename,}, new String[]{"text/plain",});
+                        ApiWrapper.scanFile(mActivity, new String[]{filename,}, new String[]{"text/plain",});
                     }
                     return filename;
                 }

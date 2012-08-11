@@ -9432,7 +9432,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
                 // interface directly.
             }
         }
-        return super.onGenericMotionEvent(event);
+        return true;
     }
 
     // Jota Text Editor
