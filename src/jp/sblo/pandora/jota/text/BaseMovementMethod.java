@@ -16,6 +16,7 @@
 
 package jp.sblo.pandora.jota.text;
 
+import jp.sblo.pandora.jota.ApiWrapper;
 import android.text.Spannable;
 import android.text.method.MetaKeyKeyListener;
 import android.view.InputDevice;
@@ -30,17 +31,17 @@ abstract public class BaseMovementMethod implements MovementMethod {
 
     @Override
     public boolean onGenericMotionEvent(TextView widget, Spannable text, MotionEvent event) {
-        if ((event.getSource() & InputDevice.SOURCE_CLASS_POINTER) != 0) {
+        if ((ApiWrapper.getSourceOfEvent(event) & InputDevice.SOURCE_CLASS_POINTER) != 0) {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_SCROLL: {
                     final float vscroll;
                     final float hscroll;
                     if ((event.getMetaState() & KeyEvent.META_SHIFT_ON) != 0) {
                         vscroll = 0;
-                        hscroll = event.getAxisValue(MotionEvent.AXIS_VSCROLL);
+                        hscroll = ApiWrapper.getAxisValue(event,MotionEvent.AXIS_VSCROLL);
                     } else {
-                        vscroll = -event.getAxisValue(MotionEvent.AXIS_VSCROLL);
-                        hscroll = event.getAxisValue(MotionEvent.AXIS_HSCROLL);
+                        vscroll = -ApiWrapper.getAxisValue(event,MotionEvent.AXIS_VSCROLL);
+                        hscroll = ApiWrapper.getAxisValue(event,MotionEvent.AXIS_HSCROLL);
                     }
 
                     boolean handled = false;
@@ -67,23 +68,23 @@ abstract public class BaseMovementMethod implements MovementMethod {
         return false;
     }
 
-    /**
-     * Gets the meta state used for movement using the modifiers tracked by the text
-     * buffer as well as those present in the key event.
-     *
-     * The movement meta state excludes the state of locked modifiers or the SHIFT key
-     * since they are not used by movement actions (but they may be used for selection).
-     *
-     * @param buffer The text buffer.
-     * @param event The key event.
-     * @return The keyboard meta states used for movement.
-     */
-    protected int getMovementMetaState(Spannable buffer, KeyEvent event) {
-        // We ignore locked modifiers and SHIFT.
-        int metaState = (event.getMetaState() | MetaKeyKeyListener.getMetaState(buffer))
-                & ~(MetaKeyKeyListener.META_ALT_LOCKED | MetaKeyKeyListener.META_SYM_LOCKED);
-        return KeyEvent.normalizeMetaState(metaState) & ~KeyEvent.META_SHIFT_MASK;
-    }
+//    /**
+//     * Gets the meta state used for movement using the modifiers tracked by the text
+//     * buffer as well as those present in the key event.
+//     *
+//     * The movement meta state excludes the state of locked modifiers or the SHIFT key
+//     * since they are not used by movement actions (but they may be used for selection).
+//     *
+//     * @param buffer The text buffer.
+//     * @param event The key event.
+//     * @return The keyboard meta states used for movement.
+//     */
+//    protected int getMovementMetaState(Spannable buffer, KeyEvent event) {
+//        // We ignore locked modifiers and SHIFT.
+//        int metaState = (event.getMetaState() | MetaKeyKeyListener.getMetaState(buffer))
+//                & ~(MetaKeyKeyListener.META_ALT_LOCKED | MetaKeyKeyListener.META_SYM_LOCKED);
+//        return KeyEvent.normalizeMetaState(metaState) & ~KeyEvent.META_SHIFT_MASK;
+//    }
 
     private int getTopLine(TextView widget) {
         return widget.getLayout().getLineForVertical(widget.getScrollY());

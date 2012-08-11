@@ -2243,10 +2243,17 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 
         String text="";
         try{
+            boolean cuttop = (JotaTextEditor.sFroyo )?false:changelog;
             BufferedReader br = new BufferedReader(new InputStreamReader(context.getAssets().open(context.getString(filename))));
             String line;
             while( (line = br.readLine())!=null ){
-                text += line + '\n';
+                if ( cuttop ){
+                    if ( line.startsWith("-----") ){
+                        cuttop = false;
+                    }
+                }else{
+                    text += line + '\n';
+                }
             }
             br.close();
         }
@@ -2272,6 +2279,10 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                 catch(Exception e){}
             }
         });
+        if ( !JotaTextEditor.sFroyo ){
+            banner.setVisibility(View.GONE);
+        }
+
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context)
         .setView( view )

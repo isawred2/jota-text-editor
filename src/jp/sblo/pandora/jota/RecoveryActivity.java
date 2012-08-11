@@ -84,10 +84,8 @@ public class RecoveryActivity extends Activity {
             String name = new File(dstname).getName();
             String message = this.getString(R.string.toast_saved_message ,name );
             Toast.makeText(this, message , Toast.LENGTH_LONG).show();
-            MediaScannerConnection.scanFile(this, new String[]{dstname,}, new String[]{"text/plain",}, null);
-
             if ( JotaTextEditor.sFroyo ){
-                MediaScannerWrapper.scanFile(this, new String[]{dstname,}, new String[]{"text/plain",});
+                ApiWrapper.scanFile(this, new String[]{dstname,}, new String[]{"text/plain",});
             }
             return true;
         } catch (Exception e) {
