@@ -12,6 +12,7 @@ Touch the banner and try Jota+!
 --------------------
 [2012/08/19 v.0.2.26]
 Added Keyword file of D Language and ruby (Thanks to BOOMER!)
+Fixed minor bugs.
 
 [2012/08/11 v.0.2.25]
 Fixed the bug that crashed when starting on Android1.6.
