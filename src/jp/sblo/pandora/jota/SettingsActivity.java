@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -41,7 +42,6 @@ import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -175,6 +175,8 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 
     private static int sLastVersion=0;
 
+    private static String URL_PLUS = "market://details?id=jp.sblo.pandora.jota.plus";
+
     private PreferenceScreen mPs = null;
 	private PreferenceManager mPm;
 
@@ -223,6 +225,14 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                         mPs.addPreference(pr);
                     }
                 }
+
+                if ( !isJotaPlusInstalled(this) ){      // donate
+                    final Preference pr = new Preference(this);
+                    pr.setTitle(R.string.label_donate);
+                    pr.setSummary(R.string.summary_donate);
+                    pr.setOnPreferenceClickListener(mProcDonate);
+                    mPs.addPreference(pr);
+                }
                 {
                     final Preference pr = new Preference(this);
                     pr.setTitle(R.string.menu_pref_search);
@@ -268,7 +278,6 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                 {
                     final Preference pr = new Preference(this);
                     pr.setTitle(R.string.menu_pref_wallpaper);
-                    pr.setSummary(R.string.summary_wallpaper);
                     pr.setOnPreferenceClickListener(mProcPrefWallpaper);
                     mPs.addPreference(pr);
                 }
@@ -726,9 +735,9 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                     pr.setTitle(R.string.label_backup_preferences);
                     pr.setOnPreferenceClickListener(mProcBackup);
                     pr.setSummary(R.string.summary_backup_preferences);
-                    if ( sSettings == null || sSettings.donateCounter == 0 ){      // donate
-                        pr.setEnabled(false);
-                    }
+//                    if ( sSettings == null || sSettings.donateCounter == 0 ){      // donate
+//                        pr.setEnabled(false);
+//                    }
                     category.addPreference(pr);
                 }
                 {
@@ -855,13 +864,6 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                     pr.setOnPreferenceClickListener(mProcChangeLog);
                     category.addPreference(pr);
                 }
-                {      // donate
-                    final Preference pr = new Preference(this);
-                    pr.setTitle(R.string.label_donate);
-                    pr.setSummary(R.string.summary_donate);
-                    pr.setOnPreferenceClickListener(mProcDonate);
-                    category.addPreference(pr);
-                }
                 {
                     final Preference pr = new Preference(this);
                     pr.setTitle(R.string.label_about);
@@ -870,13 +872,13 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                 }
             }
             if ( CAT_TOP.equals(categ) ){
-                if ( sSettings == null || sSettings.donateCounter == 0 ){      // donate
-                    final Preference pr = new Preference(this);
-                    pr.setTitle(R.string.label_donate);
-                    pr.setSummary(R.string.summary_donate);
-                    pr.setOnPreferenceClickListener(mProcDonate);
-                    mPs.addPreference(pr);
-                }
+//                if ( sSettings == null || sSettings.donateCounter == 0 ){      // donate
+//                    final Preference pr = new Preference(this);
+//                    pr.setTitle(R.string.label_donate);
+//                    pr.setSummary(R.string.summary_donate);
+//                    pr.setOnPreferenceClickListener(mProcDonate);
+//                    mPs.addPreference(pr);
+//                }
                 {
                     final Preference pr = new Preference(this);
                     pr.setTitle(R.string.label_about);
@@ -1302,9 +1304,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
     };
     private OnPreferenceClickListener mProcDonate = new OnPreferenceClickListener(){
         public boolean onPreferenceClick(Preference preference) {
-            Intent intent = new Intent( SettingsActivity.this,DonateActivity.class);
-            intent.putExtra( AboutActivity.EXTRA_URL ,  getString( R.string.url_donate ) );
-            intent.putExtra( AboutActivity.EXTRA_TITLE ,  getString( R.string.label_donate ) );
+            Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(URL_PLUS));
             startActivity(intent);
             return true;
         }
@@ -1804,7 +1804,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         int lineSpace;
         boolean showTab;
         String actionShare;
-        int donateCounter;
+//        int donateCounter;
         boolean specialkey_desirez;
         boolean blinkCursor;
         String wallpaperPortrait;
@@ -1831,24 +1831,24 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
     private static Settings sSettings;
     private static BootSettings sBootSettings;
 
-    public  static boolean checkDonate(Context ctx)
-    {
-        boolean result = false;
-        final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(ctx);
-        int donateCounter = sp.getInt(DonateActivity.DONATION_COUNTER,0);
-        if ( donateCounter == 0 ){
-            String wallpaperPortrait = sp.getString(KEY_WALLPAPER_PORTRAIT, "");
-            String wallpaperLandscape = sp.getString(KEY_WALLPAPER_LANDSCAPE, "");
-            if ( !TextUtils.isEmpty(wallpaperPortrait) || !TextUtils.isEmpty(wallpaperLandscape)  ){
-                result = true;
-            }
-            Editor editor = sp.edit();
-            editor.remove(KEY_WALLPAPER_PORTRAIT);
-            editor.remove(KEY_WALLPAPER_LANDSCAPE);
-            editor.commit();
-        }
-        return result;
-    }
+//    public  static boolean checkDonate(Context ctx)
+//    {
+//        boolean result = false;
+//        final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(ctx);
+//        int donateCounter = sp.getInt(DonateActivity.DONATION_COUNTER,0);
+//        if ( donateCounter == 0 ){
+//            String wallpaperPortrait = sp.getString(KEY_WALLPAPER_PORTRAIT, "");
+//            String wallpaperLandscape = sp.getString(KEY_WALLPAPER_LANDSCAPE, "");
+//            if ( !TextUtils.isEmpty(wallpaperPortrait) || !TextUtils.isEmpty(wallpaperLandscape)  ){
+//                result = true;
+//            }
+//            Editor editor = sp.edit();
+//            editor.remove(KEY_WALLPAPER_PORTRAIT);
+//            editor.remove(KEY_WALLPAPER_LANDSCAPE);
+//            editor.commit();
+//        }
+//        return result;
+//    }
 
 
     public	static Settings readSettings(Context ctx)
@@ -1932,7 +1932,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         ret.lineSpace = sp.getInt( KEY_LINE_SPACE , 0);
         ret.showTab = sp.getBoolean( KEY_SHOW_TAB, false);
         ret.actionShare = sp.getString(KEY_ACTION_SHARE, AS_INSERT);
-        ret.donateCounter = sp.getInt(DonateActivity.DONATION_COUNTER,0);
+//        ret.donateCounter = sp.getInt(DonateActivity.DONATION_COUNTER,0);
         ret.blinkCursor = sp.getBoolean(KEY_BLINK_CURSOR, true);
         ret.wallpaperPortrait = sp.getString(KEY_WALLPAPER_PORTRAIT, "");
         ret.wallpaperLandscape = sp.getString(KEY_WALLPAPER_LANDSCAPE, "");
@@ -2241,9 +2241,16 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
             title = R.string.app_name;
         }
 
+        boolean isJotaPlusInstalled = isJotaPlusInstalled(context);
+
         String text="";
         try{
-            boolean cuttop = (JotaTextEditor.sFroyo )?false:changelog;
+            boolean cuttop = changelog;
+            if ( cuttop ){
+                if ( JotaTextEditor.sFroyo  && !isJotaPlusInstalled ) {
+                    cuttop = false;
+                }
+            }
             BufferedReader br = new BufferedReader(new InputStreamReader(context.getAssets().open(context.getString(filename))));
             String line;
             while( (line = br.readLine())!=null ){
@@ -2267,11 +2274,14 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         msgText.setText( text );
 
         Button banner = (Button)view.findViewById(R.id.banner);
+        if ( isJotaPlusInstalled ){
+            banner.setVisibility(View.GONE);
+        }
         banner.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("market://details?id=jp.sblo.pandora.jota.plus"));
+                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(URL_PLUS));
 //                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("https://sites.google.com/site/aquamarinepandora/jotaplus"));
                 try{
                     context.startActivity(intent);
@@ -2289,12 +2299,11 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         .setTitle( title )
         .setPositiveButton(R.string.label_ok, null);
 
-        if ( changelog && (sSettings !=null && sSettings.donateCounter ==0) ){
+        if ( JotaTextEditor.sFroyo  && !isJotaPlusInstalled(context) ){      // donate
+//        if ( changelog  /*&& (sSettings !=null && sSettings.donateCounter ==0)*/ ){
             builder.setNegativeButton(R.string.label_donate, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
-                    Intent intent = new Intent( context, DonateActivity.class);
-                    intent.putExtra( AboutActivity.EXTRA_URL ,  context.getString( R.string.url_donate ) );
-                    intent.putExtra( AboutActivity.EXTRA_TITLE ,  context.getString( R.string.label_donate ) );
+                    Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(URL_PLUS));
                     context.startActivity(intent);
                 }
             });
@@ -2315,5 +2324,18 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         }
         sLastVersion = -1;
     }
+
+    public static boolean isJotaPlusInstalled(Context context)
+    {
+        PackageManager pm = context.getPackageManager();
+        try {
+            pm.getPackageInfo("jp.sblo.pandora.jota.plus", 0);
+            return true;
+        } catch (NameNotFoundException e) {
+        }
+        return false;
+    }
+
+
 }
 

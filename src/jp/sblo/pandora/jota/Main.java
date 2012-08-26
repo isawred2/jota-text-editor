@@ -2455,9 +2455,9 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
             }
         }
 
-        if ( SettingsActivity.checkDonate(this) ){
-            Toast.makeText(this, R.string.summary_wallpaper, Toast.LENGTH_LONG ).show();
-        }
+//        if ( SettingsActivity.checkDonate(this) ){
+//            Toast.makeText(this, R.string.summary_wallpaper, Toast.LENGTH_LONG ).show();
+//        }
     }
 
     @Override
