@@ -226,7 +226,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                     }
                 }
 
-                if ( !isJotaPlusInstalled(this) ){      // donate
+                if ( JotaTextEditor.sFroyo  && !isJotaPlusInstalled(this) ){      // donate
                     final Preference pr = new Preference(this);
                     pr.setTitle(R.string.label_donate);
                     pr.setSummary(R.string.summary_donate);
@@ -734,7 +734,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                     final Preference pr = new Preference(this);
                     pr.setTitle(R.string.label_backup_preferences);
                     pr.setOnPreferenceClickListener(mProcBackup);
-                    pr.setSummary(R.string.summary_backup_preferences);
+//                    pr.setSummary(R.string.summary_backup_preferences);
 //                    if ( sSettings == null || sSettings.donateCounter == 0 ){      // donate
 //                        pr.setEnabled(false);
 //                    }
@@ -2274,7 +2274,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         msgText.setText( text );
 
         Button banner = (Button)view.findViewById(R.id.banner);
-        if ( isJotaPlusInstalled ){
+        if ( !JotaTextEditor.sFroyo || isJotaPlusInstalled ){
             banner.setVisibility(View.GONE);
         }
         banner.setOnClickListener(new View.OnClickListener() {
@@ -2289,10 +2289,6 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                 catch(Exception e){}
             }
         });
-        if ( !JotaTextEditor.sFroyo ){
-            banner.setVisibility(View.GONE);
-        }
-
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context)
         .setView( view )
