@@ -10,6 +10,9 @@ Jota+ (i-o-ta plus) is released as a MAJOR UPDATE of Jota Text Editor.
 Touch the banner and try Jota+!
 
 --------------------
+[2012/08/31 v.0.2.27]
+Unlocked all feature for donors.
+
 [2012/08/19 v.0.2.26]
 Added Keyword file of D Language and ruby (Thanks to BOOMER!)
 Fixed minor bugs.
