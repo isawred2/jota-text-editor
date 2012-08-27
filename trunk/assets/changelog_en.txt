@@ -11,7 +11,9 @@ Touch the banner and try Jota+!
 
 --------------------
 [2012/08/31 v.0.2.27]
-Unlocked all feature for donors.
+Unlocked all features for donors.
+Donation was stopped. 
+Please purchase the Jota+ to support developer.
 
 [2012/08/19 v.0.2.26]
 Added Keyword file of D Language and ruby (Thanks to BOOMER!)
