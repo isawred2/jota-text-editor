@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import jp.sblo.pandora.billing.BillingService;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -746,6 +748,13 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                     pr.setOnPreferenceClickListener(mProcRestore);
                     category.addPreference(pr);
                 }
+                {
+                    final Preference pr = new Preference(this);
+                    pr.setTitle(R.string.label_activate_jota_plus);
+                    pr.setSummary(R.string.summary_activate_jota_plus);
+                    pr.setOnPreferenceClickListener(mProcActivateJotaPlus);
+                    category.addPreference(pr);
+                }
             }
             if ( CAT_WALLPAPER.equals(categ) ){
                 // View Category
@@ -1253,6 +1262,14 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 
     };
 
+    private OnPreferenceClickListener mProcActivateJotaPlus = new OnPreferenceClickListener(){
+        public boolean onPreferenceClick(Preference preference) {
+            BillingService billingService = new BillingService();
+            billingService.setContext(SettingsActivity.this);
+            billingService.restoreTransactions();
+            return false;
+        }
+    };
     private OnPreferenceClickListener mProcHelp = new OnPreferenceClickListener(){
         public boolean onPreferenceClick(Preference preference) {
             Intent intent = new Intent( Intent.ACTION_VIEW , Uri.parse( getString( R.string.help_url) ));
