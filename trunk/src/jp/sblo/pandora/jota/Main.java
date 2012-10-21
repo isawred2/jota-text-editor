@@ -459,6 +459,9 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
             mEditor.setChanged(mInstanceState.changed);
         }
         SettingsActivity.showWelcomeMessage(this);
+        if (savedInstanceState==null){
+            mHandler.postDelayed(mShowImeProc, 1000);
+        }
     }
 
     @Override
@@ -535,6 +538,7 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
             saveHistory();
             if (mBootSettings.viewerMode) {
                 mEditor.showIme(false);
+                mHandler.removeCallbacks(mShowImeProc);
             }
             KeywordHighlght.loadHighlight(this,filename);
         }
@@ -2571,5 +2575,14 @@ public class Main extends Activity implements JotaDocumentWatcher, ShortcutListe
         }
 
     }
+
+    private Runnable mShowImeProc = new Runnable() {
+        @Override
+        public void run() {
+            if ( mEditor != null ){
+                mEditor.showIme(true);
+            }
+        }
+    };
 
 }
