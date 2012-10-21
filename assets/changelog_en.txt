@@ -10,6 +10,9 @@ Jota+ (i-o-ta plus) is released as a MAJOR UPDATE of Jota Text Editor.
 Touch the banner and try Jota+!
 
 --------------------
+[2012/10/22 v.0.2.29]
+Fixed some bugs.
+
 [2012/09/22 v.0.2.28]
 Added keyword file of Objective-C. (Thanks to JAM!)
 Added a Button to activate Jota+ (for donors).
