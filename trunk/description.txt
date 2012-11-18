@@ -1392,3 +1392,102 @@ Môžete mi tiež napísať správu z obrazovky nastavení v Jota.
 ★ Ak potrebujete grep (vyhľadávanie v množstve textových súborov), vyskúšajte moju aplikáciu "aGrep".
 
 --------------------------------------------------------------------------------
+Jota Text Editor (Finnish)
+
+Jota Text Editor (lausutaan "aiouda") on suunniteltu pitkien tekstien käsittelyyn.
+
+Toiminnot
+- Tukee tiedostoja miljoonaan merkkiin asti.
+
+- Seuraavien merkistöjen automaattitunnistus:
+  UTF-8
+  UTF-16BE
+  UTF-16LE
+  UTF-32BE
+  UTF-32LE
+  WINDOWS-1251
+  WINDOWS-1252
+  WINDOWS-1253
+  WINDOWS-1255
+  SHIFT_JIS
+  ISO-2022-JP
+  ISO-2022-CN
+  ISO-2022-KR
+  ISO-8859-5
+  ISO-8859-7
+  ISO-8859-8
+  BIG5
+  GB18030
+  EUC-JP
+  EUC-KR
+  EUC-TW
+  IBM855
+  IBM866
+  KOI8-R
+  MACCYRILLIC
+  HZ-GB-2312
+  X-ISO-10646-UCS-4-3412
+  X-ISO-10646-UCS-4-2143
+  (Tietyn merkistön toimivuus riippuu Androidisi toteutuksesta.)
+
+- Merkkikoodausten vaihto
+- Rivinvaihtomerkin automaattitunnistus
+- Rivinvaihtomerkin vaihto
+- Rivinvaihtomerkin säilytys tiedoston tallennukseen asti
+- Kursorin sijainnin tallennus
+- Viimeisimpien tiedostojen historia
+
+- Etsi ja korvaa (tukee säännöllisiä lausekkeita (regex))
+
+- Tekstin jakaminen muiden sovellusten kanssa
+  Mushroom
+  Jaa (ACTION_SEND)
+  Etsi (ACTION_SEARCH)
+  Avaa (ACTION_VIEW)
+
+  Direct Intent : Voit käynnistää minkä tahansa sovelluksen valikosta.
+
+- Vieritys sormea liikuttamalla
+- Vieritys nopealla pyyhkäisyllä
+- Kumoa/tee uudelleen
+- ALT/CTRL-näppäimistöoikotiet
+- Värien kustomointi
+- Pikakuvakkeen luominen kotinäkymään
+- Näppäimistöoikoteiden määrittely
+- Gingerbread-tyylinen tekstin valinta
+  (Valitse sana kaksoiskosketuksella. Valittua alueen koskettaminen tuo valitsimet näkyviin.)
+- Automaattirivitys tai rivitys tiettyyn rivin pituuteen
+- Sarkaimen leveyden määrittely
+- Lukutila
+- Rivin numeroiden näyttö
+- Sanalaskuri
+- Toimiva vaaka-asennon tuki
+- Automaattitallennus
+- Automaattisisennys
+- Sarkain- ja rivinvaihtomerkkien näyttö
+- Automaattiset isot kirjaimet
+- Voidaan käyttää SL4A editorina
+- Kustomoitava työkalupalkki
+- Kustomoitava syntaksin korostus
+- Kuvankaappaus
+- Taustakuva
+
+- Tukee Android-versioita 1.6:sta eteenpäin
+- Tukee sekä näyttönäppäimistöä ja fyysistä näppäimistöä
+
+- Pysyvästi ilmainen ilman mainoksia
+- Avoimen lähdekoodin sovellus Apache lisenssillä.
+- Lahjoitukset ovat tervetulleita. Voit lahjoittaa sovelluksen asetuksista.
+
+HUOMAA
+  Oikealta vasemmalle kirjoitettavaa tekstiä ei tueta.
+
+
+Jos haluat kehittäjän vastauksen kehittäjältä, älä kirjoita kommentiasi/kysymystäsi Play Storen arvosteluun.
+Sen voit sijaan lähettää kehittäjälle mailia tai twiitata (@jiro_aqua).
+Saat kehittäjään yhteyden sovelluksen asetuksista.
+
+
+Jos tarvitset grep-toiminnallisuutta (haku useista tiedostoista), kokeile "aGrep"-sovellusta.
+
+--------------------------------------------------------------------------------
