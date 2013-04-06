@@ -1,4 +1,4 @@
-Jota+ (i-o-ta plus) is released as a MAJOR UPDATE of Jota Text Editor.
+Please try Jota+.
 
 ★New features of Jota+
 - Support multi-file feature!
@@ -6,10 +6,14 @@ Jota+ (i-o-ta plus) is released as a MAJOR UPDATE of Jota Text Editor.
 - Support root access!
 - Modern UI based on ICS!
 - Highlight searching words!
+- Fixed Phrase and Clipboard history.
 
 Touch the banner and try Jota+!
 
 --------------------
+[2013/04/06 v.0.2.31]
+Updated Korean resources. (Thanks to Noah!)
+
 [2012/11/18 v.0.2.30]
 Added Finnish reources. (Thanks to Jarkko Kallio!)
 
