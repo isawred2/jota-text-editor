@@ -12,6 +12,9 @@ Jota Text Editor のメジャーアップデートです。
 バナーをタッチしてJota+をお試しください！
 
 --------------------
+[2013/08/23 v.0.2.33]
+ギリシャ語リソースを追加 (Thanks to Ben_The_Greek!)
+
 [2013/04/06 v.0.2.31]
 Updated Korean resources. (Thanks to Noah!)
 

@@ -11,6 +11,9 @@ Please try Jota+.
 Touch the banner and try Jota+!
 
 --------------------
+[2013/08/23 v.0.2.33]
+Added Greek Resources. (Thanks to Ben_The_Greek!)
+
 [2013/04/06 v.0.2.31]
 Updated Korean resources. (Thanks to Noah!)
 
