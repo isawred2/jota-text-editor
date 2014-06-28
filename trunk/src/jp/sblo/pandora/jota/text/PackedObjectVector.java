@@ -16,8 +16,6 @@
 
 package jp.sblo.pandora.jota.text;
 
-import com.android.internal.util.ArrayUtils;
-
 class PackedObjectVector<E>
 {
     private int mColumns;

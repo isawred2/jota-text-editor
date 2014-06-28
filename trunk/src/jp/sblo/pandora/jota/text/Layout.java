@@ -37,8 +37,6 @@ import android.text.TextPaint;
 import android.text.method.TextKeyListener;
 import android.view.KeyEvent;
 
-import com.android.internal.util.ArrayUtils;
-
 /**
  * A base class that manages text layout in visual elements on
  * the screen.

@@ -16,8 +16,6 @@
 
 package jp.sblo.pandora.jota.text;
 
-import com.android.internal.util.ArrayUtils;
-
 
 /**
  * PackedIntVector stores a two-dimensional array of integers,
