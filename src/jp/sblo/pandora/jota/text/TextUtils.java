@@ -54,8 +54,6 @@ import android.text.style.CharacterStyle;
 import android.util.Printer;
 
 import com.android.internal.R;
-import com.android.internal.util.ArrayUtils;
-
 public class TextUtils {
     private TextUtils() { /* cannot be instantiated */ }
 

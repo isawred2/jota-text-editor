@@ -24,8 +24,6 @@ import android.text.Spanned;
 import android.text.TextPaint;
 import android.util.Log;
 
-import com.android.internal.util.ArrayUtils;
-
 /**
  * StaticLayout is a Layout for text that will not be edited after it
  * is laid out.  Use {@link DynamicLayout} for text that may change.

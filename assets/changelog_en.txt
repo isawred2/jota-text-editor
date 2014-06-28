@@ -11,6 +11,9 @@ Please try Jota+.
 Touch the banner and try Jota+!
 
 --------------------
+[2014/06/28 v.0.2.34]
+Support Android L preview release.
+
 [2013/08/23 v.0.2.33]
 Added Greek Resources. (Thanks to Ben_The_Greek!)
 

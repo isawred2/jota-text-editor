@@ -32,8 +32,6 @@ import android.text.Spanned;
 import android.text.TextWatcher;
 import android.util.Log;
 
-import com.android.internal.util.ArrayUtils;
-
 /**
  * This is the class for text whose content and markup can both be changed.
  */

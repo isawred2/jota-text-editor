@@ -12,6 +12,9 @@ Jota Text Editor のメジャーアップデートです。
 バナーをタッチしてJota+をお試しください！
 
 --------------------
+[2014/06/28 v.0.2.34]
+Android L preview release に対応
+
 [2013/08/23 v.0.2.33]
 ギリシャ語リソースを追加 (Thanks to Ben_The_Greek!)
 
