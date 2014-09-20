@@ -11,6 +11,9 @@ Please try Jota+.
 Touch the banner and try Jota+!
 
 --------------------
+[2014/09/20 v.0.2.35]
+Fixed some bugs.
+
 [2014/06/28 v.0.2.34]
 Support Android L preview release.
 
